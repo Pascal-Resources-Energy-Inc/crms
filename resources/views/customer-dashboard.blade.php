@@ -9,7 +9,7 @@
                 <div class="card w-100">
                   <div class="card-body position-relative">
                     <div>
-                      <h5 class="mb-1 fw-bold">Welcome Jonathan Deo</h5>
+                      <h5 class="mb-1 fw-bold">Welcome Juan Dela Cruz</h5>
                       <p class="fs-3 mb-3 pb-1">Check all the statistics</p>
                       <button class="btn btn-primary rounded-pill" type="button">
                        View Profile
@@ -35,7 +35,7 @@
                       </div>
                       <div class="col-lg-12 col-xl-6">
                         Stove ID: XXX-XXXXX<br>
-                        Name: Juan Dela Cruz
+                        Name: Juan Dela Cruz <br>
                         Contact No.: 09XX-XXX-XXXX
                       </div>
                     </div>
