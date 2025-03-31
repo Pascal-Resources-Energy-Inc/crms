@@ -147,7 +147,7 @@
     <div class="brand-logo d-flex align-items-center justify-content-between text-center">
       <a href="{{url('/')}}" class="text-nowrap logo-img text-center">
         <img src="{{asset('images/icon_images.png')}}" style='height:50px;width:178;' class="dark-logo text-center" alt="Logo-Dark" />
-        <img src="{{asset('images/icon_image_icon.png')}}" class="light-logo" alt="Logo-light" />
+        {{-- <img src="{{asset('images/icon_image_icon.png')}}" class="light-logo" alt="Logo-light" /> --}}
       </a>
       <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
         <i class="ti ti-x"></i>
@@ -304,8 +304,8 @@
      
     
       <div class="d-block d-lg-none">
-        <img src="{{asset('images/icon.png')}}" class="dark-logo" alt="Logo-Dark" />
-        <img src="{{asset('images/icon.png')}}" class="light-logo" alt="Logo-light" />
+        {{-- <img src="{{asset('images/icon.png')}}" class="dark-logo" alt="Logo-Dark" />
+        <img src="{{asset('images/icon.png')}}" class="light-logo" alt="Logo-light" /> --}}
       </div>
     
     
@@ -451,7 +451,7 @@
       aria-labelledby="offcanvasWithBothOptionsLabel">
       <nav class="sidebar-nav scroll-sidebar">
         <div class="offcanvas-header justify-content-between">
-          <img src="{{asset('images/icon.png')}}" alt="" class="img-fluid" />
+          {{-- <img src="{{asset('images/icon.png')}}" alt="" class="img-fluid" /> --}}
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body h-n80" data-simplebar>

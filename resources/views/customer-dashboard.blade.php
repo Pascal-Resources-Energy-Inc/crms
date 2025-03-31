@@ -26,10 +26,20 @@
                 </div>
               </div>
 
-              <div class="col-lg-12 col-xl-6">
+              <div class="col-lg-12 col-xl-6 text-left">
                 <div class="card w-100 stretch">
                   <div class="card-body position-relative ">
-                    <div id="qrcode"></div>
+                    <div class='row'>
+                      <div class="col-lg-12 col-xl-4">
+                        <div id="qrcode"></div>
+                      </div>
+                      <div class="col-lg-12 col-xl-6">
+                        Stove ID: XXX-XXXXX<br>
+                        Name: Juan Dela Cruz
+                        Contact No.: 09XX-XXX-XXXX
+                      </div>
+                    </div>
+                   
                     
                   </div>
                 </div>
