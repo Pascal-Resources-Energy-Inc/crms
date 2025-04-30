@@ -110,6 +110,8 @@
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col">Dealer</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Points Earned</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -137,9 +139,20 @@
         // Function to generate random transactions
         function generateTransaction(id) {
             const transactionDate = new Date(2025, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString();
-            const quantity = Math.floor(Math.random() * 10) + 1; // Random quantity between 1 and 10
-            const amount = (Math.random() * 1000 + 100).toFixed(2); // Random amount between 100 and 1100
+            const quantity = Math.floor(Math.random() * 2) + 1; // Random quantity between 1 and 10
+            const amount = "XXX.XX"; // Random amount between 100 and 1100
             const dealer = dealers[Math.floor(Math.random() * 7)]; // Random dealer between 1 to 7
+            const customer = "Juan Dela Cruz"; // Random dealer between 1 to 7
+            var pointsEarned =0;
+            if(quantity == 2)
+            {
+                pointsEarned=2;
+            }
+            else
+            {
+                pointsEarned=1;
+            }
+            ; // Random dealer between 1 to 7
             const status = ["Completed", "Pending", "Failed"][Math.floor(Math.random() * 3)];
 
             // Update the totals
@@ -154,6 +167,8 @@
                 quantity: quantity,
                 amount: amount,
                 dealer: dealer,
+                customer: customer,
+                pointsEarned: pointsEarned,
                 status: status
             };
 
@@ -184,6 +199,9 @@
                         <td>${transaction.quantity}</td>
                         <td>PHP ${transaction.amount}</td>
                         <td>${transaction.dealer}</td>
+                        <td>${transaction.customer}</td>
+                        <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">${transaction.pointsEarned}</span></td>
                         <td><span class="badge bg-success">Completed</span></td>
                         <td><a href="#" class="btn btn-primary btn-view">View</a></td>
                     </tr>

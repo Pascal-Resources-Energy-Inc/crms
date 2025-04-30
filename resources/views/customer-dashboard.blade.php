@@ -36,7 +36,8 @@
                       <div class="col-lg-12 col-xl-6">
                         Stove ID: XXX-XXXXX<br>
                         Name: Juan Dela Cruz <br>
-                        Contact No.: 09XX-XXX-XXXX
+                        Contact No.: 09XX-XXX-XXXX <br>
+                        Registered: Feb 16, 2025 <br>
                       </div>
                     </div>
                    
@@ -44,6 +45,63 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-success">
+                        <i class="ti ti-credit-card fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Total Points</h4>
+                        <span class="text-muted">Earned</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">4.0</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-warning">
+                        <i class="ti ti-box-multiple fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Quantity </h4>
+                        <span class="text-muted">Purchased</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">4.0</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-danger">
+                        <i class="ti ti-currency-dollar fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Last </h4>
+                        <span class="text-muted">Purchased</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h5 class="fs-7 mb-0">Mar 20, 2025</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </section>
           <!-- Welcome Section End -->
@@ -75,6 +133,8 @@
                               <th>Product</th>
                               <th>Quantity</th>
                               <th>Amount</th>
+                              <th>Dealer</th>
+                              <th>Earned Points</th>
                               <th>Date</th>
                           </tr>
                       </thead>
@@ -83,24 +143,33 @@
                           <tr>
                               <td>123</td>
                               <td>330g LPG Cylinder</td>
-                              <td>5</td>
+                              <td>2</td>
                               <td>PHP XXX.00</td>
+                              <td>Dealer 1</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">2</span></td>
                               <td>March 1, 2025</td>
                           </tr>
                           <!-- Sample Purchase 2 -->
                           <tr>
                               <td>124</td>
                               <td>230g LPG Cylinder</td>
-                              <td>3</td>
+                              <td>1</td>
                               <td>PHP XXX.00</td>
+                              <td>Dealer 2</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span></td>
                               <td>March 10, 2025</td>
                           </tr>
                           <!-- Sample Purchase 3 -->
                           <tr>
                               <td>125</td>
                               <td>330g LPG Cylinder</td>
-                              <td>2</td>
+                              <td>1</td>
                               <td>PHP XXX.00</td>
+                              <td>Dealer 1</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span></td>
                               <td>March 20, 2025</td>
                           </tr>
                       </tbody>

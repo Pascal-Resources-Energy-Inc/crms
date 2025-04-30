@@ -9,10 +9,10 @@
                 <div class="card w-100">
                   <div class="card-body position-relative">
                     <div>
-                      <h5 class="mb-1 fw-bold">Welcome Jonathan Deo</h5>
+                      <h5 class="mb-1 fw-bold">Welcome Dealer 1</h5>
                       <p class="fs-3 mb-3 pb-1">Check all the statistics</p>
                       <button class="btn btn-primary rounded-pill" type="button">
-                        Visit Now
+                       View Profile
                       </button>
                     </div>
                     <div class="school-img d-none d-sm-block">
@@ -26,64 +26,81 @@
                 </div>
               </div>
 
-              <div class="col-lg-12 col-xl-6">
-                <div class="row">
-                  <div class="col-sm-4 d-flex align-items-strech">
-                    <div class="card warning-card overflow-hidden text-bg-primary w-100">
-                      <div class="card-body p-4">
-                        <div class="mb-7">
-                          <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
-                        </div>
-                        <h5 class="text-white fw-bold fs-14 text-nowrap">
-                          2,358.00 <span class="fs-2 fw-light">+23%</span>
-                        </h5>
-                        <p class="opacity-50 mb-0 ">Qty Sold</p>
+              <div class="col-lg-12 col-xl-6 text-left">
+                <div class="card w-100 stretch">
+                  <div class="card-body position-relative ">
+                    <div class='row'>
+                      
+                      <div class="col-lg-12 col-xl-6">
+                        Dealer ID: XXX-XXXXX<br>
+                        Name: Dealer 1 <br>
+                        Contact No.: 09XX-XXX-XXXX <br>
+                        Registered: Feb 16, 2025 <br>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="col-sm-4 d-flex align-items-strech">
-                    <div class="card danger-card overflow-hidden text-bg-primary w-100">
-                      <div class="card-body p-4">
-                        <div class="mb-7">
-                          <i class="ti ti-report-money fs-8 fw-lighter"></i>
-                        </div>
-                        <h5 class="text-white fw-bold fs-14">
-                          356 <span class="fs-2 fw-light">+8%</span>
-                        </h5>
-                        <p class="opacity-50 mb-0">Carbon Credit</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-4 d-flex align-items-strech">
-                    <div class="card info-card overflow-hidden text-bg-primary w-100">
-                      <div class="card-body p-4">
-                        <div class="mb-7">
-                          <i class="ti ti-currency-dollar fs-8 fw-lighter"></i>
-                        </div>
-                        <h5 class="text-white fw-bold fs-14 text-nowrap">
-                          $235.8K <span class="fs-2 fw-light">-3%</span>
-                        </h5>
-                        <p class="opacity-50 mb-0">Earnings</p>
-                      </div>
-                    </div>
+                   
+                    
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <section>
             <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5>Dealer Quantity Sold (2025)</h5>
-                      <div id="chart-bar-stacked"></div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-success">
+                        <i class="ti ti-credit-card fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Total Points</h4>
+                        <span class="text-muted">Earned</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">20.0</h2>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-warning">
+                        <i class="ti ti-box-multiple fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Quantity </h4>
+                        <span class="text-muted">Sold</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">20.0</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-danger">
+                        <i class="ti ti-currency-dollar fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Inventory </h4>
+                        <span class="text-muted"><small>as of {{date('M d, Y')}}</small></span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h5 class="fs-7 mb-0">20.00</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </section>
           <!-- Welcome Section End -->
 
@@ -97,11 +114,11 @@
           <!-- Educators Start -->
           <section>
             <div class="row">
-              <div class="col-lg-12 col-xl-8 d-flex align-items-stretch">
+              <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
                 <div class="card w-100">
                   <div class="card-body">
                     <div class="d-flex mb-4 justify-content-between align-items-center">
-                      <h5 class="mb-0 fw-bold">Top Dealer</h5>
+                      <h5 class="mb-0 fw-bold">Today Transaction</h5>
 
                  
                     </div>
@@ -110,69 +127,71 @@
                       <table class="table table-borderless align-middle text-nowrap">
                         <thead>
                           <tr>
-                            <th scope="col">Profile</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Total Sales</th>
-                            <th scope="col">Carbon Credit</th>
+                              <th>Transaction No.</th>
+                              <th>Quantity</th>
+                              <th>Amount</th>
+                              <th>Customer</th>
+                              <th>Earned Points</th>
+                              <th>Date</th>
                           </tr>
-                        </thead>
-                        <tbody>
+                      </thead>
+                      <tbody>
+                          <!-- Sample Purchase 1 -->
                           <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div class="me-4">
-                                  <img src="{{asset('design//assets/images/profile/user-2.jpg')}}" width="50" class="rounded-circle" alt="" />
-                                </div>
-
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">Dealer 1</h6>
-                                  <p class="fs-3 mb-0">Bicol</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p class="fs-3 fw-normal mb-0">20.00</p>
-                            </td>
-                            <td>
-                              <p class="fs-3 mb-0">
-                                PHP 20,000.00
-                              </p>
-                            </td>
-                            <td>
-                              <span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">50</span>
-                            </td>
+                              <td>1235</td>
+                              <td>2</td>
+                              <td>PHP XXX.00</td>
+                              <td>Juan Dela Cruz</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">2</span></td>
+                              <td>{{date('M d, Y')}}</td>
                           </tr>
-
-                        </tbody>
+                          <!-- Sample Purchase 2 -->
+                          <tr>
+                              <td>1245</td>
+                              <td>1</td>
+                              <td>PHP XXX.00</td>
+                              <td>Juan Dela Cruz</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span></td>
+                              <td>{{date('M d, Y')}}</td>
+                          </tr>
+                          <!-- Sample Purchase 3 -->
+                          <tr>
+                              <td>1255</td>
+                              <td>1</td>
+                              <td>PHP XXX.00</td>
+                              <td>Juan Dela Cruz</td>
+                              <td><span
+                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span></td>
+                              <td>{{date('M d, Y')}}</td>
+                          </tr>
+                      </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12 col-xl-4 d-flex align-items-stretch">
-                <div class="card acedamic w-100">
-                  <div class="card-body">
-                  
-                  </div>
-                </div>
-              </div>
+            
             </div>
           </section>
           <!-- Educators End -->
 @endsection
 @section('javascript')
 
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<script>
+    const qrcode = new QRCode(document.getElementById('qrcode'), {
+      text: 'http://jindo.dev.naver.com/collie',
+      width: 128,
+      height: 128,
+      colorDark : '#000',
+      colorLight : '#fff',
+      correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
 
-<script src="{{asset('design/assets/libs/jvectormap/jquery-jvectormap.min.js')}}"></script>
-<script src="{{asset('design/assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
-<script src="{{asset('design/assets/js/extra-libs/jvectormap/jquery-jvectormap-us-aea-en.js')}}"></script>
-<script src="{{asset('design/assets/js/dashboards/dashboard.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-<script src="{{asset('design/assets/js/dashboards/dashboard2.js')}}"></script>
-
-<script src="{{asset('design/assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
-<script src="{{asset('design/assets/js/apex-chart/apex.bar.init.js')}}"></script>
 
 @endsection

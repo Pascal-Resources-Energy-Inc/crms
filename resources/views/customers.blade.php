@@ -62,8 +62,6 @@
                                 <th>Address</th>
                                 <th>Area</th>
                                 <th>Stove ID</th>
-                                <th>330g Qty</th>
-                                <th>230g Qty</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -74,9 +72,7 @@
                                 <td>123 Mabini St., Quezon City</td>
                                 <td>Metro Manila</td>
                                 <td>ST12345</td>
-                                <td>5</td>
-                                <td>3</td>
-                                <td><a href="{{url('customer')}}" class="btn btn-primary btn-view">View</a></td>
+                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
                             </tr>
                             <tr>
                                 <td>Ana Santos</td>
@@ -84,9 +80,7 @@
                                 <td>456 Roxas Blvd., Manila</td>
                                 <td>Metro Manila</td>
                                 <td>ST12346</td>
-                                <td>8</td>
-                                <td>2</td>
-                                <td><a href="{{url('customer')}}" class="btn btn-primary btn-view">View</a></td>
+                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
                             </tr>
                             <tr>
                                 <td>Pedro Martinez</td>
@@ -94,9 +88,7 @@
                                 <td>789 Quezon Ave., Davao</td>
                                 <td>Davao City</td>
                                 <td>ST12347</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td><a href="{{url('customer')}}" class="btn btn-primary btn-view">View</a></td>
+                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
                             </tr>
                             <tr>
                                 <td>Maria Lopez</td>
@@ -104,9 +96,7 @@
                                 <td>101 Bonifacio St., Cebu</td>
                                 <td>Cebu City</td>
                                 <td>ST12348</td>
-                                <td>6</td>
-                                <td>4</td>
-                                <td><a href="{{url('customer')}}" class="btn btn-primary btn-view">View</a></td>
+                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
                             </tr>
                         </tbody>
                     </table>

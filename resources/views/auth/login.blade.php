@@ -14,7 +14,50 @@
 </div>
 <h2 class="mb-6 fs-8 fw-bolder">Welcome</h2>
 {{-- <p class="text-dark fs-4 mb-7">Your Admin Dashboard</p> --}}
-
+<div class="d-flex align-items-center gap-3">
+  <a
+    class="btn btn-white w-100 text-dark border fw-bold d-flex align-items-center justify-content-center rounded-1 py-6 shadow-none"
+    href="javascript:void(0)"
+    role="button"
+  >
+    <img
+      src="{{asset('design/assets/images/svgs/google-icon.svg')}}"
+      alt=""
+      class="img-fluid me-7"
+      width="24"
+      height="24"
+    />
+    <span class="d-none d-sm-block me-1 flex-shrink-0"
+      >Sign in with</span
+    >Google
+  </a>
+  <a
+    class="btn btn-white w-100 text-dark border fw-bold d-flex align-items-center justify-content-center rounded-1 py-6 shadow-none"
+    href="javascript:void(0)"
+    role="button"
+  >
+    <img
+      src="{{asset('design/assets/images/svgs/icon-facebook.svg')}}"
+      alt=""
+      class="img-fluid me-2"
+      width="24"
+      height="24"
+    />
+    <span class="d-none d-sm-block me-1 flex-shrink-0"
+      >Sign in with</span
+    >FB
+  </a>
+</div>
+<div class="position-relative text-center my-7">
+  <p
+    class="mb-0 fs-3 px-3 d-inline-block bg-white z-1 position-relative"
+  >
+    or sign in with
+  </p>
+  <span
+    class="border-top w-100 position-absolute top-50 start-50 translate-middle"
+  ></span>
+</div>
 <form method="POST" action="{{ route('login') }}">
     @csrf
   <div class="mb-7">

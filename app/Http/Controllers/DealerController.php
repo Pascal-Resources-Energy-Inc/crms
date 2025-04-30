@@ -11,4 +11,8 @@ class DealerController extends Controller
     {
         return view('dealers');
     }
+    public function show(Request $request)
+    {
+        return view('dashboard-dealer');
+    }
 }
