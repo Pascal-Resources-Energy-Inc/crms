@@ -44,9 +44,8 @@
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5>Customers</h5>
+                    <h5>Customers <a href='{{url("new-customer")}}'><button class="btn-sm btn-success btn">+ Add</button></a></h5>
                     
-                    <!-- Search Bar -->
                     <div class="mb-3">
                         <div class="input-group">
                             <input type="text" class="form-control" id="customerSearch" placeholder="Search Customer by Name, Stove ID...">
@@ -66,38 +65,7 @@
                             </tr>
                         </thead>
                         <tbody id="customerBody">
-                            <tr>
-                                <td>Juan Dela Cruz</td>
-                                <td>(0917) 123 4567</td>
-                                <td>123 Mabini St., Quezon City</td>
-                                <td>Metro Manila</td>
-                                <td>ST12345</td>
-                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>Ana Santos</td>
-                                <td>(0921) 987 6543</td>
-                                <td>456 Roxas Blvd., Manila</td>
-                                <td>Metro Manila</td>
-                                <td>ST12346</td>
-                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>Pedro Martinez</td>
-                                <td>(0932) 234 5678</td>
-                                <td>789 Quezon Ave., Davao</td>
-                                <td>Davao City</td>
-                                <td>ST12347</td>
-                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>Maria Lopez</td>
-                                <td>(0945) 345 6789</td>
-                                <td>101 Bonifacio St., Cebu</td>
-                                <td>Cebu City</td>
-                                <td>ST12348</td>
-                                <td><a href="{{url('dashboard-customer')}}" class="btn btn-primary btn-view">View</a></td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>

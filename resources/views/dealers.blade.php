@@ -48,7 +48,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    5
+                    0
                   </h5>
                   <p class="opacity-50 mb-0 ">Active Dealers</p>
                 </div>
@@ -61,7 +61,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    5
+                    0
                   </h5>
                   <p class="opacity-50 mb-0 ">Inctive Dealers</p>
                 </div>
@@ -74,7 +74,7 @@
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5>Dealers</h5>
+                    <h5>Dealers <a href='{{url("new-dealer")}}'><button class="btn-sm btn-success btn">+ New</button></a></h5>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -88,20 +88,7 @@
                         </thead>
                         <tbody id="dealerBody">
                             <!-- Dealers will be inserted here dynamically -->
-                            @foreach(range(1, 20) as $i)
-                            <tr>
-                                <td>Dealer {{ $i }}</td>
-                                <td>PHP {{ number_format(rand(100000, 500000), 2) }}</td> <!-- Random sales -->
-                                <td>Address {{ $i }}</td>
-                                <td>Area {{ $i }}</td>
-                                <td>
-                                    <span class="badge {{ rand(0, 1) ? 'bg-success' : 'bg-danger' }}">
-                                        {{ rand(0, 1) ? 'Active' : 'Inactive' }}
-                                    </span>
-                                </td>
-                                <td><a href="{{url('dealer')}}" class="btn btn-primary btn-view">View</a></td>
-                            </tr>
-                            @endforeach
+                         
                         </tbody>
                     </table>
                 </div>

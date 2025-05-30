@@ -1,98 +1,108 @@
 <!DOCTYPE html>
-<html  lang="en"  dir="ltr" data-bs-theme="light" data-color-theme="Green_Theme" data-layout="vertical">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    {{-- @laravelPWA --}}
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="shortcut icon"  href="{{url('images/aaa.png')}}">
+    <link rel="icon"  href="{{url('images/aaa.png')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <!-- Layout config Js -->
+    <script src="{{asset('inside_css/assets/js/layout.js')}}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{{asset('inside_css/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('inside_css/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('inside_css/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{{asset('inside_css/assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+ 
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{ asset('login_css/images/loader.gif')}}") 50% 50% no-repeat white ;
+            opacity: .8;
+            background-size:120px 120px;
+        }
+      .bg-overlay {
+		    background: linear-gradient(to right, #c3c3c3, #c3c3c3) !important;
+    		/* opacity: .9; */
+   			/* Change 5px to your desired thickness */
+		}
+    </style>
+    <!-- LogIN CSS -->
+  
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <!-- Required meta tags -->
-        <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Favicon icon-->
-    <link rel="shortcut icon" type="image/png" href="{{asset('images/icon.png')}}" />
-
-    <!-- Core Css -->
-    <link rel="stylesheet" href="{{asset('design/assets/css/styles.css')}}" />
-
-    <!-- <title>Spike Bootstrap Admin</title> -->
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
-    <div class="preloader">
-        <img
-          src="{{asset('design/assets/images/logos/loader.svg')}}"
-          alt="loader"
-          class="lds-ripple img-fluid"
-        />
-      </div>
-      <div id="main-wrapper" class="p-0 bg-white">
-        <div
-          class="auth-login position-relative overflow-hidden d-flex align-items-center justify-content-center px-7 px-xxl-0 rounded-3 h-n20"
-        >
-          <div class="auth-login-shape position-relative w-100">
-            <div
-              class="auth-login-wrapper card mb-0 container position-relative z-1 h-100 max-h-770"
-              data-simplebar
-            >
-              <div class="card-body mt-5">
-               
-                <div
-                  class="row align-items-center justify-content-around pt-6 pb-5"
-                >
-                  <div class="col-lg-6 col-xl-5 d-none d-lg-block">
-                    <div class="text-center text-lg-start">
-                      <img 
-                        src="{{asset('images/bg.jpg')}}"
-                        alt=""
-                        class="img-fluid"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-xl-5">
-                  @yield('content')
-                  </div>
-                </div>
-              </div>
+    <div id = "loader" style="display:none;" class="loader">
+    </div>
+    
+    <div class="auth-page-wrapper pt-5">
+        <!-- auth page bg -->
+        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+            <div class="bg-overlay"></div>
+
+            <div class="shape">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                </svg>
             </div>
-           
-          </div>
         </div>
-        <div class="light-transparent sidebartoggler"></div>
-      </div>
-    {{-- <div id="app">
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div> --}}
+
+        <!-- auth page content -->
+        <div class="auth-page-content">
+             <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mt-sm-5 mb-4 text-white-50">
+                            <div>
+                                <a href="{{url('/')}}" class="d-inline-block auth-logo">
+                                    <img src="{{asset('images/logo_mo.png')}}" class="white-border" alt="" height="50">
+                                </a>
+                            </div>
+                            {{-- <p class="mt-3 fs-15 fw-medium">3 in 1 solution</p> --}}
+                        </div>
+                    </div>
+                </div>
+                @yield('content')
+             </div>
+        </div>
+    </div>
+
+    {{-- <script src="{{asset('login_css/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('login_css/js/popper.min.jss')}}"></script>
+    <script src="{{asset('login_css/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('login_css/js/main.js')}}"></script> --}}
+    <script src="{{asset('inside_css/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('inside_css/assets/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{asset('inside_css/assets/libs/node-waves/waves.min.js')}}"></script>
+    <script src="{{asset('inside_css/assets/libs/feather-icons/feather.min.js')}}"></script>
+    <script src="{{asset('inside_css/assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
+    <script src="{{asset('inside_css/assets/js/plugins.js')}}"></script>
+
+    <!-- particles js -->
+    <script src="{{asset('inside_css/assets/libs/particles.js/particles.js')}}"></script>
+    <!-- particles app js -->
+    <script src="{{asset('inside_css/assets/js/pages/particles.app.js')}}"></script>
+    <!-- password-addon init -->
+    <script src="{{asset('inside_css/assets/js/pages/password-addon.init.js')}}"></script>
   
-    <script src="{{asset('design/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('design/assets/libs/simplebar/dist/simplebar.min.js')}}"></script>
-    <script src="{{asset('design/assets/js/theme/app.init.js')}}"></script>
-    <script src="{{asset('design/assets/js/theme/theme.js')}}"></script>
-    <script src="{{asset('design/assets/js/theme/app.min.js')}}"></script>
-    <script src="{{asset('design/assets/js/theme/sidebarmenu.js')}}"></script>
-    <script src="{{asset('design/assets/js/theme/feather.min.js')}}"></script>
-    {{-- <script >
-        window.onload = function() {
-            var userImage = document.getElementById("light-layout");
-            userImage.click();
-        };
-    </script> --}}
-    <!-- solar icons -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 </html>

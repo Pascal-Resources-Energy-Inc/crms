@@ -19,4 +19,8 @@ class CustomerController extends Controller
     {
         return view('customer-dashboard');
     }
+    public function newCustomer(Request $request)
+    {
+        return view('new-customer');
+    }
 }
