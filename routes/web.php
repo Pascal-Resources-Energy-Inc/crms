@@ -28,3 +28,4 @@ Route::get('/customers','CustomerController@index')->name('customers');
 Route::get('/customer','CustomerController@view')->name('customer');
 Route::get('/dashboard-customer','CustomerController@show')->name('customer');
 Route::get('/new-customer','CustomerController@newCustomer')->name('newcustomer');
+Route::post('new-customer','CustomerController@saveCustomer')->name('saveCustomer');

@@ -48,7 +48,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    PHP 1,245,678
+                    0.00
                   </h5>
                   <p class="opacity-50 mb-0 ">Total Sales</p>
                 </div>
@@ -61,7 +61,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    3,450.00
+                    0.00
                   </h5>
                   <p class="opacity-50 mb-0 ">Transactions</p>
                 </div>
@@ -74,7 +74,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    20,000.00
+                    0.00
                   </h5>
                   <p class="opacity-50 mb-0 ">Qty Sold</p>
                 </div>
@@ -88,20 +88,7 @@
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <div class="filter-container">
-                        <label for="dealerFilter" class="form-label">Filter by Dealer</label>
-                        <select class="form-select" id="dealerFilter">
-                            <option value="All">All Dealers</option>
-                            <option value="Dealer 1">Dealer 1</option>
-                            <option value="Dealer 2">Dealer 2</option>
-                            <option value="Dealer 3">Dealer 3</option>
-                            <option value="Dealer 4">Dealer 4</option>
-                            <option value="Dealer 5">Dealer 5</option>
-                            <option value="Dealer 6">Dealer 6</option>
-                            <option value="Dealer 7">Dealer 7</option>
-                        </select>
-                    </div>
-                    <h5>Transaction History</h5>
+                    <h5>Transactions</h5>
                     <table class="table table-bordered table-striped transaction-table">
                         <thead class="">
                             <tr>
@@ -117,7 +104,6 @@
                             </tr>
                         </thead>
                         <tbody id="transactionBody">
-                            <!-- Transactions will be inserted here dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -127,107 +113,4 @@
 </section>
 @endsection
 @section('javascript')
-<script>
-    // Generate random transaction data and populate the dashboard and table
-    document.addEventListener("DOMContentLoaded", function () {
-        const dealers = ["Dealer 1", "Dealer 2", "Dealer 3", "Dealer 4", "Dealer 5", "Dealer 6", "Dealer 7"];
-        let totalQty = 0;
-        let totalAmount = 0;
-        let dealerSales = Array(7).fill(0); // Array to keep track of sales by dealer
-        let allTransactions = []; // To hold all transactions for filtering
-
-        // Function to generate random transactions
-        function generateTransaction(id) {
-            const transactionDate = new Date(2025, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString();
-            const quantity = Math.floor(Math.random() * 2) + 1; // Random quantity between 1 and 10
-            const amount = "XXX.XX"; // Random amount between 100 and 1100
-            const dealer = dealers[Math.floor(Math.random() * 7)]; // Random dealer between 1 to 7
-            const customer = "Juan Dela Cruz"; // Random dealer between 1 to 7
-            var pointsEarned =0;
-            if(quantity == 2)
-            {
-                pointsEarned=2;
-            }
-            else
-            {
-                pointsEarned=1;
-            }
-            ; // Random dealer between 1 to 7
-            const status = ["Completed", "Pending", "Failed"][Math.floor(Math.random() * 3)];
-
-            // Update the totals
-            totalQty += quantity;
-            totalAmount += parseFloat(amount);
-            dealerSales[dealers.indexOf(dealer)] += quantity;
-
-            // Store the transaction
-            const transaction = {
-                id: id,
-                date: transactionDate,
-                quantity: quantity,
-                amount: amount,
-                dealer: dealer,
-                customer: customer,
-                pointsEarned: pointsEarned,
-                status: status
-            };
-
-            allTransactions.push(transaction);
-
-            return transaction;
-        }
-
-        // Generate 50 random transactions
-        for (let i = 1; i <= 50; i++) {
-            generateTransaction(i);
-        }
-
-        // Function to update the transaction table based on dealer filter
-        function updateTransactionTable(dealerFilter = "All") {
-            let filteredTransactions = allTransactions;
-
-            if (dealerFilter !== "All") {
-                filteredTransactions = allTransactions.filter(transaction => transaction.dealer === dealerFilter);
-            }
-
-            // Insert transactions into table body
-            const transactionRows = filteredTransactions.map(transaction => {
-                return `
-                    <tr>
-                        <td>TXN${transaction.id}</td>
-                        <td>${transaction.date}</td>
-                        <td>${transaction.quantity}</td>
-                        <td>PHP ${transaction.amount}</td>
-                        <td>${transaction.dealer}</td>
-                        <td>${transaction.customer}</td>
-                        <td><span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">${transaction.pointsEarned}</span></td>
-                        <td><span class="badge bg-success">Completed</span></td>
-                        <td><a href="#" class="btn btn-primary btn-view">View</a></td>
-                    </tr>
-                `;
-            }).join('');
-
-            document.getElementById("transactionBody").innerHTML = transactionRows;
-
-            // Update Dashboard Stats based on filtered transactions
-            const filteredTotalQty = filteredTransactions.reduce((acc, transaction) => acc + transaction.quantity, 0);
-            const filteredTotalAmount = filteredTransactions.reduce((acc, transaction) => acc + parseFloat(transaction.amount), 0);
-
-            // document.getElementById("totalQty").innerText = filteredTotalQty;
-            // document.getElementById("totalAmount").innerText = `PHP ${filteredTotalAmount.toFixed(2)}`;
-            // document.getElementById("dealerSales").innerText = `${dealerFilter} - ${filteredTotalQty}`;
-        }
-
-        // Initial load of the table and stats
-        updateTransactionTable();
-
-        // Add event listener to the dealer filter dropdown
-        document.getElementById("dealerFilter").addEventListener("change", function () {
-            const selectedDealer = this.value;
-            updateTransactionTable(selectedDealer);
-        });
-
-    });
-</script>
 @endsection

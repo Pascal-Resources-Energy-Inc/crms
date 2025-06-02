@@ -146,7 +146,7 @@
     <!-- ---------------------------------- -->
     <div class="brand-logo d-flex align-items-center justify-content-between text-center">
       <a href="{{url('/')}}" class="text-nowrap logo-img text-center">
-        <img src="{{asset('images/icon_images.png')}}" style='height:50px;width:178;' class="dark-logo text-center" alt="Logo-Dark" />
+        <img src="{{asset('images/logo_mo.png')}}" style='height:50px;width:178;' class="dark-logo text-center" alt="Logo-Dark" />
         {{-- <img src="{{asset('images/icon_image_icon.png')}}" class="light-logo" alt="Logo-light" /> --}}
       </a>
       <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
@@ -218,7 +218,7 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'transactions')active @endif" href="{{url('/transactions')}}" aria-expanded="false">
+            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'dealer=transactions')active @endif" href="{{url('/dealer=transactions')}}" aria-expanded="false">
               <span class="aside-icon p-2 bg-primary-subtle rounded-1">
                 <iconify-icon icon="mdi:currency-usd" class="fs-6"></iconify-icon>
 

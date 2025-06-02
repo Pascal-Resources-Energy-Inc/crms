@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Stove;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -21,6 +21,16 @@ class CustomerController extends Controller
     }
     public function newCustomer(Request $request)
     {
-        return view('new-customer');
+        $stoves = Stove::where('client_id',null)->get();
+        return view('new-customer',
+            array(
+                'stoves' => $stoves
+            )
+        );
+    }
+
+    public function saveCustomer(Request $request)
+    {
+        dd($request->all());
     }
 }

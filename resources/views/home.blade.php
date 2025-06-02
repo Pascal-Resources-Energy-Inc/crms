@@ -13,11 +13,11 @@
                 <div class="card w-100">
                   <div class="card-body position-relative">
                     <div>
-                      <h5 class="mb-1 fw-bold">Welcome Jonathan Deo</h5>
-                      <p class="fs-3 mb-3 pb-1">Check all the statistics</p>
-                      <button class="btn btn-primary rounded-pill" type="button">
+                      <h5 class="mb-1 fw-bold">Welcome {{auth()->user()->name}}</h5>
+                      {{-- <p class="fs-3 mb-3 pb-1">Check all the statistics</p> --}}
+                      {{-- <button class="btn btn-primary rounded-pill" type="button">
                         Visit Now
-                      </button>
+                      </button> --}}
                     </div>
                     <div class="school-img d-none d-sm-block">
                       <img src="{{asset('design//assets/images/backgrounds/school.png')}}" class="img-fluid" alt="" />
@@ -39,7 +39,7 @@
                           <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                         </div>
                         <h5 class="text-white fw-bold fs-14 text-nowrap">
-                          XXX.00 <span class="fs-2 fw-light">+x%</span>
+                          {{number_format($transactions_details->sum('qty'),2)}} 
                         </h5>
                         <p class="opacity-50 mb-0 ">Qty Sold</p>
                       </div>
@@ -53,7 +53,7 @@
                           <i class="ti ti-current-location fs-8 fw-lighter"></i>
                         </div>
                         <h5 class="text-white fw-bold fs-14">
-                          10 
+                          {{count($dealers)}} 
                         </h5>
                         <p class="opacity-50 mb-0">Dealer</p>
                       </div>
@@ -79,7 +79,7 @@
           </section>
           <section>
             <div class="row">
-                <div class="col-lg-12 col-xl-6 d-flex align-items-stretch">
+                <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
                   <div class="card w-100">
                     <div class="card-body">
                       <h5>Refill Sold Quantity(2025)</h5>
@@ -87,7 +87,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12 col-xl-6 d-flex align-items-stretch">
+                {{-- <div class="col-lg-12 col-xl-6 d-flex align-items-stretch">
                   <div class="card w-100">
                    
                     <div class="card-body">
@@ -103,7 +103,7 @@
                      
                     </div>
                   </div>
-                </div>
+                </div> --}}
               </div>
           </section>
           <!-- Welcome Section End -->
@@ -142,7 +142,8 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          @foreach($transactions->take(20) as $transaction)
+                            <tr>
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="me-4">
@@ -178,43 +179,7 @@
                               5
                             </td> 
                           </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div class="me-4">
-                                  <img src="{{asset('design//assets/images/profile/user-2.jpg')}}" width="50" class="rounded-circle" alt="" />
-                                </div>
-
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">Juan Dela Cruz</h6>
-                                  <p class="fs-3 mb-0">Bicol</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p class="fs-3 fw-normal mb-0">1.00</p>
-                            </td>
-                            <td>
-                              <p class="fs-3 mb-0">
-                                Dealer 2
-                              </p>
-                            </td>
-                            <td>
-                              <span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span>
-                            </td>
-                            <td>
-                              <span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">1</span>
-                            </td>
-                            <td>
-                              {{date("M. d, Y",strtotime('2025-04-01'))}}
-                            </td>
-                            <td>
-                              5
-                            </td>                            
-                          </tr>
-
+                          @endforeach
                         </tbody>
                       </table>
                     </div>
@@ -249,7 +214,7 @@
 @endsection
 @section('javascript')
 
-  <script src="../assets/js/dashboards/dashboard.js"></script>
+  {{-- <script src="../assets/js/dashboards/dashboard.js"></script> --}}
 
 
 <script src="{{asset('design/assets/l ibs/jvectormap/jquery-jvectormap.min.js')}}"></script>
@@ -258,8 +223,121 @@
 <script src="{{asset('design/assets/js/dashboards/dashboard.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 {{-- <script src="{{asset('design/assets/js/dashboards/dashboard2.js')}}"></script> --}}
+<script>
+   const categories = @json($categories);
+    const qty = @json($qty);
+  $(function () {
+  
+  // Stacked Bar Chart -------> BAR CHART (Vertical)
+  var options_stacked = {
+    series: [
+      {
+        name: "LPG Cylinder",  // Unified series name
+        data: qty, // Data for Jan to Dec
+      }
+    ],
+    chart: {
+      fontFamily: "inherit",
+      type: "bar",
+      height: 350,
+      stacked: true,
+      toolbar: {
+        show: false,
+      },
+    },
+    grid: {
+      borderColor: "transparent",
+    },
+    // Updated color palette for better contrast
+    colors: [
+      "#4F80FF",  // A calming blue color
+    ],
+    plotOptions: {
+      bar: {
+        horizontal: false, // Change this to false to make the bars vertical
+      },
+    },
+    stroke: {
+      width: 1,
+      colors: ["#fff"],
+    },
+    xaxis: {
+      categories: categories,
+      labels: {
+        formatter: function (val) {
+          return val + "";
+        },
+        style: {
+          colors: [
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+          ],
+        },
+      },
+    },
+    yaxis: {
+      title: {
+        text: undefined,
+      },
+      labels: {
+        formatter: function (val) {
+          return val ;
+        },
+        style: {
+          colors: [
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+            "#a1aab2",
+          ],
+        },
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val ;
+        },
+      },
+      theme: "dark",
+    },
+    fill: {
+      opacity: 1,
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "left",
+      offsetX: 40,
+      labels: {
+        colors: ["#a1aab2"],
+      },
+    },
+  };
 
-<script src="{{asset('design/assets/js/apex-chart/apex.bar.init.js')}}"></script>
+  var chart_bar_stacked = new ApexCharts(
+    document.querySelector("#chart-bar-stacked"),
+    options_stacked
+  );
+  chart_bar_stacked.render();
+
+
+});
+
+</script>
+{{-- <script src="{{asset('design/assets/js/apex-chart/apex.bar.init.js')}}"></script> --}}
 <script src="{{asset('design/assets/js/dashboards/dashboard.js')}}"></script>
 
 @endsection

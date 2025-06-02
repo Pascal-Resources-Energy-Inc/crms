@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Transaction;
+use App\Dealer;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use App\TransactionDetail;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +28,45 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $currentYear = Carbon::now()->year;
+        $transactions = Transaction::orderBy('id','desc')->get();
+        $dealers = Dealer::get();
+        $transactions_details = TransactionDetail::get();
+        
+        $currentYear = Carbon::now()->year;
+
+        // Step 1: Fetch monthly sales
+        $sales = DB::table('transaction_details')
+            ->selectRaw('MONTH(created_at) as month_number, MONTHNAME(created_at) as month_name, SUM(qty) as total_qty')
+            ->whereYear('created_at', $currentYear)
+            ->groupBy(DB::raw('MONTH(created_at), MONTHNAME(created_at)'))
+            ->orderBy('month_number')
+            ->get()
+            ->keyBy('month_number');
+
+        // Step 2: Generate full months with default qty = 0
+        $allMonths = collect(range(1, 12))->map(function ($monthNumber) use ($sales) {
+            return [
+                'month' => Carbon::create()->month($monthNumber)->format('F'), // Full month name
+                'total_qty' => $sales->get($monthNumber)->total_qty ?? 0,
+            ];
+        });
+
+        // Step 3: Separate into categories and qty arrays
+        $categories = $allMonths->pluck('month')->toArray();
+        $qty = $allMonths->pluck('total_qty')->toArray();   
+
+        return view('home',
+            array(
+            
+            'transactions' => $transactions,
+            'transactions_details' => $transactions_details,
+            'dealers' => $dealers,
+            'categories' =>  $categories,
+            'qty' =>  $qty,
+            
+
+            )
+        );
     }
 }

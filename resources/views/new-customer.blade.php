@@ -6,7 +6,8 @@
       touch-action: none;
     }
   </style>
-
+  <link rel="stylesheet" href="{{asset('design/vendors/select2/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('design/vendors/select2-bootstrap-theme/select2-bootstrap.min.css')}}">
 @endsection
 @section('content')
 <section class="welcome">
@@ -18,7 +19,8 @@
               <div class="card-body wizard-content">
                 <h4 class="card-title">New Customer</h4>
                 <p class="card-subtitle mb-3"> Please fill out all required fields marked with an asterisk (<span class='text-danger'>*</span>).  </p>
-                <form action="#" class="validation-wizard wizard-circle mt-5">
+                <form method='POST' action='{{url('new-customer')}}' onsubmit='show()' enctype="multipart/form-data" class="validation-wizard wizard-circle mt-5">
+                  @csrf
                   <!-- Step 1 -->
                   <h6>Information</h6>
                   <section>
@@ -27,7 +29,7 @@
                         <div class="mb-3">
                           <label class="form-label" for="wfirstName2"> Full Name  <span class="text-danger">*</span>
                           </label>
-                          <input type="text" class="form-control required" id="wfirstName2" name="firstName" />
+                          <input type="text" class="form-control required" id="wfirstName2" name="name" />
                         </div>
                       </div>
                     </div>
@@ -36,19 +38,19 @@
                         <div class="mb-3">
                           <label class="form-label" for="wemailAddress2"> Email Address <span class="text-danger">*</span>
                           </label>
-                          <input type="email" class="form-control required" id="wemailAddress2" name="emailAddress" />
+                          <input type="email" class="form-control required" id="wemailAddress2" name="email_address" />
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="mb-3">
                           <label class="form-label" for="wphoneNumber2">Phone Number <span class="text-danger">*</span></label>
-                          <input type="tel" class="form-control required" id="wphoneNumber2" />
+                          <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" />
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="mb-3">
-                          <label class="form-label" for="facebook">Facebook <span class="text-danger">*</span></label>
-                          <input type="tel" class="form-control required" id="facebook" />
+                          <label class="form-label" for="facebook2">Facebook <span class="text-danger">*</span></label>
+                          <input type="tel" class="form-control required" id="facebook2" name='facebook' required/>
                         </div>
                       </div>
                     </div>
@@ -57,13 +59,18 @@
                         <div class="mb-3">
                           <label class="form-label" for="wlocation2"> Address <span class="text-danger">*</span>
                           </label>
-                          <textarea class="form-control required"></textarea>
+                          <textarea class="form-control required" name='address' required></textarea>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="mb-3">
-                          <label class="form-label" for="stoveId">Stove ID  <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control required" id="stoveId" />
+                          <label class="form-label" for="stoveId">Serial Number  <span class="text-danger">*</span></label>
+                            <select class="js-example-basic-single w-100   required" name='serial_number' style='width:100%;' required>
+                                {{-- <option value="">Select Serial Number</option> --}}
+                                @foreach($stoves as $stove)
+                                  <option value="{{$stove->id}}">{{$stove->serial_number}}</option>
+                                  @endforeach
+                            </select>
                         </div>
                       </div>
                     </div>
@@ -166,7 +173,9 @@
                                   </div>
                         </div>
                     </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
                   </section>
+                  
                 </form>
               </div>
             </div>
@@ -205,7 +214,9 @@
 <script src="{{asset('design/assets/libs/jquery-steps/build/jquery.steps.min.js')}}"></script>
 <script src="{{asset('design/assets/libs/jquery-validation/dist/jquery.validate.min.js')}}"></script>
 <script src="{{asset('design/assets/js/forms/form-wizard.js')}}"></script>
-
+<script src="{{asset('design/vendors/typeahead.js/typeahead.bundle.min.js')}}"></script>
+  <script src="{{asset('design/vendors/select2/select2.min.js')}}"></script>
+    <script src="{{asset('design/js/select2.js')}}"></script>
 <script>
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');

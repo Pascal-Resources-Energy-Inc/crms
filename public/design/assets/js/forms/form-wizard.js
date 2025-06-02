@@ -155,6 +155,7 @@ $(".validation-wizard").steps({
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed."
     );
   },
+  
 }),
   $(".validation-wizard").validate({
     ignore: "input[type=hidden]",
