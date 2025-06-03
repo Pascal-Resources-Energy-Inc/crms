@@ -54,7 +54,7 @@
                     </div>  
                     <br>
                    <div class='text-center'>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadAvatarModal" title="Upload Avatar">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#uploadAvatarModal" title="Upload Avatar">
                         <i class="fas fa-camera"></i>
                         <span class="sr-only">Upload Avatar</span>
                         </button>
@@ -112,8 +112,9 @@
         </div>
     </div>
     
-@include('change_avatar')
+
 </section>
+@include('change_avatar')
 @endsection
 
 @section('javascript')

@@ -111,7 +111,7 @@
 
 
 </style>
-
+  @include('sweetalert::alert')
     @yield('css')
        
     <style>
@@ -718,6 +718,6 @@
       });
     }
   </script>
-  {{-- @include('sweetalert::alert') --}}
+
 </body>
 </html>
