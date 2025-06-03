@@ -67,7 +67,7 @@
                           <i class="ti ti-user fs-8 fw-lighter"></i>
                         </div>
                         <h5 class="text-white fw-bold fs-14 text-nowrap">
-                         100 
+                         {{$customers->count()}} 
                         </h5>
                         <p class="opacity-50 mb-0">Customers</p>
                       </div>
@@ -82,7 +82,7 @@
                 <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
                   <div class="card w-100">
                     <div class="card-body">
-                      <h5>Refill Sold Quantity(2025)</h5>
+                      <h5>Refill Sold Quantity({{date('Y')}})</h5>
                       <div id="chart-bar-stacked"></div>
                     </div>
                   </div>

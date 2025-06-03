@@ -112,7 +112,7 @@
 
 </style>
 
-    @yield('header')
+    @yield('css')
        
     <style>
       .loader {

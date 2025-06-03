@@ -5,6 +5,10 @@
       border: 1px solid #ccc;
       touch-action: none;
     }
+    .select2-selection{
+
+      border-color:#aebcc3 !important;
+    }
   </style>
   <link rel="stylesheet" href="{{asset('design/vendors/select2/select2.min.css')}}">
   <link rel="stylesheet" href="{{asset('design/vendors/select2-bootstrap-theme/select2-bootstrap.min.css')}}">
@@ -65,8 +69,8 @@
                       <div class="col-md-4">
                         <div class="mb-3">
                           <label class="form-label" for="stoveId">Serial Number  <span class="text-danger">*</span></label>
-                            <select class="js-example-basic-single w-100   required" name='serial_number' style='width:100%;' required>
-                                {{-- <option value="">Select Serial Number</option> --}}
+                            <select class="js-example-basic-single w-100 form-control renz required" name='serial_number'  required>
+                                <option value="">Search Serial Number</option>
                                 @foreach($stoves as $stove)
                                   <option value="{{$stove->id}}">{{$stove->serial_number}}</option>
                                   @endforeach

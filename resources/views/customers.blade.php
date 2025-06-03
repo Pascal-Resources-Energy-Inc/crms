@@ -35,7 +35,59 @@
     .filter-container {
         margin-bottom: 20px;
     }
+    <style>
+    #signatureCanvas {
+      border: 1px solid #ccc;
+      touch-action: none;
+    }
+    .select2-selection{
+
+      border-color:#aebcc3 !important;
+    }
+  </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+/* Match Bootstrap 4 .form-control */
+.chosen-container .chosen-single {
+  height: calc(2.25rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.chosen-container .chosen-drop {
+  border: 1px solid #ced4da;
+  border-top: none;
+  border-radius: 0 0 0.25rem 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+}
+
+.chosen-container .chosen-results {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.chosen-container .chosen-search input {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
 </style>
+
 @endsection
 @section('content')
 <section class="welcome">
@@ -44,28 +96,42 @@
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5>Customers <a href='{{url("new-customer")}}'><button class="btn-sm btn-success btn">+ Add</button></a></h5>
-                    
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="customerSearch" placeholder="Search Customer by Name, Stove ID...">
-                        </div>
-                    </div>
-    
+                    <h5>Customers <button class="btn-sm btn-success btn" data-bs-toggle="modal"  data-bs-target="#new_customer">+ Add</button></h5>
                     <!-- Customers Table -->
-                    <table class="table table-bordered table-striped">
+                    <table id="example" class="table table-bordered table-striped " style="width:100%">
                         <thead>
                             <tr>
                                 <th>Customer Name</th>
                                 <th>Contact Number</th>
-                                <th>Address</th>
-                                <th>Area</th>
-                                <th>Stove ID</th>
-                                <th>Action</th>
+                                <th>Email Address</th>
+                                <th>Serial Number</th>
+                                <th>Last Transaction</th>
                             </tr>
                         </thead>
                         <tbody id="customerBody">
+                            @foreach($customers as $customer)
+                            <tr>
+                                <td><a href='view-client/{{$customer->id}}'>{{$customer->name}}</a></td>
+                                <td>{{$customer->number}}</td>
+                                <td>{{$customer->email_address}}</td>
+                                <td>
+                                    @if($customer->serial)
+                                        {{ $customer->serial->serial_number }}
+                                    @endif
+                                </td>
+                                <td>
+                                  @php
+                                    $transaction = ($customer->transactions)->sortByDesc('created_at')->first();
+                                  @endphp
 
+                                    @if($transaction)
+                                    {{date('M d, Y',strtotime($transaction->updated_at))}}
+                                    @else
+                                    No Data
+                                  @endif
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -75,9 +141,24 @@
     
 </section>
 @endsection
-
+@include('new_customer')
 @section('javascript')
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('.chosen-select').chosen({
+      width: '100%'  // Important for Bootstrap layout
+    });
+  });
+</script>
 <script>
     // Search functionality
     document.addEventListener('DOMContentLoaded', function() {

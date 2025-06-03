@@ -5,6 +5,7 @@ use App\Transaction;
 use App\Dealer;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Client;
 use Illuminate\Support\Collection;
 use App\TransactionDetail;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $customers = Client::get();
         $currentYear = Carbon::now()->year;
         $transactions = Transaction::orderBy('id','desc')->get();
         $dealers = Dealer::get();
@@ -64,6 +66,7 @@ class HomeController extends Controller
             'dealers' => $dealers,
             'categories' =>  $categories,
             'qty' =>  $qty,
+            'customers' =>  $customers,
             
 
             )
