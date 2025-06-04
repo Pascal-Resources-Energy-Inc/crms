@@ -105,6 +105,7 @@
                                 <th>Contact Number</th>
                                 <th>Email Address</th>
                                 <th>Serial Number</th>
+                                <th>Total Points</th>
                                 <th>Last Transaction</th>
                             </tr>
                         </thead>
@@ -119,6 +120,7 @@
                                         {{ $customer->serial->serial_number }}
                                     @endif
                                 </td>
+                                <td> {{$customer->transactions->sum('points_client')}}</td>
                                 <td>
                                   @php
                                     $transaction = ($customer->transactions)->sortByDesc('created_at')->first();

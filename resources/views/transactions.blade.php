@@ -35,11 +35,31 @@
     .filter-container {
         margin-bottom: 20px;
     }
+    @media (max-width: 768px) {
+  .modal-dialog {
+    margin: 1rem;
+    max-width: 100%;
+  }
+
+  .chosen-container {
+    width: 100% !important;
+  }
+
+  .chosen-drop {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
 </style>
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> --}}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <style>
 /* Match Bootstrap 4 .form-control */
@@ -150,36 +170,38 @@
                     <h5>Transactions <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
                     <i class="bi bi-plus-lg"></i> New
                   </button></h5> 
-                    <table class="table table-bordered table-striped transaction-table" id="example"  style="width:100%">
-                        <thead class="">
-                            <tr>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Dealer</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Dealer Points</th>
-                                <th scope="col">Customer Points</th>
-                                <th scope="col">Item</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactionBody">
-                          @foreach($transactions as $transaction)
-                            <tr>
-                              <td>{{$transaction->id}}</td>
-                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
-                              <td>{{number_format($transaction->qty,2)}}</td>
-                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
-                              <td>{{$transaction->dealer->name}}</td>
-                              <td>{{$transaction->customer->name}}</td>
-                              <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
-                              <td><span class='text-success'>{{$transaction->points_client}}</span></td>
-                              <td>{{$transaction->item}}</td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                    </table>
+                   <div class="table-responsive">
+    <table class="table table-bordered table-striped transaction-table" id="example" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Dealer</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Dealer Points</th>
+                <th scope="col">Customer Points</th>
+                <th scope="col">Item</th>
+            </tr>
+        </thead>
+        <tbody id="transactionBody">
+            @foreach($transactions as $transaction)
+            <tr>
+                <td>{{$transaction->id}}</td>
+                <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                <td>{{number_format($transaction->qty,2)}}</td>
+                <td>{{number_format($transaction->qty * $transaction->price,2)}}</td>
+                <td>{{$transaction->dealer->name}}</td>
+                <td>{{$transaction->customer->name}}</td>
+                <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
+                <td><span class='text-success'>{{$transaction->points_client}}</span></td>
+                <td>{{$transaction->item}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
                 </div>
             </div>
         </div>
@@ -188,10 +210,26 @@
 @include('new_transaction')
 @endsection
 @section('javascript')
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script> --}}
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $('#customerSelect').select2({
+      dropdownParent: $('#addTransactionModal'),
+      width: '100%'
+    });
+    $('#itemSelect').select2({
+      dropdownParent: $('#addTransactionModal'),
+      width: '100%'
+    });
+
+ 
+  });
+</script>
 <script>
   $(document).ready(function() {
     $('#example').DataTable();
@@ -203,6 +241,18 @@
       width: '100%'  // Important for Bootstrap layout
     });
   });
+  document.addEventListener("DOMContentLoaded", function () {
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  if (isMobile()) {
+    // Destroy Chosen if mobile
+    $(".chosen-select").chosen("destroy");
+  } else {
+    $(".chosen-select").chosen({ width: "100%" });
+  }
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
