@@ -7,6 +7,7 @@
 
 <!--  Header End -->
           <!-- Welcome Section Start -->
+          @if(auth()->user()->role == "Admin")
           <section class="welcome">
             <div class="row">
               <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
@@ -106,16 +107,6 @@
                 </div> --}}
               </div>
           </section>
-          <!-- Welcome Section End -->
-
-          <!-- Profit Section Start -->
-       
-          <!-- Profit Section End -->
-
-          <!-- Grades Start -->
-          <!-- Grades End -->
-
-          <!-- Educators Start -->
           <section>
             <div class="row">
               <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
@@ -130,55 +121,29 @@
                     <div class="table-responsive" data-simplebar>
                       <table class="table table-borderless align-middle text-nowrap">
                         <thead>
-                          <tr>
-                          <tr>
-                            <th scope="col">Profile</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Dealer</th>
-                            <th scope="col">Points Earned  <Br>Dealer</th>
-                            <th scope="col">Points Earned  <Br>End User</th>
-                            <th scope="col">Date Purchased</th>
-                            <th scope="col">Avg Consumption/Week</th>
-                          </tr>
+                         <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Dealer</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Dealer Points</th>
+                                <th scope="col">Customer Points</th>
+                                <th scope="col">Item</th>
+                            </tr>
                         </thead>
                         <tbody>
-                          @foreach($transactions->take(20) as $transaction)
+                           @foreach($transactions_details as $transaction)
                             <tr>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <div class="me-4">
-                                  <img src="{{asset('design//assets/images/profile/user-2.jpg')}}" width="50" class="rounded-circle" alt="" />
-                                </div>
-
-                                <div>
-                                  <h6 class="mb-1 fw-bolder">Juan Dela Cruz</h6>
-                                  <p class="fs-3 mb-0">Bicol</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p class="fs-3 fw-normal mb-0">2.00</p>
-                            </td>
-                            <td>
-                              <p class="fs-3 mb-0">
-                               Dealer 1
-                              </p>
-                            </td>
-                            <td>
-                              <span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">2</span>
-                            </td>
-                            <td>
-                              <span
-                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">2</span>
-                            </td>
-                            <td>
-                              {{date("M. d, Y")}}
-                            </td>
-                            <td>
-                              5
-                            </td> 
-                          </tr>
+                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{number_format($transaction->qty,2)}}</td>
+                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
+                              <td>{{$transaction->dealer->name}}</td>
+                              <td>{{$transaction->customer->name}}</td>
+                              <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
+                              <td><span class='text-success'>{{$transaction->points_client}}</span></td>
+                              <td>{{$transaction->item}}</td>
+                            </tr>
                           @endforeach
                         </tbody>
                       </table>
@@ -186,33 +151,351 @@
                   </div>
                 </div>
               </div>
-{{-- 
-              <div class="col-lg-12 col-xl-6 d-flex align-items-stretch">
+
+            </div>
+          </section>
+          @endif
+          @if(auth()->user()->role == "Dealer")
+
+          <section class="welcome">
+            <div class="row">
+              <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
                 <div class="card w-100">
-                  <div class="card-body">
-                    <h5 class="card-title">Stove Distribution (35 pcs)</h5>
-                    <div id="usa" class="h-270">
-                      
+                  <div class="card-body position-relative">
+                    <div>
+                      <h5 class="mb-1 fw-bold">Welcome  {{auth()->user()->name}}</h5>
+                      {{-- <p class="fs-3 mb-3 pb-1">Check all the statistics</p> --}}
+                      <a href='{{url('user-profile')}}' ><button class="btn btn-primary rounded-pill" type="button">
+                       View Profile
+                      </button>
+                      </a>
                     </div>
-                    
-                    <div class="mt-4">
-                      <div class="hstack gap-4 mb-4">
-                        <h6 class="mb-0 flex-shrink-0 w">Bicol</h6>
-                        <div class="progress bg-light-subtle mt-1 w-100 " style='height:10px; '>
-                          <div class="progress-bar text-bg-info" role="progressbar" style="width: 100%" aria-valuenow="28"
-                            aria-valuemin="0" aria-valuemax="100">100%</div>
-                        </div>
-                      </div>
-                    
+                    <div class="school-img d-none d-sm-block">
+                      <img src="{{asset('design//assets/images/backgrounds/school.png')}}" class="img-fluid" alt="" />
+                    </div>
+
+                    <div class="d-sm-none d-block text-center">
+                      <img src="{{asset('design//assets/images/backgrounds/school.png')}}" class="img-fluid" alt="" />
                     </div>
                   </div>
                 </div>
-              </div> --}}
+              </div>
+
+              <div class="col-lg-12 col-xl-6 text-left">
+                <div class="card w-100 stretch">
+                  <div class="card-body position-relative ">
+                    <div class='row'>
+                      
+                      <div class="col-lg-12 col-xl-6">
+                        Dealer ID: {{date('Y',strtotime($dealer->created_at))}}-{{$dealer->id}}<br>
+                        Name: {{$dealer->name}} <br>
+                        Contact No.: {{$dealer->number}} <br>
+                        Registered: {{date('M d,Y',strtotime($dealer->created_at))}} <br>
+                      </div>
+                    </div>
+                   
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-success">
+                        <i class="ti ti-credit-card fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Total Points</h4>
+                        <span class="text-muted">Earned</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">{{($dealer->sales)->sum('points_dealer')}}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-warning">
+                        <i class="ti ti-box-multiple fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Quantity </h4>
+                        <span class="text-muted">Sold</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">{{($dealer->sales)->sum('qty')}}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-danger">
+                        <i class="ti ti-currency-dollar fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Inventory </h4>
+                        <span class="text-muted"><small>as of {{date('M d, Y')}}</small></span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h5 class="fs-7 mb-0">0.00</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </section>
-          <!-- Educators End -->
+          <section>
+            <div class="row">
+              <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex mb-4 justify-content-between align-items-center">
+                      <h5 class="mb-0 fw-bold">Latest Transaction</h5>
+
+                 
+                    </div>
+
+                    <div class="table-responsive" data-simplebar>
+                      <table class="table table-borderless align-middle text-nowrap">
+                        <thead>
+                         <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Dealer</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Dealer Points</th>
+                                <th scope="col">Customer Points</th>
+                                <th scope="col">Item</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach($transactions_details as $transaction)
+                            <tr>
+                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{number_format($transaction->qty,2)}}</td>
+                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
+                              <td>{{$transaction->dealer->name}}</td>
+                              <td>{{$transaction->customer->name}}</td>
+                              <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
+                              <td><span class='text-success'>{{$transaction->points_client}}</span></td>
+                              <td>{{$transaction->item}}</td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          @endif
+          @if(auth()->user()->role == "Client")
+
+          <section class="welcome">
+            <div class="row">
+              <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body position-relative">
+                    <div>
+                      <h5 class="mb-1 fw-bold">Welcome {{auth()->user()->name}}</h5>
+                      <p class="fs-3 mb-3 pb-1">Check all the statistics</p>
+                      <a href='{{url('/user-profile')}}'><button class="btn btn-primary rounded-pill" type="button">
+                       View Profile
+                      </button>
+                      </a>
+                    </div>
+                    <div class="school-img d-none d-sm-block">
+                      <img src="{{asset('design//assets/images/backgrounds/school.png')}}" class="img-fluid" alt="" />
+                    </div>
+
+                    <div class="d-sm-none d-block text-center">
+                      <img src="{{asset('design//assets/images/backgrounds/school.png')}}" class="img-fluid" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-xl-6 text-left">
+                <div class="card w-100 stretch">
+                  <div class="card-body position-relative ">
+                    <div class='row'>
+                      <div class="col-lg-12 col-xl-4">
+                        
+                          <div id="qrcode"></div>
+                        
+                      </div>
+                      <div class="col-lg-12 col-xl-6">
+                        Serial Number ID: {{$customer->serial->serial_number}}<br>
+                        Name: {{$customer->name}} <br>
+                        Contact No.: {{$customer->number}} <br>
+                        Registered: {{date('M d, Y',strtotime($customer->created_at))}} <br>
+                      </div>
+                    </div>
+                   
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            <div class="row">
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-success">
+                        <i class="ti ti-credit-card fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Total Points</h4>
+                        <span class="text-muted">Earned</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">{{($customer->transactions)->sum('points_client')}}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-warning">
+                        <i class="ti ti-box-multiple fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Quantity </h4>
+                        <span class="text-muted">Purchased</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        <h2 class="fs-7 mb-0">{{($customer->transactions)->sum('qty')}}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-xl-4 d-flex align-items-strech">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex flex-row">
+                      <div class="round-40 rounded-circle text-white d-flex align-items-center justify-content-center text-bg-danger">
+                        <i class="ti ti-currency-dollar fs-6"></i>
+                      </div>
+                      <div class="ms-3 align-self-center">
+                        <h4 class="mb-0 fs-5">Last </h4>
+                        <span class="text-muted">Purchased</span>
+                      </div>
+                      <div class="ms-auto align-self-center">
+                        @php
+                            $trans = $transactions_details->first();
+                        @endphp
+                        <h5 class="fs-7 mb-0">
+                          @if($trans)
+                            {{date('M d, Y',strtotime($trans->created_at))}}
+                          @else
+                          No Data
+                          @endif
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          <!-- Welcome Section End -->
+
+          <!-- Profit Section Start -->
+       
+          <!-- Profit Section End -->
+
+          <!-- Grades Start -->
+          <!-- Grades End -->
+
+          <!-- Educators Start -->
+          <section>
+           <div class="row">
+              <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex mb-4 justify-content-between align-items-center">
+                      <h5 class="mb-0 fw-bold">Purchase History</h5>
+
+                 
+                    </div>
+
+                    <div class="table-responsive" data-simplebar>
+                      <table class="table table-borderless align-middle text-nowrap">
+                        <thead>
+                         <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Dealer</th>
+                                <th scope="col">Customer Points</th>
+                                <th scope="col">Item</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach($transactions_details as $transaction)
+                            <tr>
+                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{number_format($transaction->qty,2)}}</td>
+                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
+                              <td>{{$transaction->dealer->name}}</td>
+                              <td><span class='text-success'>{{$transaction->points_client}}</span></td>
+                              <td>{{$transaction->item}}</td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          @endif
+
+          
 @endsection
 @section('javascript')
+
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+ @if(auth()->user()->role == "Client")
+      <script>
+          const qrcode = new QRCode(document.getElementById('qrcode'), {
+              text: "{{ $customer->serial->serial_number }}",
+              width: 128,
+              height: 128,
+              colorDark : '#000',
+              colorLight : '#fff',
+              correctLevel : QRCode.CorrectLevel.H
+          });
+      </script>
+  @endif
+
+
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
   {{-- <script src="../assets/js/dashboards/dashboard.js"></script> --}}
 

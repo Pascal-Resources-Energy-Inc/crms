@@ -56,13 +56,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                               <label class="form-label" for="stoveId">Store Name  <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control required" id="stoveId" />
+                              <input type="text" class="form-control required" name='store_name'  />
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="mb-3">
                               <label class="form-label" for="stoveId">Store Type  <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control required" id="stoveId" />
+                              <input type="text" class="form-control required" name='store_type'  />
                             </div>
                           </div>
                     </div>

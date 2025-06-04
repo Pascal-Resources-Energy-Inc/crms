@@ -36,6 +36,7 @@
         margin-bottom: 20px;
     }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 @endsection
 @section('content')
 <section class="welcome">
@@ -48,7 +49,7 @@
                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    0
+                    {{$dealers->count()}}
                   </h5>
                   <p class="opacity-50 mb-0 ">Active Dealers</p>
                 </div>
@@ -63,7 +64,7 @@
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
                     0
                   </h5>
-                  <p class="opacity-50 mb-0 ">Inctive Dealers</p>
+                  <p class="opacity-50 mb-0 ">Inactive Dealers</p>
                 </div>
               </div>
         </div>
@@ -74,20 +75,31 @@
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h5>Dealers <a href='{{url("new-dealer")}}'><button class="btn-sm btn-success btn">+ New</button></a></h5>
-                    <table class="table table-bordered table-striped">
+                    <h5>Dealers <button class="btn-sm btn-success btn" data-bs-toggle="modal"  data-bs-target="#new_dealer">+ Add</button></h5></h5>
+                    <table id="example" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">Dealer Name</th>
-                                <th scope="col">Total Sales</th>
+                                <th scope="col">Store Name</th>
+                                <th scope="col">Store Type</th>
+                                <th scope="col">Qty Sold</th>
+                                <th scope="col">Points Earned</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Area</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody id="dealerBody">
                             <!-- Dealers will be inserted here dynamically -->
+                            @foreach($dealers as $dealer)
+                            <tr>
+                                <td scope="col"><a href='view-dealer/{{$dealer->id}}'>{{$dealer->name}}</a></td>
+                                <td scope="col">{{$dealer->store_name}}</td>
+                                <td scope="col">{{$dealer->store_type}}</td>
+                                <td scope="col">{{($dealer->sales)->sum('qty')}}</td>
+                                <td scope="col">{{($dealer->sales)->sum('points_dealer')}}</td>
+                                <td scope="col">{{$dealer->address}}</td>
+                            </tr>
+
+                            @endforeach
                          
                         </tbody>
                     </table>
@@ -97,8 +109,17 @@
     </div>
 </section>
 @endsection
-
+@include('new_dealer')
 @section('javascript')
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });
+</script>
 <script>
     // Add logic for filtering the table by dealer (static data)
     document.addEventListener("DOMContentLoaded", function () {

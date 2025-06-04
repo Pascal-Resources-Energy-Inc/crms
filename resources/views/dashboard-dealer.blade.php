@@ -102,16 +102,6 @@
 
             </div>
           </section>
-          <!-- Welcome Section End -->
-
-          <!-- Profit Section Start -->
-       
-          <!-- Profit Section End -->
-
-          <!-- Grades Start -->
-          <!-- Grades End -->
-
-          <!-- Educators Start -->
           <section>
             <div class="row">
               <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">

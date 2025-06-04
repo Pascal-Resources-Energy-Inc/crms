@@ -47,11 +47,11 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h5>Customer Information</h5>
+                    <h5>Dealer Information</h5>
                 </div>
                 <div class="card-body">
                     <div class='text-center'>
-                    <img src="{{$customer->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="Avatar Image" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                    <img src="{{$dealer->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="Avatar Image" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
                     </div>  
                     <br>
                    <div class='text-center'>
@@ -61,11 +61,12 @@
                         </button>
                     </div>
                     <!-- Customer Personal Details -->
-                    <p><strong>Name:</strong> {{$customer->name}}</p>
-                    <p><strong>Contact:</strong> {{$customer->number}}</p>
-                    <p><strong>Address:</strong> {{$customer->address}}</p>
-                    <p><strong>Serial Number:</strong> {{$customer->serial->serial_number}}</p>
-                    <p><strong>facebook:</strong> {{$customer->facebook}}</p>
+                    <p><strong>Name:</strong> {{$dealer->name}}</p>
+                    <p><strong>Contact:</strong> {{$dealer->number}}</p>
+                    <p><strong>Address:</strong> {{$dealer->address}}</p>
+                    <p><strong>Store Name:</strong> {{$dealer->store_name}}</p>
+                    <p><strong>Store Type:</strong> {{$dealer->store_type}}</p>
+                    <p><strong>facebook:</strong> {{$dealer->facebook}}</p>
 
                     <!-- QR Code Generation -->
                     <div id="qrcode" class="mt-4 text-center">
@@ -78,7 +79,7 @@
             <div class='row'>
                 <div class="col-6">
                      <div class="card shadow-sm stretch">
-                        @if($customer->valid_id)
+                        @if($dealer->valid_id)
                             <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-person-vcard-fill me-2"></i> Valid ID Information  &nbsp;
@@ -88,10 +89,10 @@
                             </h5>
                             <hr>
                             <p class="mb-2">
-                                <strong><i class="bi bi-card-text me-2"></i>ID Type:</strong> {{$customer->valid_id}}
+                                <strong><i class="bi bi-card-text me-2"></i>ID Type:</strong> {{$dealer->valid_id}}
                             </p>
                             <p class="mb-0">
-                                <strong><i class="bi bi-hash me-2"></i>ID Number:</strong> {{$customer->valid_id_number}}
+                                <strong><i class="bi bi-hash me-2"></i>ID Number:</strong> {{$dealer->valid_id_number}}
                             </p>
                             </div>
                         @else
@@ -106,12 +107,12 @@
                     </div>
                         </div>
                         <div class="col-6">
-                            @if($customer->signature)
+                            @if($dealer->signature)
                         <div class="card shadow-sm stretch" >
                             <div class="card-body text-center">
                             <h6 class="card-title"><i class="mdi mdi-file-document-check-outline"></i> Signed Contract</h6>
 
-                            @if($customer->signature)
+                            @if($dealer->signature)
                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#contractView">
                             <i class="bi bi-file-text"></i> View Signed Contract
                             </button>
@@ -184,11 +185,11 @@
     
 
 </section>
-@include('change_avatar')
-@include('upload_valid_id')
-@include('sign_contract')
-@include('viewValidId')
-@include('view_contract_signed')
+@include('change_avatar_dealer')
+@include('upload_valid_id_dealer')
+@include('viewValidIdDealer')
+@include('sign_contract_dealer')
+@include('view_contract_signed_dealer')
 @endsection
 
 @section('javascript')

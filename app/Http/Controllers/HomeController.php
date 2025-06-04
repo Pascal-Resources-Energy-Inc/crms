@@ -29,13 +29,27 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $dealer = "";
+        $customer = "";
+       
         $customers = Client::get();
         $currentYear = Carbon::now()->year;
         $transactions = Transaction::orderBy('id','desc')->get();
         $dealers = Dealer::get();
-        $transactions_details = TransactionDetail::get();
+        $transactions_details = TransactionDetail::orderBy('id','desc')->get()->take('20');
         
         $currentYear = Carbon::now()->year;
+
+         if(auth()->user()->role == "Dealer")
+        {
+            $dealer = Dealer::with('sales')->where('user_id',auth()->user()->id)->first();
+             $transactions_details = TransactionDetail::where('dealer_id',auth()->user()->id)->orderBy('id','desc')->get();
+        }
+         if(auth()->user()->role == "Client")
+        {
+                $customer = Client::where('user_id',auth()->user()->id)->first();
+             $transactions_details = TransactionDetail::where('client_id',$customer->id)->orderBy('id','desc')->get();
+        }
 
         // Step 1: Fetch monthly sales
         $sales = DB::table('transaction_details')
@@ -67,6 +81,8 @@ class HomeController extends Controller
             'categories' =>  $categories,
             'qty' =>  $qty,
             'customers' =>  $customers,
+            'dealer' =>  $dealer,
+            'customer' =>  $customer,
             
 
             )

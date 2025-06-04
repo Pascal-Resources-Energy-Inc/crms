@@ -8,7 +8,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <form method='POST' action='{{url('change-avatar/'.$customer->id)}}' onsubmit='show()' enctype="multipart/form-data" class="validation-wizard wizard-circle mt-5">
+      <form method='POST' action='{{url('change-avatar-dealer/'.$dealer->id)}}' onsubmit='show()' enctype="multipart/form-data" class="validation-wizard wizard-circle mt-5">
       @csrf
         <div class="modal-body text-center">
           <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileUpload(event)">
@@ -30,7 +30,7 @@
           </div>
 
           <div id="previewSection" class="mt-3">
-            <img id="preview" src="{{($customer->avatar)}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';"  alt="Image Preview"  class="img-fluid rounded border" />
+            <img id="preview" src="{{($dealer->avatar)}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';"  alt="Image Preview"  class="img-fluid rounded border" />
           </div>
 
           <input type="hidden" id="image_data" name="image_data" />
