@@ -75,9 +75,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-md-8">
             <div class='row'>
-                <div class="col-6">
+                <div class="col-md-6">
                      <div class="card shadow-sm stretch">
                         @if($profile->valid_id)
                             <div class="card-body">
@@ -100,7 +100,7 @@
                         @endif
                     </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             @if($profile->signature)
                         <div class="card shadow-sm stretch" >
                             <div class="card-body text-center">

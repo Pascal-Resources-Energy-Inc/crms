@@ -74,9 +74,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-md-8">
             <div class='row'>
-                <div class="col-6">
+                <div class="col-md-6">
                      <div class="card shadow-sm stretch">
                         @if($customer->valid_id)
                             <div class="card-body">
@@ -105,7 +105,7 @@
                         @endif
                     </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             @if($customer->signature)
                         <div class="card shadow-sm stretch" >
                             <div class="card-body text-center">
@@ -142,38 +142,40 @@
                 </div>
                 <div class="card-body">
                     <!-- Purchase History Table -->
-                    <table class="table table-bordered" style='font-size:12px;'>
-                        <thead>
-                            <tr>
-                                <th>Transaction No.</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Points Earned</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($transactions as $transaction)
-                            <tr>
-                                <td>{{$transaction->id}}</td>
-                                <td>{{$transaction->item}}</td>
-                                <td>{{$transaction->qty}}</td>
-                                <td><span class='text-success'>{{$transaction->points_client}}</span></td>
-                                <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
-                                <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
-                            </tr>
-                            @endforeach
-                            <!-- Sample Purchase 1 -->
-                            {{-- <tr>
-                                <td>123</td>
-                                <td>330g LPG Cylinder</td>
-                                <td>5</td>
-                                <td>PHP XXX.00</td>
-                                <td>March 1, 2025</td>
-                            </tr> --}}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" style='font-size:12px;'>
+                            <thead>
+                                <tr>
+                                    <th>Transaction No.</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Points Earned</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($transactions as $transaction)
+                                <tr>
+                                    <td>{{$transaction->id}}</td>
+                                    <td>{{$transaction->item}}</td>
+                                    <td>{{$transaction->qty}}</td>
+                                    <td><span class='text-success'>{{$transaction->points_client}}</span></td>
+                                    <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
+                                    <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                                </tr>
+                                @endforeach
+                                <!-- Sample Purchase 1 -->
+                                {{-- <tr>
+                                    <td>123</td>
+                                    <td>330g LPG Cylinder</td>
+                                    <td>5</td>
+                                    <td>PHP XXX.00</td>
+                                    <td>March 1, 2025</td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
           </div>
