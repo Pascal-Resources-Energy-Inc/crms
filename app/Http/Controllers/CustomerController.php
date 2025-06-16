@@ -126,4 +126,33 @@ class CustomerController extends Controller
         Alert::success('Successfully Uploaded')->persistent('Dismiss');
         return back();
     }
+
+  public function getUser($id)
+{
+   $serials = Stove::where('serial_number', 'like', '%' . $id . '%')->first();
+   if($serials)
+   {
+
+
+   $client = Client::findOrfail($serials->client_id);
+    $user = User::find($client->user_id);
+
+    if ($user) {
+        return response()->json([
+            'success' => true,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name
+            ]
+        ]);
+    } else {
+        return response()->json(['success' => false], 404);
+    }
+       }
+       else
+
+       {
+         return response()->json(['success' => false], 404);
+       }
+}
 }
