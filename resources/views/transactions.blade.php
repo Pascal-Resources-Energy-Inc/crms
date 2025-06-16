@@ -106,7 +106,7 @@
 @section('content')
 <section class="welcome">
     <div class="row">
-       <div class="col-sm-6 col-lg-6 col-xl-6">
+       <div class="col-sm-8 col-lg-8 col-xl-8">
           <div class="row">
         <!-- Right Column: Dashboard Stats -->
             <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
@@ -158,7 +158,7 @@
             </div>
           </div>
        </div>
-        <div class="col-sm-6 col-lg-6 col-xl-6">
+        <div class="col-sm-4 col-lg-4 col-xl-4">
              <div class="row">
             <!-- Total Sales -->
                 <div class="col-sm-6 col-lg-6 ">
