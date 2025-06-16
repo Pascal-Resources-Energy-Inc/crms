@@ -281,6 +281,16 @@
     const qtyInput = document.getElementById('qtyInput');
     qtyInput.value = parseInt(qtyInput.value) + 1;
   });
+  document.getElementById('qtyMinusa').addEventListener('click', () => {
+    const qtyInput = document.getElementById('qtyInputa');
+    let val = parseInt(qtyInput.value);
+    if (val > 1) qtyInput.value = val - 1;
+  });
+
+  document.getElementById('qtyPlusa').addEventListener('click', () => {
+    const qtyInput = document.getElementById('qtyInputa');
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+  });
 
   // Simple filter function for select + search input
   function filterSelect(inputId, selectId) {

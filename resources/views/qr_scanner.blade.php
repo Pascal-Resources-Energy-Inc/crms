@@ -54,9 +54,9 @@
             <label class="form-label">Quantity</label>
             <div style="max-width: 140px;">
               <div class="input-group">
-                <button type="button" class="btn btn-outline-secondary btn-sm" id="qtyMinus">-</button>
-                <input type="number" name="qty" id="qtyInput" class="form-control form-control-sm text-center" value="1" min="1" required>
-                <button type="button" class="btn btn-outline-secondary btn-sm" id="qtyPlus">+</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="qtyMinusa">-</button>
+                <input type="number" name="qty" id="qtyInputa" class="form-control form-control-sm text-center" value="1" min="1" required>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="qtyPlusa">+</button>
               </div>
             </div>
           </div>
