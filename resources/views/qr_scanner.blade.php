@@ -29,7 +29,7 @@
         <div class="modal-body">
           <!-- User Info Fields -->
           <div class="mb-3">
-              <label for="userId" class="form-label">User ID</label>
+              {{-- <label for="userId" class="form-label">User ID</label> --}}
               <input type="hidden" id="userId" name="customer_id" class="form-control" hidden readonly>
           </div>
 
