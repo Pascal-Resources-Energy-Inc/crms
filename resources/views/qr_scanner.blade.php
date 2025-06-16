@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="addTransactionModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="addTransactionModaldd" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form id="addTransactionForm" method="POST" action="{{ url('store-transaction') }}">
       @csrf

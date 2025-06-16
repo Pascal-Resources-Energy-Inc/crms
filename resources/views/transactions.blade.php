@@ -352,7 +352,9 @@ function fetchUserInfo(userId) {
                 document.getElementById('userName').value = data.user.name;
 
                 // Open transaction modal after success
-                var transactionModal = new bootstrap.Modal(document.getElementById('addTransactionModal'));
+                var qrModal = bootstrap.Modal.getInstance(document.getElementById('qrScannerModal'));
+                qrModal.hide();
+                var transactionModal = new bootstrap.Modal(document.getElementById('addTransactionModaldd'));
                 transactionModal.show();
             } else {
                 alert("User not found");
