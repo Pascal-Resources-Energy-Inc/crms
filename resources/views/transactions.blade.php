@@ -224,13 +224,13 @@
       
     </div>
 </section>
-{{-- @if(auth()->user()->role == "Admin")
+@if(auth()->user()->role == "Admin")
 
   @include('new_transaction_admin')
 
-@else --}}
+@else
   @include('new_transaction')
-{{-- @endif --}}
+@endif
 @include('qr_scanner')
 @endsection
 @section('javascript')
