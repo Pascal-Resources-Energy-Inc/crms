@@ -112,7 +112,7 @@
                         <tbody id="customerBody">
                             @foreach($customers as $customer)
                             <tr>
-                                <td><a href='view-client/{{$customer->id}}'>{{$customer->name}}</a></td>
+                                <td><a href='view-client/{{$customer->id}}'><img src="{{$customer->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="Avatar Image" class="img-fluid rounded-circle" style="width: 50px; height: 50px;"> {{$customer->name}}</a></td>
                                 <td>{{$customer->number}}</td>
                                 <td>{{$customer->email_address}}</td>
                                 <td>
