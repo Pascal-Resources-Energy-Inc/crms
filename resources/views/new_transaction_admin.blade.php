@@ -44,14 +44,11 @@
             <br>
             @foreach($items as $key => $item)
             <input type="radio" id="{{$item->id}}" name="item_id" @if($key == 0) checked  @endif value="{{$item->id}}" required>
-            <label for="{{$item->id}}" class='mr-3'>{{$item->item}}</label>
+            <label for="{{$item->id}}" class='mr-3'>{{$item->item}}</label> 
+            <br>
             @endforeach
           </div>
-
-          <!-- Quantity -->
-          <div class='row'>
-            <div class='col-md-3'>
-                <div class="mb-3">
+            <div class="mb-3">
                 <label class="form-label">Quantity</label>
                     <div style="max-width: 140px;">
                     <div class="input-group">
@@ -61,13 +58,12 @@
                     </div>
                     </div>
                 </div>
-            </div>
-            <div class='col-md-3'>
-                <label for="date" class="form-label">Date</label> 
-                <input type='date' value='{{date('Y-m-d')}}' max='{{date('Y-m-d')}}' name='date' class='form-control' required>
-            </div>
-
-          </div>
+                         <div class="mb-3">
+                            <label for="date" class="form-label">Date</label> 
+                            <input type='date' value='{{date('Y-m-d')}}' max='{{date('Y-m-d')}}' name='date' class='form-control' required>
+                         </div>
+          <!-- Quantity -->
+      
         
         </div>
 

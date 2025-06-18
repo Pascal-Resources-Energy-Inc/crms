@@ -46,6 +46,7 @@
             @foreach($items as $key => $item)
             <input type="radio" id="{{$item->id}}" name="item_id" @if($key == 0) checked  @endif value="{{$item->id}}" required>
             <label for="{{$item->id}}" class='mr-3'>{{$item->item}}</label>
+            <br>
             @endforeach
           </div>
 
