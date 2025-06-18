@@ -83,6 +83,7 @@
                                 <th scope="col">Dealer Name</th>
                                 <th scope="col">Store Name</th>
                                 <th scope="col">Store Type</th>
+                                <th scope="col">Number</th>
                                 <th scope="col">Qty Sold</th>
                                 <th scope="col">Points Earned</th>
                                 <th scope="col">Address</th>
@@ -95,6 +96,7 @@
                                 <td scope="col"><a href='view-dealer/{{$dealer->id}}'>{{$dealer->name}}</a></td>
                                 <td scope="col">{{$dealer->store_name}}</td>
                                 <td scope="col">{{$dealer->store_type}}</td>
+                                <td scope="col">{{$dealer->number}}</td>
                                 <td scope="col">{{($dealer->sales)->sum('qty')}}</td>
                                 <td scope="col">{{($dealer->sales)->sum('points_dealer')}}</td>
                                 <td scope="col">{{$dealer->address}}</td>
