@@ -112,6 +112,11 @@
             <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
                 <div class="card w-100">
                     <div class="card-body">
+                      @if(auth()->user()->role == "Admin")
+                        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#addTransactionModalAdmin">
+                          <i class="bi bi-plus-lg"></i> Search Name
+                        </button>
+                      @else
                         <h5>Transactions 
                              <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#qrScannerModal">
                           Scan QR
@@ -121,6 +126,7 @@
                         </button>
                      
                       </h5> 
+                      @endif
                       <div class="table-responsive">
                           <table class="table table-bordered table-striped transaction-table" id="example" style="width:100%">
                               <thead>
@@ -220,7 +226,13 @@
       
     </div>
 </section>
-@include('new_transaction')
+@if(auth()->user()->role == "Admin")
+
+  @include('new_transaction_admin')
+
+@else
+  @include('new_transaction')
+@endif
 @include('qr_scanner')
 @endsection
 @section('javascript')
@@ -239,6 +251,11 @@
       dropdownParent: $('#addTransactionModal'),
       width: '100%'
     });
+     $('.select2').select2({
+      dropdownParent: $('#addTransactionModalAdmin'),
+      width: '100%'
+    });
+    
 
  
   });

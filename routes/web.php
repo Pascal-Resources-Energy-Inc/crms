@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/transactions','TransactionController@index')->name('transactions');
 Route::post('/store-transaction','TransactionController@store')->name('new-transaction');
+Route::post('/store-transaction-admin','TransactionController@storeAdmin')->name('new-transaction');
 Route::get('user-profile','UserController@view');
 Route::get('get-user/{id}','CustomerController@getUser');
 
