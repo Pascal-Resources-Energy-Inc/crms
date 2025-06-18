@@ -11,6 +11,7 @@
         <div class="modal-body">
           <!-- Customer Select -->
           <div class='mb-3'>
+             <label for="dealer" class="form-label">Select Dealer</label>
              <select id="dealer" name="dealer" class="form-select select2" style='font-size:10px;' required>
                    <option value=''>Search</option>
                    @foreach($dealers as $dealer)
