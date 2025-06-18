@@ -60,7 +60,7 @@
                 </div>
                          <div class="mb-3">
                             <label for="date" class="form-label">Date</label> 
-                            <input type='date' value='{{date('Y-m-d')}}' max='{{date('Y-m-d')}}' name='date' class='form-control' required>
+                            <input type='date' value='{{date('Y-m-d')}}' max='{{date('Y-m-d')}}' name='date' class='form-control form-control-sm' required>
                          </div>
           <!-- Quantity -->
       
