@@ -12,7 +12,7 @@
           <!-- Customer Select -->
           <div class="mb-3">
             <label for="customerSelect" class="form-label">Select Customer</label>
-            <select id="customerSelect" name="customer_id" class="form-select" style='font-size:10px;' required>
+            <select id="customerSelect" name="customer_id" class="form-select select2" style='font-size:10px;' required>
             <option value=''>Search</option>
               @foreach($customers as $customer)
                 @php

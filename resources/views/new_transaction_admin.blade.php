@@ -19,8 +19,8 @@
              </select>
           </div>
           <div class="mb-3">
-            <label for="customerSelect" class="form-label">Select Customer</label>
-            <select id="customerSelect" name="customer_id" class="form-select select2" style='font-size:10px;' required>
+            <label for="customerSelect123" class="form-label">Select Customer</label>
+            <select id="customerSelect123" name="customer_id" class="form-select select2" style='font-size:10px;' required>
             <option value=''>Search</option>
               @foreach($customers as $customer)
                 @php

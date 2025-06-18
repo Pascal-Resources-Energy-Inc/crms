@@ -59,8 +59,6 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <style>
 /* Match Bootstrap 4 .form-control */
 .chosen-container .chosen-single {
@@ -226,64 +224,43 @@
       
     </div>
 </section>
-@if(auth()->user()->role == "Admin")
+{{-- @if(auth()->user()->role == "Admin")
 
   @include('new_transaction_admin')
 
-@else
+@else --}}
   @include('new_transaction')
-@endif
+{{-- @endif --}}
 @include('qr_scanner')
 @endsection
 @section('javascript')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Then load Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    $('#customerSelect').select2({
-      dropdownParent: $('#addTransactionModal'),
-      width: '100%'
-    });
-    $('#itemSelect').select2({
-      dropdownParent: $('#addTransactionModal'),
-      width: '100%'
-    });
-     $('.select2').select2({
-      dropdownParent: $('#addTransactionModalAdmin'),
-      width: '100%'
-    });
-    
 
- 
+<script>
+ $(document).ready(function() {
+  $('#customerSelect').select2({
+    dropdownParent: $('#addTransactionModal') // ✅ replace with your modal's ID
   });
+  $('#customerSelect123').select2({
+    dropdownParent: $('#addTransactionModalAdmin') // ✅ replace with your modal's ID
+  });
+  $('#dealer').select2({
+    dropdownParent: $('#addTransactionModalAdmin') // ✅ replace with your modal's ID
+  });
+});
 </script>
 <script>
   $(document).ready(function() {
     $('#example').DataTable();
   });
 </script>
-<script>
-  $(document).ready(function(){
-    $('.chosen-select').chosen({
-      width: '100%'  // Important for Bootstrap layout
-    });
-  });
-  document.addEventListener("DOMContentLoaded", function () {
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
 
-  if (isMobile()) {
-    // Destroy Chosen if mobile
-    $(".chosen-select").chosen("destroy");
-  } else {
-    $(".chosen-select").chosen({ width: "100%" });
-  }
-});
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
