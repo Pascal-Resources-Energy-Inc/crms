@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use App\TransactionDetail;
 use Illuminate\Http\Request;
 
+
 class HomeController extends Controller
 {
     /**
@@ -71,6 +72,16 @@ class HomeController extends Controller
         // Step 3: Separate into categories and qty arrays
         $categories = $allMonths->pluck('month')->toArray();
         $qty = $allMonths->pluck('total_qty')->toArray();   
+
+      $dealers = TransactionDetail::select(
+            'dealer_id',
+            DB::raw('SUM(points_dealer) as total_points'),
+            DB::raw('MAX(created_at) as latest_transaction')
+        )
+        ->with('dealer') // eager load the related dealer
+        ->groupBy('dealer_id')
+        ->orderByDesc('total_points')
+        ->get();
 
         return view('home',
             array(

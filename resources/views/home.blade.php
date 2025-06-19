@@ -109,7 +109,7 @@
           </section>
           <section>
             <div class="row">
-              <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
+              <div class="col-lg-7 col-xl-7 d-flex align-items-stretch">
                 <div class="card w-100">
                   <div class="card-body">
                     <div class="d-flex mb-4 justify-content-between align-items-center">
@@ -147,6 +147,36 @@
                           @endforeach
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 col-xl-5 d-flex align-items-stretch">
+                <div class="card w-100">
+                  <div class="card-body">
+                    <div class="d-flex mb-4 justify-content-between align-items-center">
+                       <h5 class="mb-0 fw-bold">Top 10 Dealers</h5>
+                    </div>
+                        <div class="table-responsive" data-simplebar>
+                        <table class="table table-borderless align-middle table-bordered table-striped text-nowrap">
+                          <thead>
+                          <tr>
+                                  <th scope="col">Dealer</th>
+                                  <th scope="col">Total Points</th>
+                                  <th scope="col">Last Transaction</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($dealers as $dealer)
+                              <tr>
+                                <td>{{ $dealer->dealer->name ?? 'Unknown' }}</td>
+                                <td>{{number_format($dealer->total_points,2)}}</td>
+                                <td>{{date('M d, Y',strtotime($dealer->latest_transaction))}}</td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                    </div>
                     </div>
                   </div>
                 </div>
