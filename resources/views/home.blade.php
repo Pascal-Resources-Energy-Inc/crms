@@ -158,6 +158,7 @@
                        <h5 class="mb-0 fw-bold">Top 10 Dealers</h5>
                     </div>
                         <div class="table-responsive" data-simplebar>
+                          <small>
                         <table class="table table-borderless align-middle table-bordered table-striped text-nowrap">
                           <thead>
                           <tr>
@@ -176,6 +177,7 @@
                             @endforeach
                           </tbody>
                         </table>
+                          </small>
                     </div>
                     </div>
                   </div>
