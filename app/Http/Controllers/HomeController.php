@@ -37,7 +37,7 @@ class HomeController extends Controller
         $currentYear = Carbon::now()->year;
         $transactions = Transaction::orderBy('id','desc')->get();
         $dealers = Dealer::get();
-        $transactions_details = TransactionDetail::orderBy('id','desc')->get()->take('20');
+        $transactions_details = TransactionDetail::orderBy('id','desc')->get();
         
         $currentYear = Carbon::now()->year;
 
