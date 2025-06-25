@@ -56,7 +56,10 @@
 {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
 
 <!-- Select2 JS -->
 <style>
@@ -236,13 +239,13 @@
 @section('javascript')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Then load Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Chosen JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 
-<script>
+{{-- <script>
  $(document).ready(function() {
   $('#customerSelect').select2({
     dropdownParent: $('#addTransactionModal') // ✅ replace with your modal's ID
@@ -254,6 +257,20 @@
     dropdownParent: $('#addTransactionModalAdmin') // ✅ replace with your modal's ID
   });
 });
+</script> --}}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new TomSelect('#customerSelect', {
+      create: false,
+      allowEmptyOption: true,
+      placeholder: "Search Customer"
+    });
+    new TomSelect('#dealer', {
+      create: false,
+      allowEmptyOption: true,
+      placeholder: "Search Dealer"
+    });
+  });
 </script>
 <script>
   $(document).ready(function() {
