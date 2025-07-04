@@ -45,10 +45,9 @@
       border-color:#aebcc3 !important;
     }
   </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <style>
 /* Match Bootstrap 4 .form-control */
 .chosen-container .chosen-single {
@@ -106,7 +105,6 @@
                                 <th>Contact Number</th>
                                 <th>Email Address</th>
                                 <th>Serial Number</th>
-                                <th>Address</th>
                                 <th>Total Points</th>
                                 <th>Last Transaction</th>
                             </tr>
@@ -121,9 +119,6 @@
                                     @if($customer->serial)
                                         {{ $customer->serial->serial_number }}
                                     @endif
-                                </td>
-                                <td>
-                                   {{$customer->address}}
                                 </td>
                                 <td> {{$customer->transactions->sum('points_client')}}</td>
                                 <td>
@@ -150,34 +145,19 @@
 @endsection
 @include('new_customer')
 @section('javascript')
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-
-<!-- Buttons JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-
 <script>
   $(document).ready(function() {
     $('#example').DataTable();
   });
 </script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable({
-      dom: 'Bfrtip',
-      buttons: [
-        {
-          extend: 'excelHtml5',
-          text: 'Export to Excel',
-          title: 'DataExport'
-        }
-      ]
+  $(document).ready(function(){
+    $('.chosen-select').chosen({
+      width: '100%'  // Important for Bootstrap layout
     });
   });
 </script>
