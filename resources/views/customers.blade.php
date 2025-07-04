@@ -1,53 +1,10 @@
 @extends('layouts.header')
 @section('css')
-<style>
-    /* Custom styling */
-    .transaction-table th {
-        text-align: center;
-    }
-    .btn-view {
-        width: 100px;
-        font-size: 14px;
-    }
-    .dashboard-stats {
-        display: flex;
-        justify-content: space-around;
-    }
-    .dashboard-stats div {
-        text-align: center;
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 30%;
-    }
-    /* Welcome section styling */
-    .welcome {
-        margin-top: 20px;
-    }
-    .card-header {
-        font-size: 1.25rem;
-        font-weight: bold;
-    }
-    .card-body {
-        padding: 20px;
-    }
-    .filter-container {
-        margin-bottom: 20px;
-    }
-    <style>
-    #signatureCanvas {
-      border: 1px solid #ccc;
-      touch-action: none;
-    }
-    .select2-selection{
 
-      border-color:#aebcc3 !important;
-    }
-  </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 <style>
 /* Match Bootstrap 4 .form-control */
 .chosen-container .chosen-single {
@@ -153,10 +110,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- Buttons extension -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable();
+ $(document).ready(function() {
+  $('#example').DataTable({
+    dom: 'Bfrtip',
+    buttons: [
+      {
+        extend: 'excelHtml5',
+        text: 'Export Excel',
+        className: 'btn btn-sm btn-success',
+        title: 'Customers'
+      }
+    ]
   });
+});
 </script>
 <script>
   $(document).ready(function(){
