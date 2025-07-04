@@ -105,6 +105,7 @@
                                 <th>Contact Number</th>
                                 <th>Email Address</th>
                                 <th>Serial Number</th>
+                                <th>Address</th>
                                 <th>Total Points</th>
                                 <th>Last Transaction</th>
                             </tr>
@@ -119,6 +120,9 @@
                                     @if($customer->serial)
                                         {{ $customer->serial->serial_number }}
                                     @endif
+                                </td>
+                                <td>
+                                   {{$customer->address}}
                                 </td>
                                 <td> {{$customer->transactions->sum('points_client')}}</td>
                                 <td>
