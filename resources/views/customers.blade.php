@@ -151,26 +151,29 @@
 @section('javascript')
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<!-- JSZip (required for Excel export) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- Buttons extension JS -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script>
- $(document).ready(function() {
-  $('#example').DataTable({
-    dom: 'Bfrtip',
-    buttons: [
-      {
-        extend: 'excelHtml5',
-        text: 'Export to Excel',
-        title: 'DataExport'
-      }
-    ]
+  $(document).ready(function() {
+    $('#example').DataTable();
   });
-});
 </script>
 <script>
-  $(document).ready(function(){
-    $('.chosen-select').chosen({
-      width: '100%'  // Important for Bootstrap layout
+  $(document).ready(function() {
+    $('#example').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+        {
+          extend: 'excelHtml5',
+          text: 'Export to Excel',
+          title: 'DataExport'
+        }
+      ]
     });
   });
 </script>
