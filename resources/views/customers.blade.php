@@ -154,9 +154,18 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#example').DataTable();
+ $(document).ready(function() {
+  $('#example').DataTable({
+    dom: 'Bfrtip',
+    buttons: [
+      {
+        extend: 'excelHtml5',
+        text: 'Export to Excel',
+        title: 'DataExport'
+      }
+    ]
   });
+});
 </script>
 <script>
   $(document).ready(function(){
