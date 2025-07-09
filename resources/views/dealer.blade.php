@@ -67,6 +67,7 @@
                     <p><strong>Store Name:</strong> {{$dealer->store_name}}</p>
                     <p><strong>Store Type:</strong> {{$dealer->store_type}}</p>
                     <p><strong>facebook:</strong> {{$dealer->facebook}}</p>
+                    <p><strong>Email:</strong> {{$dealer->user->email}}</p>
 
                     <!-- QR Code Generation -->
                     <div id="qrcode" class="mt-4 text-center">
