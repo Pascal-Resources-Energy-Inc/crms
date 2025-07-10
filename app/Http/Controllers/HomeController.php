@@ -33,7 +33,7 @@ class HomeController extends Controller
         $dealer = "";
         $customer = "";
        
-        $customers = Client::get();
+        $customers = Client::whereHas('transactions')->get();
         $currentYear = Carbon::now()->year;
         $transactions = Transaction::orderBy('id','desc')->get();
         $dealers = Dealer::get();
