@@ -133,7 +133,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @foreach($transactions_details->take('20') as $transaction)
+                           @foreach($transactions_details->take('10') as $transaction)
                             <tr>
                               <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
                               <td>{{number_format($transaction->qty,2)}}</td>
