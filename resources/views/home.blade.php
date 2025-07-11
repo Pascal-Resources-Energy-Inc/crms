@@ -171,7 +171,7 @@
                           <tbody>
                             @foreach($dealers as $dealer)
                               <tr>
-                                <td>{{ $dealer->dealer->name ?? 'Unknown' }}</td>
+                                <td>{{strtoupper( $dealer->dealer->name ?? 'Unknown' )}}</td>
                                 <td>{{number_format($dealer->total_points,2)}}</td>
                                 <td>{{date('M d, Y',strtotime($dealer->latest_transaction))}}</td>
                               </tr>
