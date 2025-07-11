@@ -32,7 +32,16 @@ class HomeController extends Controller
     {
         $dealer = "";
         $customer = "";
-       
+       $threeDaysAgo = Carbon::now()->subDays(3)->toDateString();
+
+$threeDaysAgo = Carbon::now()->subDays(3)->toDateString();
+
+$customers_less = Client::
+whereHas('latestTransaction', function ($q) use ($threeDaysAgo) {
+    $q->where('date', '<=', $threeDaysAgo);
+})->with('latestTransaction')->
+get();
+// dd($customers_less);
         $customers = Client::whereHas('transactions')->get();
         $currentYear = Carbon::now()->year;
         $transactions = Transaction::orderBy('id','desc')->get();
@@ -94,6 +103,7 @@ class HomeController extends Controller
             'customers' =>  $customers,
             'dealer' =>  $dealer,
             'customer' =>  $customer,
+            'customers_less' =>  $customers_less,
             
 
             )

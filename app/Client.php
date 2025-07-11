@@ -17,4 +17,8 @@ class Client extends Model
     {
         return $this->hasMany(TransactionDetail::class);
     }
+    public function latestTransaction()
+    {
+        return $this->hasOne(TransactionDetail::class)->latest('date');
+    }
 }

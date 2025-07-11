@@ -8,6 +8,7 @@
 <!--  Header End -->
           <!-- Welcome Section Start -->
           @if(auth()->user()->role == "Admin")
+          @include('alert')
           <section class="welcome">
             <div class="row">
               <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
@@ -654,5 +655,10 @@
 </script>
 {{-- <script src="{{asset('design/assets/js/apex-chart/apex.bar.init.js')}}"></script> --}}
 <script src="{{asset('design/assets/js/dashboards/dashboard.js')}}"></script>
-
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var myModal = new bootstrap.Modal(document.getElementById('homeModal'));
+    myModal.show();
+  });
+</script>
 @endsection
