@@ -42,7 +42,6 @@ class HomeController extends Controller
             'desc'
         )
         ->get();
-        dd($threeDaysAgo);
 // dd($customers_less);
         $customers = Client::whereHas('transactions')->get();
         $currentYear = Carbon::now()->year;
