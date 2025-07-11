@@ -34,7 +34,7 @@ class HomeController extends Controller
         $customer = "";
        $threeDaysAgo = Carbon::now()->subDays(3)->toDateString();
         $customers_less = Client::whereDoesntHave('latestTransaction', function ($q) use ($threeDaysAgo) {
-            $q->where('date', '>', $threeDaysAgo);
+            $q->where('date', '>=', $threeDaysAgo);
         })
         // ->with('latestTransaction')
         ->orderBy(
