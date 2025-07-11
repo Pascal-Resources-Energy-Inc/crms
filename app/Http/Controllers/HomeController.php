@@ -36,11 +36,15 @@ class HomeController extends Controller
 
 $threeDaysAgo = Carbon::now()->subDays(3)->toDateString();
 
-$customers_less = Client::
-whereHas('latestTransaction', function ($q) use ($threeDaysAgo) {
+$customers_less = Client::whereHas('latestTransaction', function ($q) use ($threeDaysAgo) {
     $q->where('date', '<=', $threeDaysAgo);
-})->with('latestTransaction')->
-get();
+})
+->with('latestTransaction')
+->orderBy(
+    DB::raw('(SELECT date FROM transaction_details WHERE transaction_details.client_id = clients.id ORDER BY date DESC LIMIT 1)'),
+    'desc'
+)
+->get();
 // dd($customers_less);
         $customers = Client::whereHas('transactions')->get();
         $currentYear = Carbon::now()->year;
