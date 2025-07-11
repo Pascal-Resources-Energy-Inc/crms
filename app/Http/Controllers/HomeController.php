@@ -36,6 +36,7 @@ class HomeController extends Controller
         $customers_less = Client::whereDoesntHave('latestTransaction', function ($q) use ($threeDaysAgo) {
             $q->where('date', '>=', $threeDaysAgo);
         })
+        ->whereHas('latestTransaction')
         // ->with('latestTransaction')
         ->orderBy(
             DB::raw('(SELECT date FROM transaction_details WHERE transaction_details.client_id = clients.id ORDER BY date DESC LIMIT 1)'),
