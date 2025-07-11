@@ -70,7 +70,7 @@
                         <tbody id="customerBody">
                             @foreach($customers as $customer)
                             <tr>
-                                <td><a href='view-client/{{$customer->id}}'> {{$customer->name}}</a></td>
+                                <td><a href='view-client/{{$customer->id}}'> {{strtoupper($customer->name)}}</a></td>
                                 <td>{{$customer->number}}</td>
                                 <td>{{$customer->email_address}}</td>
                                 <td>

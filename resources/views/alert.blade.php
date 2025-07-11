@@ -24,7 +24,7 @@
                         <tbody>
                            @foreach($customers_less as $cus)
                             <tr>
-                              <td>{{$cus->name}}</td>
+                              <td>{{strtoupper($cus->name)}}</td>
                               <td>{{$cus->number}}</td>
                               <td>{{$cus->address}}</td>
                               <td>{{date('M d, Y',strtotime($cus->latestTransaction->date))}}</td>
