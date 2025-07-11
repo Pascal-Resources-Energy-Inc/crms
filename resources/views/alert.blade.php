@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="homeModalLabel">Last purchase was more than 3 days ago.</h5>
+        <h5 class="modal-title text-danger" id="homeModalLabel">Last purchase was more than 3 days ago. <button class='btn btn-sm btn-danger' onclick="printTable()">Print</button></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -11,8 +11,8 @@
                 <div class="card w-100">
                   <div class="card-body">
 
-                    <div class="table-responsive" data-simplebar>
-                      <table class="table table-borderless align-middle text-nowrap">
+                    <div class="table-responsive" id='table-container' data-simplebar>
+                      <table class="table table-bordered align-middle text-nowrap">
                         <thead>
                          <tr>
                                 <th scope="col">Client</th>
@@ -46,3 +46,14 @@
     </div>
   </div>
 </div>
+
+  <script>
+    function printTable() {
+      const printContents = document.getElementById('table-container').innerHTML;
+      const originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+    }
+  </script>
