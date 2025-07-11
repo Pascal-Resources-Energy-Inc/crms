@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="homeModalLabel">Last purchase was more than 3 days ago. <button class='btn btn-sm btn-danger' onclick="printTable()">Print</button></h5>
+        <h5 class="modal-title text-danger" id="homeModalLabel">Last purchase was more than 7 days ago. <button class='btn btn-sm btn-danger' onclick="printTable()">Print</button></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
