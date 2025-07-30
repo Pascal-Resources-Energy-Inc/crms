@@ -48,7 +48,7 @@
                       <div class="col-md-4">
                         <div class="mb-3">
                           <label class="form-label" for="wphoneNumber2">Phone Number <span class="text-danger">*</span></label>
-                          <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" />
+                          <input type="tel" class="form-control required" id="wphoneNumber2" maxlength="11" name="phone_number" />
                         </div>
                       </div>
                       <div class="col-md-4">

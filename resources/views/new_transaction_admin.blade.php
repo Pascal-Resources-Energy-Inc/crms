@@ -29,7 +29,7 @@
         $parts = explode(' ', $fullName);
         $lastName = array_pop($parts);
         $masked = str_repeat('*', strlen(implode(' ', $parts))) . ' ' . $lastName;
-        $serial = $customer->serial->serial_number;
+        $serial = $customer->serial->serial_number ?? '';
         $masked_serial = str_repeat('*', max(0, strlen($serial) - 5)) . substr($serial, -5);
         $number = $customer->number;
         $masked_number = str_repeat('*', max(0, strlen($number) - 5)) . substr($number, -5);
