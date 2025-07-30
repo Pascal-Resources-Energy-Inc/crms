@@ -127,6 +127,7 @@
                       </div>
                     </div>
 
+                    
                     <div class="table-responsive" data-simplebar>
                       <table class="table table-borderless align-middle text-nowrap">
                         <thead>
@@ -134,8 +135,6 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Customer</th>
                                 <th scope="col">Customer Points</th>
-                                <th scope="col">Item</th>
-                                <th scope="col">Details</th>
                             </tr>
                         </thead>
                         <tbody id="transaction-table-body">
@@ -153,15 +152,6 @@
                                 </a>
                               </td>
                               <td><span class='text-success'>{{$transaction->points_client}}</span></td>
-                              <td>{{$transaction->item}}</td>
-                              <td>
-                                <button class="btn btn-sm btn-outline-info" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#transactionModal" 
-                                        onclick="showTransactionDetails('{{date('M d, Y',strtotime($transaction->created_at))}}', '{{number_format($transaction->qty,2)}}', '{{number_format($transaction->qty*$transaction->price,2)}}', '{{strtoupper($transaction->dealer->name ?? '')}}', '{{strtoupper($transaction->customer->name ?? '')}}', '{{$transaction->points_dealer}}', '{{$transaction->points_client}}', '{{$transaction->item}}')">
-                                  View
-                                </button>
-                              </td>
                             </tr>
                           @endforeach
                         </tbody>
