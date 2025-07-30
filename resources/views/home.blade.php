@@ -136,7 +136,7 @@
                         <tbody>
                            @foreach($transactions_details->take('10') as $transaction)
                             <tr>
-                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{date('M d, Y',strtotime($transaction->date))}}</td>
                               <td>{{number_format($transaction->qty,2)}}</td>
                               <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
                               <td>{{strtoupper($transaction->dealer->name ?? '')}}</td>
