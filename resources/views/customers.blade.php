@@ -107,10 +107,10 @@
                               <td>{{ $customer->transactions->sum('points_client') }}</td>
                               <td>
                                   @php
-                                      $transaction = ($customer->transactions)->sortByDesc('created_at')->first();
+                                      $transaction = ($customer->transactions)->sortByDesc('date')->first();
                                   @endphp
                                   @if($transaction)
-                                      {{ date('M d, Y', strtotime($transaction->updated_at)) }}
+                                      {{ date('M d, Y', strtotime($transaction->date)) }}
                                   @else
                                       No Data
                                   @endif

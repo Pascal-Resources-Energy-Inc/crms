@@ -87,7 +87,7 @@ class HomeController extends Controller
       $dealers = TransactionDetail::select(
             'dealer_id',
             DB::raw('SUM(points_dealer) as total_points'),
-            DB::raw('MAX(created_at) as latest_transaction')
+            DB::raw('MAX(date) as latest_transaction')
         )
         ->with('dealer') // eager load the related dealer
         ->groupBy('dealer_id')

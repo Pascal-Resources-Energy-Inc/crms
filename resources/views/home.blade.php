@@ -142,7 +142,7 @@
                           @foreach($transactions_details as $index => $transaction)
                             <tr class="transaction-row" data-customer-id="{{$transaction->customer->id ?? 0}}" 
                                 style="{{$index >= 10 ? 'display: none;' : ''}}">
-                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{date('M d, Y',strtotime($transaction->date))}}</td>
                               <td>
                                 <a style="cursor: pointer"
                                   class="customer-link text-decoration-none fw-bold text-primary" 
