@@ -15,7 +15,7 @@
                 <div class="card w-100">
                   <div class="card-body position-relative">
                     <div>
-                      <h5 class="mb-1 fw-bold">Welcome {{auth()->user()->name}}</h5>
+                      <h5 class="mb-1 fw-bold">Welcome {{auth()->user()->name ?? ''}}</h5>
                       {{-- <p class="fs-3 mb-3 pb-1">Check all the statistics</p> --}}
                       {{-- <button class="btn btn-primary rounded-pill" type="button">
                         Visit Now
@@ -139,8 +139,8 @@
                               <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
                               <td>{{number_format($transaction->qty,2)}}</td>
                               <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
-                              <td>{{strtoupper($transaction->dealer->name)}}</td>
-                              <td>{{strtoupper($transaction->customer->name)}}</td>
+                              <td>{{strtoupper($transaction->dealer->name ?? '')}}</td>
+                              <td>{{strtoupper($transaction->customer->name ?? '')}}</td>
                               <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
                               <td><span class='text-success'>{{$transaction->points_client}}</span></td>
                               <td>{{$transaction->item}}</td>

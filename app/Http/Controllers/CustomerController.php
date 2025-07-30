@@ -11,9 +11,9 @@ class CustomerController extends Controller
 {
     //
     public function index(Request $request)
-    {
+    {   
         $stoves = Stove::where('client_id',null)->get();
-        $customers = Client::get();
+        $customers = Client::with(['transactions', 'serial'])->get();
         return view('customers',
             array(
                 'stoves' => $stoves,
@@ -68,6 +68,7 @@ class CustomerController extends Controller
         $customer->facebook = $request->facebook;
         $customer->address = $request->address;
         $customer->serial_number = $request->serial_number;
+        $customer->status = $request->status;
         $customer->save();
 
         $serial_number = Stove::findOrfail($request->serial_number);

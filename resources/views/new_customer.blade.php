@@ -44,7 +44,7 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label class="form-label" for="wphoneNumber2">Phone Number <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control required" id="wphoneNumber2" name="phone_number" required/>
+                <input type="text" class="form-control required" id="wphoneNumber2" maxlength="11" pattern="\d{11}" name="phone_number" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" />
               </div>
             </div>
             <div class="col-md-12">
@@ -62,6 +62,8 @@
                 <textarea class="form-control required" name='address' required></textarea>
               </div>
             </div>
+            
+            <input style="display:none" value="Active" name="status" id="status">
            
           </div>
       </div>
