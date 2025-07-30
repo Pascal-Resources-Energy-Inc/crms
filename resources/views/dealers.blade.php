@@ -1,7 +1,6 @@
 @extends('layouts.header')
 @section('css')
 <style>
-    /* Custom styling */
     .transaction-table th {
         text-align: center;
     }
@@ -21,7 +20,6 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 30%;
     }
-    /* Welcome section styling */
     .welcome {
         margin-top: 20px;
     }
@@ -35,6 +33,9 @@
     .filter-container {
         margin-bottom: 20px;
     }
+    .dataTables_length select {
+        width: 55px !important;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -47,7 +48,7 @@
             <div class="card warning-card overflow-hidden text-bg-primary w-100">
                 <div class="card-body p-4">
                   <div class="mb-7">
-                    <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
+                    <i class="ti ti-current-location fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
                     {{$dealers->count()}}
@@ -60,7 +61,7 @@
             <div class="card danger-card overflow-hidden text-bg-primary w-100">
                 <div class="card-body p-4">
                   <div class="mb-7">
-                    <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
+                    <i class="ti ti-current-location fs-8 fw-lighter"></i>
                   </div>
                   <h5 class="text-white fw-bold fs-14 text-nowrap">
                     0
@@ -72,7 +73,6 @@
       
       </div>
     <div class="row">
-        <!-- Right Column: Dashboard Stats -->
         <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
@@ -90,7 +90,6 @@
                             </tr>
                         </thead>
                         <tbody id="dealerBody">
-                            <!-- Dealers will be inserted here dynamically -->
                             @foreach($dealers as $dealer)
                             <tr>
                                 <td scope="col"><a href='view-dealer/{{$dealer->id}}'>{{$dealer->name}}</a></td>
@@ -124,7 +123,6 @@
   });
 </script>
 <script>
-    // Add logic for filtering the table by dealer (static data)
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("dealerFilter").addEventListener("change", function () {
             const selectedDealer = this.value;

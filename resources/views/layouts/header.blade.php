@@ -209,6 +209,17 @@
               <span class="hide-menu ps-1">Customers</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'Users')active @endif" href="{{url('/users')}}" aria-expanded="false">
+              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
+                <iconify-icon icon="mdi:cog" class="fs-6"></iconify-icon>
+
+
+
+              </span>
+              <span class="hide-menu ps-1">Users</span>
+            </a>
+          </li>
           @endif
           {{-- <li class="nav-small-cap">
             <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>

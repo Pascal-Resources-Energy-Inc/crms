@@ -22,7 +22,10 @@ Route::post('/store-transaction-admin','TransactionController@storeAdmin')->name
 Route::get('user-profile','UserController@view');
 Route::get('get-user/{id}','CustomerController@getUser');
 
-
+Route::get('/users','EditUserController@index')->name('users');
+Route::put('edit-users/{id}', 'EditUserController@update')->name('edit-users');
+Route::post('/new-admin','EditUserController@store')->name('new-admin');
+Route::post('admin-privillege/{id}', 'EditUserController@updatePrivilege')->name('admin.privilege.update');
 
 Route::get('/dealers','DealerController@index')->name('dealers');
 Route::post('/new-dealer','DealerController@newDealer');
