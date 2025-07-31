@@ -115,39 +115,84 @@
                   <div class="card-body">
                     <div class="d-flex mb-4 justify-content-between align-items-center">
                       <h5 class="mb-0 fw-bold">Latest Transaction</h5>
-
-                 
+                      <div class="d-flex align-items-center">
+                        <span class="me-2 text-muted">Show</span>
+                        <select class="form-select form-select-sm me-2" id="entriesPerPage" onchange="updateTableEntries()" style="width: auto;">
+                          <option value="10" selected>10</option>
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                        <span class="text-muted">entries</span>
+                      </div>
                     </div>
 
+                    
                     <div class="table-responsive" data-simplebar>
                       <table class="table table-borderless align-middle text-nowrap">
                         <thead>
-                         <tr>
+                        <tr>
                                 <th scope="col">Date</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Dealer</th>
                                 <th scope="col">Customer</th>
-                                <th scope="col">Dealer Points</th>
                                 <th scope="col">Customer Points</th>
-                                <th scope="col">Item</th>
                             </tr>
                         </thead>
-                        <tbody>
-                           @foreach($transactions_details->take('10') as $transaction)
-                            <tr>
+                        <tbody id="transaction-table-body">
+                          @foreach($transactions_details as $index => $transaction)
+                            <tr class="transaction-row" data-customer-id="{{$transaction->customer->id ?? 0}}" 
+                                style="{{$index >= 10 ? 'display: none;' : ''}}">
                               <td>{{date('M d, Y',strtotime($transaction->date))}}</td>
-                              <td>{{number_format($transaction->qty,2)}}</td>
-                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
-                              <td>{{strtoupper($transaction->dealer->name ?? '')}}</td>
-                              <td>{{strtoupper($transaction->customer->name ?? '')}}</td>
-                              <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
+                              <td>
+                                <a style="cursor: pointer"
+                                  class="customer-link text-decoration-none fw-bold text-primary" 
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#transactionModal" 
+                                  onclick="showTransactionDetails('{{date('M d, Y',strtotime($transaction->created_at))}}', '{{number_format($transaction->qty,2)}}', '{{number_format($transaction->qty*$transaction->price,2)}}', '{{strtoupper($transaction->dealer->name ?? '')}}', '{{strtoupper($transaction->customer->name ?? '')}}', '{{$transaction->points_dealer}}', '{{$transaction->points_client}}', '{{$transaction->item}}')">
+                                  {{strtoupper($transaction->customer->name ?? 'Unknown')}}
+                                </a>
+                              </td>
                               <td><span class='text-success'>{{$transaction->points_client}}</span></td>
-                              <td>{{$transaction->item}}</td>
                             </tr>
                           @endforeach
                         </tbody>
                       </table>
+                    </div>
+                    <small class="text-muted" id="entriesInfo">
+                        Showing 1 to {{min(10, $transactions_details->count())}} of {{$transactions_details->count()}} entries
+                    </small>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="transactionModalLabel">Transaction Details <span id="customerName" style="display:none"></span></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="table-responsive">
+                        <table class="table table-striped align-middle text-nowrap">
+                          <thead>
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Amount</th>
+                              <th scope="col">Dealer</th>
+                              <th scope="col">Customer</th>
+                              <th scope="col">Dealer Points</th>
+                              <th scope="col">Customer Points</th>
+                              <th scope="col">Item</th>
+                            </tr>
+                          </thead>
+                          <tbody id="customerTransactions">
+                            <!-- Customer transactions will be here -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
@@ -283,53 +328,6 @@
                       <div class="ms-auto align-self-center">
                         <h5 class="fs-7 mb-0">0.00</h5>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </section>
-          <section>
-            <div class="row">
-              <div class="col-lg-12 col-xl-12 d-flex align-items-stretch">
-                <div class="card w-100">
-                  <div class="card-body">
-                    <div class="d-flex mb-4 justify-content-between align-items-center">
-                      <h5 class="mb-0 fw-bold">Latest Transaction</h5>
-
-                 
-                    </div>
-
-                    <div class="table-responsive" data-simplebar>
-                      <table class="table table-borderless align-middle text-nowrap">
-                        <thead>
-                         <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Dealer</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Dealer Points</th>
-                                <th scope="col">Customer Points</th>
-                                <th scope="col">Item</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @foreach($transactions_details as $transaction)
-                            <tr>
-                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
-                              <td>{{number_format($transaction->qty,2)}}</td>
-                              <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
-                              <td>{{$transaction->dealer->name}}</td>
-                              <td>{{$transaction->customer->name}}</td>
-                              <td><span class='text-success'>{{$transaction->points_dealer}}</span></td>
-                              <td><span class='text-success'>{{$transaction->points_client}}</span></td>
-                              <td>{{$transaction->item}}</td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
                     </div>
                   </div>
                 </div>
@@ -539,6 +537,95 @@
 <script src="{{asset('design/assets/js/dashboards/dashboard.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 {{-- <script src="{{asset('design/assets/js/dashboards/dashboard2.js')}}"></script> --}}
+
+<script>
+const allTransactions = {!! json_encode(
+    $transactions_details->map(function($transaction) {
+        return [
+            'date' => date('M d, Y', strtotime($transaction->created_at)),
+            'quantity' => number_format($transaction->qty, 2),
+            'amount' => number_format($transaction->qty * $transaction->price, 2),
+            'dealer' => strtoupper($transaction->dealer->name ?? ''),
+            'customer' => strtoupper($transaction->customer->name ?? ''),
+            'dealer_points' => $transaction->points_dealer,
+            'customer_points' => $transaction->points_client,
+            'item' => $transaction->item,
+            'customer_id' => optional($transaction->customer)->id ?? 0
+        ];
+    })
+) !!};
+
+function showTransactionDetails(date, quantity, amount, dealer, customer, dealerPoints, customerPoints, item) {
+    document.getElementById('customerName').textContent = customer;
+    
+    const tbody = document.getElementById('customerTransactions');
+    tbody.innerHTML = '';
+    
+    const row = `
+        <tr>
+            <td>${date}</td>
+            <td>${quantity}</td>
+            <td>${amount}</td>
+            <td>${dealer}</td>
+            <td>${customer}</td>
+            <td><span class='text-success'>${dealerPoints}</span></td>
+            <td><span class='text-success'>${customerPoints}</span></td>
+            <td>${item}</td>
+        </tr>
+    `;
+    tbody.innerHTML = row;
+}
+
+function loadCustomerTransactions(customerId, customerName) {
+    document.getElementById('customerName').textContent = customerName;
+    
+    const customerTransactions = allTransactions.filter(transaction => 
+        transaction.customer_id == customerId
+    );
+    
+    const tbody = document.getElementById('customerTransactions');
+    tbody.innerHTML = '';
+    
+    customerTransactions.forEach(transaction => {
+        const row = `
+            <tr>
+                <td>${transaction.date}</td>
+                <td>${transaction.quantity}</td>
+                <td>${transaction.amount}</td>
+                <td>${transaction.dealer}</td>
+                <td>${transaction.customer}</td>
+                <td><span class='text-success'>${transaction.dealer_points}</span></td>
+                <td><span class='text-success'>${transaction.customer_points}</span></td>
+                <td>${transaction.item}</td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+    
+    if (customerTransactions.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">No transactions found for this customer.</td></tr>';
+    }
+}
+
+function updateTableEntries() {
+    const entriesPerPage = parseInt(document.getElementById('entriesPerPage').value);
+    const allRows = document.querySelectorAll('.transaction-row');
+    const totalEntries = allRows.length;
+    
+    allRows.forEach((row, index) => {
+        if (index < entriesPerPage) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    const showing = Math.min(entriesPerPage, totalEntries);
+    document.getElementById('entriesInfo').textContent = 
+        `Showing 1 to ${showing} of ${totalEntries} entries`;
+}
+</script>
+
 <script>
    const categories = @json($categories);
     const qty = @json($qty);
