@@ -14,7 +14,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
-
+Route::group(['middleware' => 'auth'], function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/transactions','TransactionController@index')->name('transactions');
 Route::post('/store-transaction','TransactionController@store')->name('new-transaction');
@@ -45,3 +45,4 @@ Route::post('new-customer','CustomerController@saveCustomer')->name('saveCustome
 Route::post('/change-avatar/{id}','CustomerController@changeAvatar')->name('changeAvatar');
 Route::post('/valid-id/{id}','CustomerController@uploadValidId')->name('uploadValidId');
 Route::post('/submit-contract/{id}','CustomerController@contractSign')->name('sign');
+});

@@ -14,10 +14,11 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $customers = Client::get();
+        $customers = Client::whereHas('serial')->get();
         $items = Item::get();
         $dealers = Dealer::get();
          $transactions = [];
+        //  dd(auth()->user());
         if(auth()->user()->role == "Admin")
         {
             $transactions = TransactionDetail::get();
