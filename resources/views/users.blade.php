@@ -191,7 +191,6 @@ table td:nth-child(6) {
     transform: translateY(-50%);
     pointer-events: none;
 }
-
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -343,7 +342,7 @@ table td:nth-child(6) {
 
                                         @if($user->role == 'Admin')
                                             @if($canEdit)
-                                                <button class="btn-custom btn-edit-custom" data-bs-toggle="modal" data-bs-target="#edit-users-{{ $user->id }}" title="Edit Admin">
+                                                <button class="btn-custom btn-info" data-bs-toggle="modal" data-bs-target="#edit-users-{{ $user->id }}" title="Edit Admin">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             @endif

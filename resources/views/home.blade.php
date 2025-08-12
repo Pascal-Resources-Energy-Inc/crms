@@ -43,7 +43,7 @@
                         <h5 class="text-white fw-bold fs-14 text-nowrap">
                           {{number_format($transactions_details->sum('qty'),2)}} 
                         </h5>
-                        <p class="opacity-50 mb-0 ">Qty Sold</p>
+                        <p class="opacity-50 mb-0 ">QTY SOLD</p>
                       </div>
                     </div>
                   </div>
@@ -57,7 +57,7 @@
                         <h5 class="text-white fw-bold fs-14">
                           {{count($dealers)}} 
                         </h5>
-                        <p class="opacity-50 mb-0">Dealer</p>
+                        <p class="opacity-50 mb-0">DEALER</p>
                       </div>
                     </div>
                   </div>  
@@ -71,7 +71,7 @@
                         <h5 class="text-white fw-bold fs-14 text-nowrap">
                          {{$customers->count()}} 
                         </h5>
-                        <p class="opacity-50 mb-0">Customers</p>
+                        <p class="opacity-50 mb-0">CUSTOMERS</p>
                       </div>
                     </div>
                   </div>

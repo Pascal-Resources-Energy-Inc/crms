@@ -44,6 +44,19 @@
                                 Add
                             </label>
                         </div>
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox" 
+                                name="can_delete" 
+                                id="can_delete-{{ $user->id }}" 
+                                value="on"
+                                {{ ($user->can_delete ?? false) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="can_delete-{{ $user->id }}">
+                                Delete
+                            </label>
+                        </div>
                     </div>
                 </div>
 
