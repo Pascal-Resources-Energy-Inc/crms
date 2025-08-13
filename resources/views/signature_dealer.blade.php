@@ -45,7 +45,7 @@
         <input type="file" name="contract_signature" id="contract_signature" style="display: none;" required/>
         <div class="buttons">
         <a href='{{url("/view-dealer/".$dealer->id)}}'>Back to Contract</a>
-        <button onclick="clearPad()">Clear</button>
+        <button type='button'  onclick="clearPad()">Clear</button>
         <button type='submit'>Save</button>
         </div>
    </form>
