@@ -145,10 +145,19 @@
     
     /* Ensure buttons don't break on small screens */
     .btn-responsive {
+        height: 43px;
+        width: 200px;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
+
+    .center-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    
+    
 </style>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.6/dist/signature_pad.umd.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -239,13 +248,13 @@
                                     <i class="bi bi-person-vcard"></i> Upload Valid ID
                                 </h5>
                                 <p class="card-text text-muted mb-3">Submit a valid government-issued ID.</p>
-                                <button class="btn btn-danger btn-responsive" 
-                                        type='button' 
-                                        data-bs-toggle="modal"  
-                                        data-bs-target="#uploadIdModal">
-                                    <i class="bi bi-upload"></i> 
-                                    <span class="d-none d-sm-inline ms-1">Upload ID</span>
-                                </button>
+                                <div class="center-btn">
+                                    <button class="btn btn-danger btn-responsive" data-bs-toggle="modal" data-bs-target="#uploadIdModal">
+                                        <i class="bi bi-upload"></i>
+                                        <span class="d-sm-inline ms-1">Upload ID</span>
+                                    </button>
+                                </div>
+
                             </div>
                         @endif
                     </div>
@@ -267,7 +276,7 @@
                                         data-bs-toggle="modal" 
                                         data-bs-target="#contractView">
                                     <i class="bi bi-file-text"></i> 
-                                    <span class="d-none d-sm-inline ms-1">View Contract</span>
+                                    <span class="d-sm-inline ms-1">View Contract</span>
                                 </button>
                             </div>
                         </div>
@@ -278,12 +287,12 @@
                                     <i class="bi bi-file-earmark-text"></i> Contract Signing
                                 </h5>
                                 <p class="card-text text-muted mb-3">Review and sign the contract.</p>
-                                <button class="btn btn-danger btn-responsive" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#contractModal">
-                                    <i class="bi bi-pencil-square"></i> 
-                                    <span class="d-none d-sm-inline ms-1">Sign Contract</span>
-                                </button>
+                                <div class="center-btn">
+                                    <button class="btn btn-danger btn-responsive" data-bs-toggle="modal" data-bs-target="#contractModal">
+                                        <i class="bi bi-pencil-square"></i>
+                                        <span class="d-sm-inline ms-1">Sign Contract</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @endif
