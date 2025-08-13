@@ -175,11 +175,13 @@ class EditUserController extends Controller
 
                 $user->can_edit = $request->has('can_edit') ? 'on' : null;
                 $user->can_add = $request->has('can_add') ? 'on' : null;
+                $user->can_delete = $request->has('can_delete') ? 'on' : null;
                 $user->save();
 
                 $permissions = [];
                 if ($user->can_edit) $permissions[] = 'Edit';
                 if ($user->can_add) $permissions[] = 'Add';
+                if ($user->can_delete) $permissions[] = 'Delete';
                 
                 $permissionText = empty($permissions) ? 'No permissions' : implode(' and ', $permissions);
                 

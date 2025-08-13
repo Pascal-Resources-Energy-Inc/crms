@@ -17,6 +17,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/transactions','TransactionController@index')->name('transactions');
+Route::delete('/transactions/{id}', 'TransactionController@destroy')->name('transactions.destroy');
+Route::post('/transactions/bulk-delete', 'TransactionController@bulkDelete')->name('transactions.bulkDelete');
+
 Route::post('/store-transaction','TransactionController@store')->name('new-transaction');
 Route::post('/store-transaction-admin','TransactionController@storeAdmin')->name('new-transaction');
 Route::get('user-profile','UserController@view');

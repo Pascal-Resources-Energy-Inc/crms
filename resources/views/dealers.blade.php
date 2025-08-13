@@ -47,28 +47,29 @@
         <div class="col-sm-6 col-lg-4 col-xl-2">
             <div class="card warning-card overflow-hidden text-bg-primary w-100">
                 <div class="card-body p-4">
-                  <div class="mb-7">
-                    <i class="ti ti-current-location fs-8 fw-lighter"></i>
-                  </div>
-                  <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    {{$dealers->count()}}
-                  </h5>
-                  <p class="opacity-50 mb-0 ">Active Dealers</p>
+                    <div class="mb-7">
+                        <i class="ti ti-user-check fs-8 fw-lighter"></i> <!-- Active icon -->
+                    </div>
+                    <h5 class="text-white fw-bold fs-14 text-nowrap">
+                        {{$dealers->count()}}
+                    </h5>
+                    <p class="opacity-50 mb-0" style="font-size: 14px;">ACTIVE DEALERS</p>
                 </div>
-              </div>
+            </div>
         </div>
+
         <div class="col-sm-6 col-lg-4 col-xl-2">
             <div class="card danger-card overflow-hidden text-bg-primary w-100">
                 <div class="card-body p-4">
-                  <div class="mb-7">
-                    <i class="ti ti-current-location fs-8 fw-lighter"></i>
-                  </div>
-                  <h5 class="text-white fw-bold fs-14 text-nowrap">
-                    0
-                  </h5>
-                  <p class="opacity-50 mb-0 ">Inactive Dealers</p>
+                    <div class="mb-7">
+                        <i class="ti ti-user-x fs-8 fw-lighter"></i> <!-- Inactive icon -->
+                    </div>
+                    <h5 class="text-white fw-bold fs-14 text-nowrap">
+                        0
+                    </h5>
+                    <p class="opacity-50 mb-0" style="font-size: 14px;">INACTIVE DEALERS</p>
                 </div>
-              </div>
+            </div>
         </div>
       
       </div>
