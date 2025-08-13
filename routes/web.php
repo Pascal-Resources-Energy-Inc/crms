@@ -45,4 +45,8 @@ Route::post('new-customer','CustomerController@saveCustomer')->name('saveCustome
 Route::post('/change-avatar/{id}','CustomerController@changeAvatar')->name('changeAvatar');
 Route::post('/valid-id/{id}','CustomerController@uploadValidId')->name('uploadValidId');
 Route::post('/submit-contract/{id}','CustomerController@contractSign')->name('sign');
+
+
+Route::get('/signature/{id}','CustomerController@sign');
+Route::get('/signature-dealer/{id}','DealerController@sign');
 });
