@@ -20,6 +20,15 @@ Route::get('/transactions','TransactionController@index')->name('transactions');
 Route::delete('/transactions/{id}', 'TransactionController@destroy')->name('transactions.destroy');
 Route::post('/transactions/bulk-delete', 'TransactionController@bulkDelete')->name('transactions.bulkDelete');
 
+Route::get('/about', 'HomeController@about')->name('about');
+Route::get('/product', 'ProductController@index')->name('product.index');
+Route::post('/product', 'ProductController@store')->name('product.store');
+Route::delete('/product/{product}', 'ProductController@destroy')->name('product.destroy');
+
+Route::get('/storelocation', 'HomeController@storelocation')->name('storelocation');
+Route::get('/api/locations-map', 'HomeController@getLocationsForMap')->name('locations.map');
+Route::get('/api/location-details/{id}/{type}', 'HomeController@getLocationDetails')->name('location.details');
+
 Route::post('/store-transaction','TransactionController@store')->name('new-transaction');
 Route::post('/store-transaction-admin','TransactionController@storeAdmin')->name('new-transaction');
 Route::get('user-profile','UserController@view');

@@ -9,7 +9,7 @@ use App\Client;
 use Illuminate\Support\Collection;
 use App\TransactionDetail;
 use Illuminate\Http\Request;
-
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -110,5 +110,104 @@ class HomeController extends Controller
 
             )
         );
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+    
+    public function storelocation()
+    {
+        $dealers = $this->getFormattedDealers();
+        $customers = $this->getFormattedCustomers();
+
+        $locations = $dealers->concat($customers);
+
+        return view('storelocation', compact('locations'));
+    }
+
+    public function getLocationsForMap()
+    {
+        $dealers = $this->getFormattedDealers(true);
+        $customers = $this->getFormattedCustomers(true);
+
+        $locations = $dealers->concat($customers);
+
+        return response()->json($locations);
+    }
+
+    public function getLocationDetails($id, $type)
+    {
+        $location = null;
+
+        if ($type === 'dealer') {
+            $location = Dealer::select('id', 'name', 'address', 'store_name', 'store_type', 'number', 'email_address', 'latitude', 'longitude')
+                ->where('id', $id)
+                ->where('status', 'Active')
+                ->first();
+
+            if ($location) {
+                $location->location_type = 'dealer';
+            }
+        } elseif ($type === 'customer') {
+            $location = Client::select('id', 'name', 'address', 'number', 'email_address')
+                ->where('id', $id)
+                ->first();
+
+            if ($location) {
+                $location->store_name = $location->name;
+                $location->store_type = null;
+                $location->location_type = 'customer';
+                $location->latitude = null;
+                $location->longitude = null;
+            }
+        }
+
+        if (!$location) {
+            return response()->json(['error' => 'Location not found'], 404);
+        }
+
+        return response()->json($location);
+    }
+
+    private function getFormattedDealers($withCoordinates = false)
+    {
+        $columns = ['id', 'name', 'address', 'store_name', 'store_type', 'number', 'email_address'];
+
+        if ($withCoordinates) {
+            $columns[] = 'latitude';
+            $columns[] = 'longitude';
+        }
+
+        return Dealer::select($columns)
+            ->where('status', 'Active')
+            ->whereNotNull('address')
+            ->get()
+            ->map(function ($dealer) {
+                $dealer->location_type = 'dealer';
+                return $dealer;
+            });
+    }
+
+    private function getFormattedCustomers($withCoordinates = false)
+    {
+        $customers = Client::select('id', 'name', 'address', 'number', 'email_address')
+            ->whereNotNull('address')
+            ->get()
+            ->map(function ($customer) use ($withCoordinates) {
+                $customer->store_name = $customer->name;
+                $customer->store_type = null;
+                $customer->location_type = 'customer';
+
+                if ($withCoordinates) {
+                    $customer->latitude = null;
+                    $customer->longitude = null;
+                }
+
+                return $customer;
+            });
+
+        return $customers;
     }
 }

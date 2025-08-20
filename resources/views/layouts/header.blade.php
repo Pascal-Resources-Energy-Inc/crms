@@ -126,6 +126,193 @@
           opacity: .8;
           background-size: 120px 120px;
       }
+      .footer {
+          border-top: 1px solid #e9ecef;
+          padding: 2rem 0 1.5rem 0;
+          margin-top: 170px;
+          margin-left: 0;
+          width: 100%;
+          background: none;
+      }
+
+      .page-wrapper .footer {
+          position: relative;
+          width: 100%;
+      }
+
+      .footer .container-fluid {
+          padding-left: 1rem;
+          padding-right: 1rem;
+      }
+
+      .footer .footer-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+          position: relative;
+      }
+
+      .footer .company-info {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          position: absolute;
+          left: 0;
+          top: 0;
+      }
+
+
+      .footer-right-image img {
+        position: absolute; 
+        width: 150px; /* Adjust size as needed */
+        height: auto;
+        margin-left: 435px;
+        margin-top: -43px;
+      }
+
+      @media (max-width: 768px) {
+         .footer-right-image img {
+           margin-left: -75px;
+           margin-top: -2px;
+        }
+
+        .footer-right-image {
+          margin-top: 1rem;
+        }
+      }
+
+
+      .footer .nav-links-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.4rem;
+          margin-top: 0;
+      }
+      .footer .company-logo img {
+          width: 350px !important;
+          height: 70px !important;
+      }
+
+      .footer .company-logo {
+          width: 24px;
+          height: 24px;
+          border-radius: 4px;
+          margin-left: 80px; 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 12px;
+      }
+
+      @media (max-width: 768px) {
+         .footer .company-logo img {
+           margin-left: -57px;
+           margin-top: -5px;
+        }
+      }
+
+      .footer .company-text {
+          color: #6c757d;
+          font-size: 14px;
+          margin: 0;
+      }
+
+      .footer .nav-links {
+          display: flex;
+          gap: 2rem;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+
+      .footer .nav-links a {
+          color: #6c757d;
+          text-decoration: none;
+          font-size: 14px;
+          transition: color 0.2s ease;
+          font-weight: 500;
+      }
+
+      .footer .nav-links a:hover {
+          color: #2e7fe1ff;
+      }
+
+      .footer .divider {
+          width: 100%;
+          max-width: 300px;
+          height: 1px;
+          background-color: #e9ecef;
+          margin: 0.5rem 0;
+      }
+
+      .footer .social-links {
+          display: flex;
+          gap: 1.5rem;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+      }
+
+      .footer .social-links a {
+          color: #6c757d;
+          font-size: 20px;
+          transition: color 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .footer .social-links a:hover {
+          color: #2e7fe1ff;
+      }
+
+      @media (max-width: 768px) {
+          .footer .company-info {
+              position: static;
+              align-self: center;
+              margin-bottom: 1rem;
+          }
+          
+          .footer .footer-content {
+              align-items: center;
+          }
+          
+          .footer .nav-links-container {
+              margin-top: 0;
+          }
+          
+          .footer .nav-links {
+              gap: 1.5rem;
+          }
+          
+          .footer .nav-links a {
+              font-size: 13px;
+          }
+          
+          .footer .social-links {
+              gap: 1rem;
+          }
+          
+          .footer .social-links a {
+              font-size: 18px;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .footer .nav-links {
+              gap: 1rem;
+          }
+          
+          .footer .nav-links a {
+              font-size: 12px;
+          }
+      }
     </style>
 </head>
 <body>
@@ -146,8 +333,17 @@
     <!-- ---------------------------------- -->
     <div class="brand-logo d-flex align-items-center justify-content-between text-center">
       <a href="{{url('/')}}" class="text-nowrap logo-img text-center">
-        <img src="{{asset('images/logo_mo.png')}}" style='height:50px;width:178;' class="dark-logo text-center" alt="Logo-Dark" />
-        {{-- <img src="{{asset('images/icon_image_icon.png')}}" class="light-logo" alt="Logo-light" /> --}}
+        <!-- Full logo for expanded sidebar -->
+        <img src="{{asset('images/logo_mo.png')}}" 
+            style='height:55px;width:178px;' 
+            class="dark-logo text-center logo-full" 
+            alt="Logo-Dark" />
+        
+        <!-- Mini logo for collapsed sidebar (initially hidden) -->
+        <img src="{{asset('images/logo_nya.png')}}" 
+            style='height:43px;width:43px;display:none;' 
+            class="dark-logo text-center logo-mini" 
+            alt="Logo-Mini" />
       </a>
       <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
         <i class="ti ti-x"></i>
@@ -536,8 +732,51 @@
               </header>
               @yield('content')
               <!--  Header End -->
-            
-             
+            <footer class="footer">
+              <div class="container-fluid">
+                <div class="footer-content">
+                  
+                  <!-- Left-aligned Logo -->
+                  <div class="company-info">
+                    <div class="company-logo">
+                      <img src="{{ asset('images/footer.png') }}" alt="Company Logo" />
+                    </div>
+                  </div>
+
+                  <!-- Center Nav + Social -->
+                  <div class="nav-links-container">
+                    <nav>
+                      <ul class="nav-links">
+                        <li><a href="{{ url('/') }}">Home</a></li>
+                        <li><a href="{{ route('product.index') }}">Product</a></li>
+                        <li><a href="{{ route('storelocation') }}">Store Location</a></li>
+                        <li><a href="{{ route('about') }}">About</a></li>
+                      </ul>
+                    </nav>
+
+                    <div class="divider"></div>
+
+                    <div class="social-links">
+                      <a href="https://www.tiktok.com/@gazliteofficial" aria-label="Tiktok">
+                        <iconify-icon icon="simple-icons:tiktok"></iconify-icon>
+                      </a>
+                      <a href="https://www.instagram.com/gazliteph/#" aria-label="Instagram">
+                        <iconify-icon icon="mdi:instagram"></iconify-icon>
+                      </a>
+                      <a href="https://www.facebook.com/GazLitePH/" aria-label="Facebook">
+                        <iconify-icon icon="mdi:facebook"></iconify-icon>
+                      </a>
+                    </div>
+                      <div class="footer-right-image">
+                    <img src="{{ asset('images/footer1.png') }}" alt="Right Footer Image" />
+                  </div>
+                  </div>
+                
+                </div>
+                
+              </div>
+            </footer>
+
             </div>
           </div>
           <script>
@@ -724,6 +963,118 @@
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
   @yield('javascript')
+  
+  <script>
+    // Replace the existing logo switching script with this improved version
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggler = document.getElementById('headerCollapse');
+    const mainWrapper = document.getElementById('main-wrapper');
+    const sidebar = document.querySelector('.left-sidebar');
+    const logoFull = document.querySelector('.logo-full');
+    const logoMini = document.querySelector('.logo-mini');
+    
+    console.log('Logo switching script loaded');
+    console.log('Elements found:', {
+        sidebarToggler: !!sidebarToggler,
+        mainWrapper: !!mainWrapper,
+        sidebar: !!sidebar,
+        logoFull: !!logoFull,
+        logoMini: !!logoMini
+    });
+    
+    // Function to switch logos based on sidebar width
+    function switchLogo() {
+        if (!sidebar || !logoFull || !logoMini) return;
+        
+        // Get the computed width of the sidebar
+        const sidebarWidth = sidebar.offsetWidth;
+        console.log('Sidebar width:', sidebarWidth);
+        
+        // Check various possible class names and width
+        const isCollapsed = sidebarWidth < 100 || 
+                           mainWrapper.classList.contains('mini-sidebar') ||
+                           mainWrapper.classList.contains('sidebar-mini') ||
+                           mainWrapper.classList.contains('collapsed') ||
+                           sidebar.classList.contains('mini-sidebar') ||
+                           sidebar.classList.contains('collapsed');
+        
+        console.log('Is collapsed:', isCollapsed);
+        
+        if (isCollapsed) {
+            // Show mini logo, hide full logo
+            logoFull.style.display = 'none';
+            logoMini.style.display = 'block';
+            console.log('Switched to mini logo');
+        } else {
+            // Show full logo, hide mini logo
+            logoFull.style.display = 'block';
+            logoMini.style.display = 'none';
+            console.log('Switched to full logo');
+        }
+    }
+    
+    // Listen for sidebar toggle clicks
+    if (sidebarToggler) {
+        sidebarToggler.addEventListener('click', function() {
+            console.log('Sidebar toggler clicked');
+            // Try multiple delays to catch the animation
+            setTimeout(switchLogo, 50);
+            setTimeout(switchLogo, 150);
+            setTimeout(switchLogo, 300);
+            setTimeout(switchLogo, 500);
+        });
+    }
+    
+    // Also listen for clicks on the sidebar itself (some themes have multiple togglers)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.sidebartoggler') || e.target.closest('[data-toggle="sidebar"]')) {
+            console.log('Alternative sidebar toggle clicked');
+            setTimeout(switchLogo, 100);
+            setTimeout(switchLogo, 300);
+        }
+    });
+    
+    // Watch for class changes on main wrapper and sidebar
+    const observerConfig = {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    };
+    
+    if (mainWrapper) {
+        const mainObserver = new MutationObserver(function(mutations) {
+            console.log('Main wrapper class changed');
+            switchLogo();
+        });
+        mainObserver.observe(mainWrapper, observerConfig);
+    }
+    
+    if (sidebar) {
+        const sidebarObserver = new MutationObserver(function(mutations) {
+            console.log('Sidebar class/style changed');
+            switchLogo();
+        });
+        sidebarObserver.observe(sidebar, observerConfig);
+    }
+    
+    // Watch for window resize (in case it affects sidebar)
+    window.addEventListener('resize', function() {
+        setTimeout(switchLogo, 100);
+    });
+    
+    // Initial check
+    setTimeout(switchLogo, 500);
+    
+    // Fallback: Check periodically for the first few seconds
+    let checkCount = 0;
+    const intervalCheck = setInterval(function() {
+        switchLogo();
+        checkCount++;
+        if (checkCount > 10) {
+            clearInterval(intervalCheck);
+        }
+    }, 500);
+});
+  </script>
   <script>
       function show() {
             document.getElementById("loader").style.display = "block";

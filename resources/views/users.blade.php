@@ -1,4 +1,5 @@
 @extends('layouts.header')
+<link rel="icon" type="image/png" href="{{asset('images/logo_nya.png')}}">
 @section('css')
 <style>
 table td:nth-child(6) {
@@ -342,7 +343,7 @@ table td:nth-child(6) {
 
                                         @if($user->role == 'Admin')
                                             @if($canEdit)
-                                                <button class="btn-custom btn-info" data-bs-toggle="modal" data-bs-target="#edit-users-{{ $user->id }}" title="Edit Admin">
+                                                <button class="btn-custom btn-edit-custom" data-bs-toggle="modal" data-bs-target="#edit-users-{{ $user->id }}" title="Edit Admin">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             @endif
