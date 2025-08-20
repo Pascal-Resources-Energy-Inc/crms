@@ -1,4 +1,5 @@
 @extends('layouts.header')
+<link rel="icon" type="image/png" href="{{asset('images/logo_nya.png')}}">
 @section('css')
 <style>
     .transaction-table th {
