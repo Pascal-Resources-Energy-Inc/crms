@@ -59,7 +59,7 @@ class HomeController extends Controller
             ->get();
 
         // If logged in as Dealer
-         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer', 'points_client')
+         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer', 'points_client','item')
             ->orderByDesc('id')
             ->limit(20)
             ->get();
@@ -71,7 +71,7 @@ class HomeController extends Controller
                 ->first();
 
             $transactions_details = TransactionDetail::where('dealer_id', auth()->user()->id)
-                ->select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer')
+                ->select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer','item')
                 ->orderByDesc('id')
                 ->limit(500) // 🔹 Only load latest 500 for dashboard
                 ->get();
@@ -90,7 +90,7 @@ class HomeController extends Controller
             ->first();
 
             $transactions_details = TransactionDetail::where('client_id', $customer->id)
-                ->select('id', 'price', 'qty', 'date', 'dealer_id', 'points_client')
+                ->select('id', 'price', 'qty', 'date', 'dealer_id', 'points_client','item')
                 ->orderByDesc('id')
                 ->limit(500)
                 ->get();
