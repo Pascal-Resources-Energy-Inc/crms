@@ -623,7 +623,7 @@
                         
                       </div>
                       <div class="col-lg-12 col-xl-6">
-                        Serial Number ID:{{ optional($customer->serial)->serial_number }}<br>
+                        Serial Number ID:{{ $customer->serial ? $customer->serial->serial_number : '' }}<br>
                         Name: {{$customer->name}} <br>
                         Contact No.: {{$customer->number}} <br>
                         Registered: {{date('M d, Y',strtotime($customer->created_at))}} <br>
@@ -766,7 +766,7 @@
  @if(auth()->user()->role == "Client")
       <script>
           const qrcode = new QRCode(document.getElementById('qrcode'), {
-              text: "{{ $customer->serial->serial_number }}",
+              text: "{{ $customer->serial ? $customer->serial->serial_number : '' }}",
               width: 128,
               height: 128,
               colorDark : '#000',
