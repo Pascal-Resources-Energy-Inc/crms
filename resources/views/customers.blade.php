@@ -4,10 +4,10 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 
 <style>
+  
 .chosen-container .chosen-single {
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
@@ -67,7 +67,7 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5>Customers <button class="btn-sm btn-success btn" data-bs-toggle="modal"  data-bs-target="#new_customer">+ Add</button></h5>
-                    
+                  <div class="table-responsive">
                     <table id="example" class="table table-bordered table-striped " style="width:100%">
                         <thead>
                           <tr>
@@ -125,6 +125,7 @@
 
                         </tbody>
                     </table>
+                  </div>
                 </div>
             </div>
         </div>

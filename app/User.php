@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'serial'
+        'name', 'email', 'password', 'role', 'serial', 'read_notifications',
     ];
 
     protected $hidden = [
@@ -20,6 +20,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'read_notifications' => 'array',
     ];
 
     public function dealer()
@@ -32,4 +33,5 @@ class User extends Authenticatable
         return $this->hasOne(Client::class, 'user_id');
     }
 
+    
 }

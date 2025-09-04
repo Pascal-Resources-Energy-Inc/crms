@@ -54,7 +54,7 @@
                     <h5 class="text-white fw-bold fs-14 text-nowrap">
                         {{$dealers->count()}}
                     </h5>
-                    <p class="opacity-50 mb-0" style="font-size: 14px;">ACTIVE DEALERS</p>
+                    <p class="opacity-50 mb-0" style="font-size: 12px;">ACTIVE DEALERS</p>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                     <h5 class="text-white fw-bold fs-14 text-nowrap">
                         0
                     </h5>
-                    <p class="opacity-50 mb-0" style="font-size: 14px;">INACTIVE DEALERS</p>
+                    <p class="opacity-50 mb-0" style="font-size: 12px;">INACTIVE DEALERS</p>
                 </div>
             </div>
         </div>
@@ -79,7 +79,8 @@
             <div class="card w-100">
                 <div class="card-body">
                     <h5>Dealers <button class="btn-sm btn-success btn" data-bs-toggle="modal"  data-bs-target="#new_dealer">+ Add</button></h5></h5>
-                    <table id="example" class="table table-bordered table-striped">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped transaction-table" id="example" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">Dealer Name</th>

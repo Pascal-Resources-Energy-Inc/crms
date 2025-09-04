@@ -56,12 +56,18 @@ class LoginController extends Controller
             
             $user = Auth::user();
             
+            // Validate if user's role matches the selected role
+            if (!$this->validateSelectedRole($request, $user)) {
+                Auth::logout();
+                
+                throw ValidationException::withMessages([
+                    $this->username() => ['You are not authorized to login as the selected role. Please select the correct role that matches your account.'],
+                ]);
+            }
+            
             if ($this->isUserInactive($user)) {
 
                 Auth::logout();
-                
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
                 
                 throw ValidationException::withMessages([
                     $this->username() => ['You are not part of this project. Please contact your administrator.'],
@@ -72,6 +78,40 @@ class LoginController extends Controller
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Validate if the user's actual role matches the selected role from frontend.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return bool
+     */
+    protected function validateSelectedRole($request, $user)
+    {
+        $selectedRole = $request->input('selected_role');
+        
+        if (!$selectedRole) {
+            return true;
+        }
+        
+        $selectedRole = strtolower($selectedRole);
+        $userRole = strtolower($user->role);
+        
+        $roleMapping = [
+            'admin' => 'admin',
+            'users' => ['dealer', 'client'],
+        ];
+        
+        if ($selectedRole === 'admin') {
+            return $userRole === 'admin';
+        }
+        
+        if ($selectedRole === 'users') {
+            return in_array($userRole, ['dealer', 'client']);
+        }
+        
+        return false;
     }
 
     /**

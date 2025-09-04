@@ -195,7 +195,6 @@ table td:nth-child(6) {
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -240,6 +239,7 @@ table td:nth-child(6) {
                             </div>
                         </div>
                     </div>
+                    <div class="table-responsive">
                     <table id="example" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -367,6 +367,7 @@ table td:nth-child(6) {
                             @endforeach
                         </tbody>
                     </table>
+                  </div>
                 </div>
             </div>
         </div>

@@ -2,23 +2,130 @@
 
 @section('css')
 <style>
-    .store-locations-wrapper {
+        .main-layout .store-locations-wrapper {
         max-width: 1400px;
         margin: 0 auto;
         padding: 20px;
         display: flex;
         gap: 20px;
         height: 600px;
+        position: relative;
+        z-index: 1;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .main-layout .store-locations-wrapper .sidebar {
+        width: 350px !important;
+        background: white !important;
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        top: auto !important;
+        left: 0 !important;
+        right: auto !important;
+        height: auto !important;
+        z-index: auto !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        flex-shrink: 0;
+        transform: none !important;
+    }
+
+    .main-layout .main-content {
+        margin-left: 0 !important;
+    }
+
+    .main-layout .content-area {
+        padding: 32px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    @media (max-width: 768px) {
+        .main-layout .store-locations-wrapper {
+            flex-direction: column;
+            height: auto;
+            padding: 16px;
+            gap: 16px;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .store-locations-wrapper .sidebar {
+            width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            margin-bottom: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            min-height: 350px;
+            flex-shrink: 0;
+            left: 0 !important;
+            right: 0 !important;
+            transform: none !important;
+        }
+        
+        .main-layout .content-area {
+            padding: 16px;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
     }
     
-    .page-header {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 27px;
-        background: white;
-        margin-bottom: 20px;
+    /* Override any conflicting styles from the main layout */
+    .store-locations-wrapper .sidebar-header,
+    .store-locations-wrapper .sidebar-nav,
+    .store-locations-wrapper .sidebar-footer {
+        /* Reset main sidebar styles */
+        all: unset;
     }
     
+    /* Restore store location specific styles */
+    .store-locations-wrapper .search-section {
+        padding: 20px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #eee;
+        flex-shrink: 0;
+    }
+    
+    .store-locations-wrapper .search-label {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+    
+    .store-locations-wrapper .filter-dropdown {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    
+    .store-locations-wrapper .search-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #666;
+        box-sizing: border-box;
+    }
+    
+    .store-locations-wrapper .stores-list {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+    }
+    
+    /* Rest of your existing store location styles... */
     .page-title {
         text-align: center;
         font-size: 32px;
@@ -41,28 +148,11 @@
         gap: 8px;
         font-size: 14px;
         color: #666;
-    }
-    
-    .legend-color {
-        width: 12px;
-        height: 12px;
-        border-radius: 2px;
-    }
-    
-    .legend-dealer { background-color: #5DADE2; }
-    .legend-customer { background-color: #E74C3C; }
-
-    .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #666;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    user-select: none;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        user-select: none;
     }
 
     .legend-item:hover {
@@ -78,55 +168,14 @@
         opacity: 0.3;
     }
     
-    .sidebar {
-        width: 350px;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 2px;
     }
     
-    .search-section {
-        padding: 20px;
-        background: #f8f9fa;
-        border-bottom: 1px solid #eee;
-        flex-shrink: 0;
-    }
-    
-    .search-label {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 15px;
-        color: #333;
-    }
-    
-    .filter-dropdown {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-    
-    .search-input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-        color: #666;
-        box-sizing: border-box;
-    }
-    
-    .stores-list {
-        flex: 1;
-        overflow-y: auto;
-        min-height: 0;
-    }
+    .legend-dealer { background-color: #5DADE2; }
+    .legend-customer { background-color: #E74C3C; }
     
     .store-item {
         padding: 15px 20px;
@@ -277,39 +326,32 @@
         background: #f5f5f5;
     }
     
+    /* Mobile Responsiveness */
     @media (max-width: 768px) {
-    .store-locations-wrapper {
-        flex-direction: column;
-        height: auto;
+        .store-locations-wrapper {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .map-container {
+            width: 100%;
+            min-height: 300px;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+        }
+        
+        .footer .company-info {
+            margin-left: -70px;
+        }
     }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 350px;
-        margin-bottom: 20px;
-    }
-
-    .map-container {
-        width: 100%;
-        min-height: 300px;
-        height: auto;
-        aspect-ratio: 16 / 9;
-    }
-
-    .map-frame {
-        width: 100%;
-        height: 100%;
-        min-height: 300px;
-    }
-}
-
-
-    @media (max-width: 768px) {
-    .footer .company-info {
-        margin-left: -70px;
-    }
-}
+    
 </style>
 @endsection
 
@@ -483,7 +525,7 @@ function initMap() {
     const center = { lat: 12.8797, lng: 121.7740 };
     
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 5,
+        zoom: 7,
         center: center,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: [

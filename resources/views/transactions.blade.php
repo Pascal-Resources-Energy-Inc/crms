@@ -1,5 +1,4 @@
 @extends('layouts.header')
-@section('css')
 <style>
     .transaction-table th {
         text-align: center;
@@ -21,7 +20,7 @@
         width: 30%;
     }
     .welcome {
-        margin-top: 20px;
+        margin-top: auto !important;
     }
     .card-header {
         font-size: 1.25rem;
@@ -37,20 +36,33 @@
       border-radius: 15px !important;
     }
     @media (max-width: 768px) {
-  .modal-dialog {
-    margin: 1rem;
-    max-width: 100%;
-  }
+        .modal-dialog {
+            margin: 1rem;
+            max-width: 100%;
+        }
 
-  .chosen-container {
-    width: 100% !important;
-  }
+        .chosen-container {
+            width: 100% !important;
+        }
 
-  .chosen-drop {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-}
+        .chosen-drop {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+    }
+
+    .search-name-responsive{
+        width: 180px !important;
+    }
+
+    @media (max-width: 576px) {
+        .search-name-responsive{
+            font-size: 12px !important;
+            width: 170px !important;
+            height: 43px !important; 
+        }
+    }
 
 .chosen-container .chosen-single {
   height: calc(2.25rem + 2px);
@@ -101,25 +113,6 @@
   margin-bottom: 5px;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    border: none !important;
-    background: none !important;
-    padding: 0px 0px !important;
-    margin: 5 -5px !important;
-    color: #007bff !important;
-    font-size: 14px;
-    line-height: 1;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    font-weight: bold;
-    color: white !important;
-    background-color: #007bff !important;
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin: 0 1px;
-}
-
 .dataTables_wrapper .dataTables_paginate .paginate_button:focus {
     box-shadow: none;
     outline: none;
@@ -149,15 +142,14 @@ table.dataTable {
     margin-bottom: 0 !important;
 }
 
+
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-@endsection
 @section('head')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -241,7 +233,7 @@ table.dataTable {
                           <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#qrScannerModal">
                               Scan QR
                           </button>
-                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+                          <button type="button" class="btn btn-primary search-name-responsive" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
                               <i class="bi bi-plus-lg"></i> Search Name
                           </button>
                       @endif

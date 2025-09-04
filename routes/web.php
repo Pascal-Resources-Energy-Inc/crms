@@ -14,7 +14,18 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
+
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/otp', 'Auth\ForgotPasswordController@showOtpForm')->name('password.otp');
+Route::post('password/verify-otp', 'Auth\ForgotPasswordController@verifyOtp')->name('password.verify-otp');
+Route::get('password/reset/form', 'Auth\ForgotPasswordController@showResetForm')->name('password.reset.form');
+Route::post('password/update', 'Auth\ForgotPasswordController@reset')->name('password.update');
+
+
 Route::group(['middleware' => 'auth'], function () {
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/transactions','TransactionController@index')->name('transactions');
 Route::delete('/transactions/{id}', 'TransactionController@destroy')->name('transactions.destroy');
@@ -28,11 +39,21 @@ Route::delete('/product/{product}', 'ProductController@destroy')->name('product.
 Route::get('/storelocation', 'HomeController@storelocation')->name('storelocation');
 Route::get('/api/locations-map', 'HomeController@getLocationsForMap')->name('locations.map');
 Route::get('/api/location-details/{id}/{type}', 'HomeController@getLocationDetails')->name('location.details');
+Route::get('/home/monthly-data', 'HomeController@getMonthlyDataAjax')->name('home.monthly-data');
+Route::get('/home/chart-data', 'HomeController@getChartDataAjax')->name('home.chart-data');
+
 
 Route::post('/store-transaction','TransactionController@store')->name('new-transaction');
 Route::post('/store-transaction-admin','TransactionController@storeAdmin')->name('new-transaction');
 Route::get('user-profile','UserController@view');
 Route::get('get-user/{id}','CustomerController@getUser');
+
+Route::get('/search', 'SearchController@search')->name('search');
+Route::get('/search/suggestions', 'SearchController@searchSuggestions')->name('search.suggestions');
+Route::get('/profile/{id}/{type}', 'SearchController@viewProfile')->name('profile.view');
+Route::post('/notification/save', 'NotificationController@saveNotification')->name('notification.save');
+Route::post('/notifications/mark-all-read', 'NotificationController@markAllAsRead')->name('notifications.markAllAsRead');
+
 
 Route::get('/users','EditUserController@index')->name('users');
 Route::put('edit-users/{id}', 'EditUserController@update')->name('edit-users');
@@ -62,3 +83,4 @@ Route::post('/submit-contract/{id}','CustomerController@contractSign')->name('si
 Route::get('/signature/{id}','CustomerController@sign');
 Route::get('/signature-dealer/{id}','DealerController@sign');
 });
+
