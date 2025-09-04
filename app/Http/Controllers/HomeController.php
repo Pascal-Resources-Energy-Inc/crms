@@ -59,7 +59,11 @@ class HomeController extends Controller
             ->get();
 
         // If logged in as Dealer
-        if (auth()->user()->role === "Dealer") {
+         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer')
+                ->orderByDesc('id')
+                ->limit(20) // 🔹 Only load latest 500 for dashboard
+                ->get();
+        if (auth()->user()->role == "Dealer") {
             $dealer = Dealer::select('id', 'user_id', 'name')
                 ->where('user_id', auth()->user()->id)
                 ->first();
@@ -76,7 +80,7 @@ class HomeController extends Controller
         }
 
         // If logged in as Client
-        elseif (auth()->user()->role === "Client") {
+        elseif (auth()->user()->role == "Client") {
             $customer = Client::select('id', 'user_id', 'name')
                 ->where('user_id', auth()->user()->id)
                 ->first();
