@@ -59,10 +59,12 @@ class HomeController extends Controller
             ->get();
 
         // If logged in as Dealer
-         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer')
-                ->orderByDesc('id')
-                ->limit(20) // 🔹 Only load latest 500 for dashboard
-                ->get();
+         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer', 'points_client')
+            ->orderByDesc('id')
+            ->limit(20)
+            ->get();
+            
+        $total_qty = TransactionDetail::sum('qty');
         if (auth()->user()->role == "Dealer") {
             $dealer = Dealer::select('id', 'user_id', 'name')
                 ->where('user_id', auth()->user()->id)
@@ -77,6 +79,7 @@ class HomeController extends Controller
             $total_sales = TransactionDetail::where('dealer_id', auth()->user()->id)
                 ->select(DB::raw('SUM(price * qty) as total'))
                 ->value('total');
+            $total_qty = TransactionDetail::where('dealer_id', auth()->user()->id)->sum('qty');
         }
 
         // If logged in as Client
@@ -94,6 +97,8 @@ class HomeController extends Controller
             $total_sales = TransactionDetail::where('client_id', $customer->id)
                 ->select(DB::raw('SUM(price * qty) as total'))
                 ->value('total');
+
+                $total_qty = TransactionDetail::where('client_id', auth()->user()->id)->sum('qty');
         }
 
         // 🔹 Only calculate global total if dealer/client total isn't already set
@@ -161,6 +166,7 @@ class HomeController extends Controller
             'selected_year' => $selectedYear,
             'selected_month' => $selectedMonth,
             'view_type' => $viewType,
+            'total_qty' => $total_qty,
         ]);
     }
 

@@ -149,7 +149,7 @@
                                 <i class="ti ti-shopping-cart"></i>
                             </div>
                             <div class="stats-number">
-                                {{number_format($transactions_details->sum('qty'),0)}} 
+                                {{number_format($total_qty,0)}} 
                             </div>
                             <div class="stats-label">Products Sold</div>
                             <div class="trend-indicator {{ $qty_trend['trend'] == 'up' ? 'text-success' : ($qty_trend['trend'] == 'down' ? 'text-danger' : 'text-muted') }}">
@@ -368,7 +368,7 @@
                               <!-- Date Column -->
                               <div class="col-4 text-center">
                                 <span class="text-dark fw-medium">
-                                  {{ date('d.m.Y', strtotime($transaction->created_at)) }}
+                                  {{ date('d.m.Y', strtotime($transaction->date)) }}
                                 </span>
                               </div>
                               
