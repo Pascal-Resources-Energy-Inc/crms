@@ -111,6 +111,16 @@ class DealerController extends Controller
         $customer->save();
 
         Alert::success('Successfully Uploaded')->persistent('Dismiss');
-        return back();
+        return redirect()->to('view-dealer/' . $customer->id);
+    }
+
+    public function sign($id)
+    {
+         $dealer = Dealer::findOrfail($id);
+
+        return view('signature_dealer',
+        array(
+        'dealer' => $dealer
+        ));
     }
 }

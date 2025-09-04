@@ -125,7 +125,7 @@ class CustomerController extends Controller
         $customer->save();
 
         Alert::success('Successfully Uploaded')->persistent('Dismiss');
-        return back();
+       return redirect()->to('view-client/' . $customer->id);
     }
 
   public function getUser($id)
@@ -156,4 +156,13 @@ class CustomerController extends Controller
          return response()->json(['success' => false], 404);
        }
 }
+    public function sign($id)
+    {
+        $customer = Client::findOrfail($id);
+
+        return view('signature',
+        array(
+        'customer' => $customer
+        ));
+    }
 }

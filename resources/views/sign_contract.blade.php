@@ -49,28 +49,22 @@
 
           <!-- Signature Pad -->
           <div class="mb-3 text-center">
-            <canvas id="signatureCanvas" width="500" height="200" style="border:1px solid #ced4da; border-radius: 5px;"></canvas>
-            <input type="file" name="contract_signature" id="contract_signature" style="display: none;" required/>
-            <div class="mt-2">
-              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="clearSignature()">
-                <i class="bi bi-eraser"></i> Clear
-              </button>
-            </div>
+             <a href='{{url("/signature/".$customer->id)}}' ><button id="signHereBtn" class="btn btn-success btn-lg" type='button'>
+              ✍️ Sign Here
+            </button>
+             </a>
+           
           </div>
 
           <!-- Hidden input to store signature -->
-          <input type="hidden" name="contract_signature" id="contract_signature" />
 
         </div>
          <div class="modal-footer">
-        <button type="button" class="btn bg-danger-subtle text-danger  waves-effect"
-          data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="submit" class="btn bg-info-subtle text-info  waves-effect">
-          Submit
-        </button>
-      </div>
+            <button type="button" class="btn bg-danger-subtle text-danger  waves-effect"
+              data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
       </div>
     </form>
   </div>

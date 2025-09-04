@@ -15,12 +15,16 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
+
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/otp', 'Auth\ForgotPasswordController@showOtpForm')->name('password.otp');
 Route::post('password/verify-otp', 'Auth\ForgotPasswordController@verifyOtp')->name('password.verify-otp');
 Route::get('password/reset/form', 'Auth\ForgotPasswordController@showResetForm')->name('password.reset.form');
 Route::post('password/update', 'Auth\ForgotPasswordController@reset')->name('password.update');
+
+
+Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/transactions','TransactionController@index')->name('transactions');
@@ -74,3 +78,9 @@ Route::post('new-customer','CustomerController@saveCustomer')->name('saveCustome
 Route::post('/change-avatar/{id}','CustomerController@changeAvatar')->name('changeAvatar');
 Route::post('/valid-id/{id}','CustomerController@uploadValidId')->name('uploadValidId');
 Route::post('/submit-contract/{id}','CustomerController@contractSign')->name('sign');
+
+
+Route::get('/signature/{id}','CustomerController@sign');
+Route::get('/signature-dealer/{id}','DealerController@sign');
+});
+
