@@ -11,7 +11,7 @@
                 <tr>
                     <th colspan="2">GAZ LITE PILOT PARTICIPATION AGREEMENT FORM</th>
                     <th>Date: {{date('M d,Y',strtotime($customer->created_at))}}</th>
-                    <th>Serial Number: {{$customer->serial->serial_number}}</th>
+                    <th>Serial Number: {{$customer->serial->serial_number ?? ''}}</th>
                 </tr>
                 <tr>
                     <td colspan=4>Name of Customer: {{$customer->name}}</td>

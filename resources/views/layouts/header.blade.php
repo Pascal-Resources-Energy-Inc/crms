@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="en"  dir="ltr" data-bs-theme="light" data-color-theme="Green_Theme" data-layout="vertical">
+<html lang="en" dir="ltr" data-bs-theme="light" data-color-theme="Green_Theme" data-layout="vertical">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,125 +15,801 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <!-- Required meta tags -->
-        <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Favicon icon-->
     <link rel="shortcut icon" type="image/png" href="{{asset('images/icon.png')}}" />
 
     <!-- Core Css -->
     <link rel="stylesheet" href="{{asset('design/assets/css/styles.css')}}" />
-
-    <!-- <title>Spike Bootstrap Admin</title> -->
     <link rel="stylesheet" href="{{asset('design/assets/libs/jvectormap/jquery-jvectormap.css')}}">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    
     <style>
-        .slick-prev:before, .slick-next:before { 
-            color:green !important;
-        }
-      .slick-track
-      {
-        margin-left:0px !important;
-      }
-        .renz {
-          transition: filter 0.3s ease, color 0.3s ease;
-        }
-        .renz:hover {
-          filter: sepia(1) saturate(6) hue-rotate(100deg) brightness(.8);
-        }
-        .filter-green:hover {
-          filter: grayscale(100%) brightness(0%);
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 70px;
+            --topbar-height: 80px;
+            --bg-light: #f8fafc;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --transition-duration: 0.3s;
+            --content-padding: 32px;
         }
 
-            .move-up {
-                margin-top: -25px; /* Adjust the negative value to move the icon up */
-                margin-left: -70px; /* Adjust the negative value to move the icon up */
+        /* Layout Reset - Higher specificity to prevent conflicts */
+        .main-layout * {
+            box-sizing: border-box;
+        }
+
+        .main-layout {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #D8E9F0;
+            min-height: 100vh;
+            display: flex; /* Add this */
+            flex-direction: column; /* Add this */
+        }
+
+        body.main-layout {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            background-color: #D8E9F0 !important;
+            overflow-x: hidden !important;
+        }
+
+        /* Override existing layout styles */
+        .container-scroller {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layout-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+        }
+
+
+        /* Enhanced Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: #FFFCFC;
+            border-right: 1px solid var(--border-color);
+            transition: width var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Collapsed state */
+        .sidebar.sidebar-offcanvas.collapsed {
+            width: var(--sidebar-collapsed-width) !important;
+        }
+
+        /* Sidebar content adjustments for collapsed state */
+        .sidebar.collapsed .nav .nav-item .nav-link .menu-title,
+        .sidebar.collapsed .nav li h5 {
+            opacity: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+            transition: all var(--transition-duration) ease !important;
+        }
+
+        .sidebar.collapsed .nav .nav-item .nav-link {
+            justify-content: center !important;
+            padding: 12px !important;
+        }
+
+        .sidebar.collapsed .navbar-brand .brand-logo {
+            display: none !important;
+        }
+
+        .sidebar.collapsed .navbar-brand .brand-logo-mini {
+            display: block !important;
+        }
+
+        /* Main content responsive to sidebar */
+
+        /* Navbar adjustments */
+        .navbar.fixed-top {
+            position: fixed !important;
+            top: 0 !important;
+            left: var(--sidebar-width) !important;
+            width: calc(100% - var(--sidebar-width)) !important;
+            transition: left var(--transition-duration) ease, width var(--transition-duration) ease !important;
+            z-index: 999 !important;
+        }
+
+        .sidebar.collapsed ~ * .navbar.fixed-top {
+            left: var(--sidebar-collapsed-width) !important;
+            width: calc(100% - var(--sidebar-collapsed-width)) !important;
+        }
+
+        /* Content area */
+        .main-panel {
+            width: 100% !important;
+            padding-top: var(--topbar-height) !important;
+            min-height: calc(100vh - var(--topbar-height)) !important;
+        }
+
+        /* Enhanced toggle button */
+        .navbar-toggler[data-toggle="minimize"] {
+            background: transparent !important;
+            border: none !important;
+            color: #6c757d !important;
+            font-size: 18px !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .navbar-toggler[data-toggle="minimize"]:hover {
+            background: #f8f9fa !important;
+            color: #495057 !important;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .sidebar.sidebar-offcanvas {
+                transform: translateX(-100%) !important;
+                width: var(--sidebar-width) !important;
             }
-            .move-left {
-                margin-top: -40px; /* Adjust the negative value to move the icon up */
-                margin-left: 40px; /* Adjust the negative value to move the icon up */
+
+            .sidebar.sidebar-offcanvas.show {
+                transform: translateX(0) !important;
             }
-            .green-icon {
-              filter: invert(30%) sepia(60%) saturate(500%) hue-rotate(120deg);
 
+            .navbar.fixed-top {
+                left: 0 !important;
+                width: 100% !important;
             }
-            .filter-rgb {
-              /* filter: grayscale(100%) brightness(0%) saturate(120%) contrast(121%); */
-              opacity: 0.3 !important;
-          }
-          .font{
-            font-size:15px;
-          }
 
-          /* Default (large screens) */
-    body {
-        font-size: 18px;
-    }
+            /* Mobile overlay */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
 
-    /* Small screens (Mobile) */
-    @media (max-width: 480px) {
-      .font {
-            font-size: 8px;  /* Even smaller font size for small screens */
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+
+        /* Smooth transitions for nav items */
+        .nav .nav-item .nav-link {
+            transition: all 0.2s ease !important;
+        }
+
+        .nav .nav-item .nav-link:hover {
+            transform: translateX(2px) !important;
+            background: #f1f5f9 !important;
+        }
+
+        /* Logo transitions */
+        .navbar-brand .brand-logo,
+        .navbar-brand .brand-logo-mini {
+            transition: all var(--transition-duration) ease !important;
+        }
+
+        .navbar-brand .brand-logo-mini {
+            display: none !important;
+        }
+
+        /* Submenu handling for collapsed state */
+        .sidebar.collapsed .nav .nav-item .collapse {
+            display: none !important;
+        }
+
+        /* Badge positioning for collapsed state */
+        .sidebar.collapsed .nav .nav-item .nav-link .badge {
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            transform: scale(0.8) !important;
+        }
+
+        /* Section titles in collapsed state */
+        .sidebar.collapsed .nav li h5 {
+            font-size: 7px !important;
+            text-align: center !important;
+            padding: 0 0.5rem !important;
+            margin: 10px 0 5px 0 !important;
+            line-height: 1.2 !important;
+        }
+
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{ asset('/images/loader.gif') }}") 50% 50% no-repeat white;
+            opacity: .8;
+            background-size: 120px 120px;
+        }
+
+        /* Protected Sidebar Styles - Higher specificity */
+        .main-layout .sidebar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            height: 100vh !important;
+            width: var(--sidebar-width) !important;
+            background: #FFFCFC !important;
+            border-right: 1px solid var(--border-color) !important;
+            transition: all 0.3s ease !important;
+            z-index: 1000 !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+
+        .main-layout .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width) !important;
+        }
+
+        .main-layout .sidebar-header {
+            padding: 20px !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            min-height: var(--topbar-height) !important;
+        }
+
+        .notification-dropdown
+        {
+            cursor: pointer;
+            background: none !important;
+        }
+
+        .notification-dropdown:hover
+        {
+            background: none !important;
+        }
+
+        .notification-dropdown .notif-badge
+        {
+            width: 12px; 
+            height: 12px; 
+            font-size: 7px; 
+            border-radius: 50%;
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            background-color: red;
+        }
+
+        .main-layout .logo {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            text-decoration: none !important;
+            color: var(--primary-color) !important;
+            font-weight: 700 !important;
+            font-size: 20px !important;
+        }
+
+       .main-layout .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0 16px; /* Add padding if you want spacing inside */
+            box-sizing: border-box;
+        }
+
+        .main-layout .logo img {
+            height: 40px !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+            display: block;
+            margin: 0 auto; /* Optional if using justify-content */
+        }
+
+        .main-layout .logo-text {
+            transition: all 0.3s ease !important;
+        }
+
+        .main-layout .sidebar.collapsed .logo-text {
+            opacity: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .sidebar-nav {
+            padding: 24px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-section-title {
+            padding: 0 20px 8px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+            opacity: 0;
+        }
+
+        .nav-item {
+            margin: 4px 12px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: #f1f5f9;
+            color: var(--primary-color);
+            transform: translateX(2px);
+        }
+
+        .nav-link.active {
+            background: #dbeafe;
+            color: var(--primary-color);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-text {
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-link {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        /* User Profile Section */
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+            transition: all 0.3s ease;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .user-role {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .user-profile {
+        position: relative;
+        }
+        .user-profile::after {
+        position: absolute;
+        left: 35px !important;
+        top: 15px;
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: var(--bs-success);
+        border-radius: 50%;
+        border: 2px solid var(--bs-white);
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: all 0.3s ease;
+    padding-top: 80px; /* Add top padding to account for fixed topbar */
+}
+
+        .sidebar.collapsed + .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+}
+        .main-layout .topbar {
+    background: #5BC2E7 !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 0 32px !important;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: var(--sidebar-width) !important;
+    width: calc(100% - var(--sidebar-width)) !important;
+    z-index: 999 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    border-radius: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.sidebar.collapsed ~ .main-content .topbar {
+    left: var(--sidebar-collapsed-width) !important;
+    width: calc(100% - var(--sidebar-collapsed-width)) !important;
+}
+
+        .main-layout .topbar-left {
+            display: flex !important;
+            align-items: center !important;
+            gap: 24px !important;
+        }
+
+        .main-layout .sidebar-toggle {
+            background: none !important;
+            border: none !important;
+            padding: 8px !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            color: #FFFF !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .main-layout .sidebar-toggle:hover {
+            color: #FFFF !important;
+            color: var(--primary-color) !important;
+        }
+
+        .main-layout .welcome-message h6 {
+            margin: 0 !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .main-layout .welcome-message small {
+            color: #FFFFFF !important;
+            font-size: 13px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .main-layout .topbar-right {
+            display: flex !important;
+            align-items: center !important;
+            gap: 16px !important;
+        }
+
+        .main-layout .search-container {
+            position: relative !important;
+        }
+
+        .main-layout .search-input {
+            width: 300px !important;
+            height: 40px !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 20px !important;
+            padding: 0 16px 0 44px !important;
+            background: #D8E9F0 !important;
+            transition: all 0.2s ease !important;
+            font-size: 14px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            outline: none !important;
+        }
+
+        .main-layout .search-input::placeholder{
+            color: #5BC2E7 !important;
+        }
+
+        .main-layout .search-input:focus {
+            border-color: var(--primary-color) !important;
+            background: white !important;
+        }
+
+        .main-layout .search-icon {
+            position: absolute !important;
+            right: 16px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            color: #5BC2E7 !important;
+        }
+
+        .main-layout .profile-dropdown {
+            position: relative !important;
+            background: none !important;
+            border: none !important;
+            padding: 8px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            color: #FFFF !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .main-layout .profile-dropdown:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .main-layout .notification-badge {
+            position: absolute !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 18px !important;
+            height: 18px !important;
+            background: #ef4444 !important;
+            color: white !important;
+            border-radius: 50% !important;
+            font-size: 10px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 600 !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .main-layout .profile-img {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: 2px solid var(--border-color) !important;
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 32px;
+            position: absolute;
+            left: var(--sidebar-width);
+            right: 0;
+            transition: all 0.3s ease;
             
         }
-        
-    }
 
-    /* Medium screens (Tablets) */
-    @media (max-width: 768px) {
-      .font {
-            font-size: 12px;  /* Smaller font size for medium screens */
+        .sidebar.collapsed ~ .main-content .content-area {
+            left: var(--sidebar-collapsed-width);
         }
 
-      
-    }
-
-    /* Larger tablets / small laptops */
-    @media (max-width: 1024px) {
-      .move-up {
-                margin-top: -25px; /* Adjust the negative value to move the icon up */
-                margin-left: -20px; /* Adjust the negative value to move the icon up */
+        @media (max-width: 768px) {
+            .content-area {
+                left: 0;
             }
-      
-    }
+        }
 
-    /* Large screens (Desktops and bigger) */
+        .main-layout .dropdown-menu {
+            border: none !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+            border-radius: 12px !important;
+            padding: 16px 0 !important;
+            min-width: 280px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
 
+        .main-layout .dropdown-item {
+            padding: 12px 20px !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 14px !important;
+            color: #334155 !important;
+        }
 
+        .main-layout .dropdown-item:hover {
+            background: #f1f5f9 !important;
+            color: var(--primary-color) !important;
+        }
 
-    /* For screens with a minimum width of 768px (medium to large screens) */
+        .main-layout .profile-info {
+            padding: 16px 20px !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            margin-bottom: 8px !important;
+        }
 
+        .main-layout .profile-info h6 {
+            margin: 0 !important;
+            font-weight: 600 !important;
+            color: #1e293b !important;
+            font-size: 14px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
 
-</style>
-  
-    @yield('css')
-       
-    <style>
-      .loader {
-          position: fixed;
-          left: 0px;
-          top: 0px;
-          width: 100%;
-          height: 100%;
-          z-index: 9999;
-          background: url("{{ asset('/images/loader.gif') }}") 50% 50% no-repeat white;
-          opacity: .8;
-          background-size: 120px 120px;
-      }
-      .footer {
-          border-top: 1px solid #e9ecef;
-          padding: 2rem 0 1.5rem 0;
-          margin-top: 170px;
-          margin-left: 0;
-          width: 100%;
-          background: none;
-      }
+        .main-layout .profile-info small {
+            color: var(--text-muted) !important;
+            font-size: 12px !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .welcome-message {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 16px;
+            }
+
+            .content-area {
+                padding: 16px;
+            }
+            .main-layout .topbar {
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                padding: 0 16px !important;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding-top: 80px;
+            }
+        }
+
+        /* Overlay for mobile */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+        /* Custom responsive font sizes */
+        @media (max-width: 480px) {
+            .font {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .font {
+                font-size: 12px;
+            }
+        }
+        transaction-item .row {
+            min-height: 40px !important; /* Adjust this value */
+            padding: 11px 15px !important; /* Reduce padding */
+        }
+
+        .transaction-item .avatar-circle {
+            width: 35px !important;
+            height: 35px !important;
+        }
+
+        .transaction-item h6 {
+            font-size: 13px !important;
+            line-height: 1 !important;
+        }
+
+        .footer {
+            border-top: 1px solid #676565ff;
+            padding: 2rem 0 1.5rem 0;
+            margin-top: 170px !important; /* Change this from 170px to auto */
+            margin-left: 0;
+            width: 100%;
+            background: none;
+            position: relative; /* Add this to ensure proper positioning */
+            clear: both; /* Add this to clear any floating elements */
+        }
 
       .page-wrapper .footer {
           position: relative;
@@ -247,7 +923,7 @@
           width: 100%;
           max-width: 300px;
           height: 1px;
-          background-color: #e9ecef;
+          background-color: #ffffff4b;
           margin: 0.5rem 0;
       }
 
@@ -314,425 +990,331 @@
           }
       }
     </style>
+    
+    @yield('css')
 </head>
-<body>
-  <div id="loader" style="display:none;" class="loader">
-  </div>
-    <div class="preloader">
-        <img
-          src="{{asset('design/assets/images/logos/loader.svg')}}"
-          alt="loader"
-          class="lds-ripple img-fluid"
-        />
-      </div>
-      <div id="main-wrapper">
-        <!-- Sidebar Start -->
-        <aside class="left-sidebar with-vertical">
-          <!-- ---------------------------------- -->
-    <!-- Start Vertical Layout Sidebar -->
-    <!-- ---------------------------------- -->
-    <div class="brand-logo d-flex align-items-center justify-content-between text-center">
-      <a href="{{url('/')}}" class="text-nowrap logo-img text-center">
-        <!-- Full logo for expanded sidebar -->
-        <img src="{{asset('images/logo_mo.png')}}" 
-            style='height:55px;width:178px;' 
-            class="dark-logo text-center logo-full" 
-            alt="Logo-Dark" />
-        
-        <!-- Mini logo for collapsed sidebar (initially hidden) -->
-        <img src="{{asset('images/logo_nya.png')}}" 
-            style='height:43px;width:43px;display:none;' 
-            class="dark-logo text-center logo-mini" 
-            alt="Logo-Mini" />
-      </a>
-      <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
-        <i class="ti ti-x"></i>
-      </a>
-    </div>
-    
-    <div class="scroll-sidebar" data-simplebar>
-      <!-- Sidebar navigation-->
-      <nav class="sidebar-nav">
-        <ul id="sidebarnav" class="mb-0">
-    
-          <!-- ============================= -->
-          <!-- Home -->
-          <!-- ============================= -->
-        
-          <li class="nav-small-cap">
-            <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
-            <span class="hide-menu">Home</span>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'home')active @endif" href="{{url('/')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="solar:screencast-2-line-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu ps-1">Dashboard</span>
+<body class="main-layout">
+    <div id="loader" style="display:none;" class="loader"></div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header d-flex align-items-center justify-content-between text-center">
+            <a href="{{url('/')}}" class="logo text-center text-nowrap">
+                <!-- Full logo (for expanded sidebar) -->
+                <img src="{{asset('images/logo_mo.png')}}"
+                    class="logo-full"
+                    alt="Logo-Full" />
+
+                <!-- Mini logo (for collapsed sidebar) -->
+                <img src="{{asset('images/logo_nya.png')}}"
+                    style="height:43px;width:43px;display:none;"
+                    class="logo-mini"
+                    alt="Logo-Mini" />
             </a>
-          </li>
-          @if((auth()->user()->role == "Admin") || (auth()->user()->role == "Dealer"))
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'transactions')active @endif" href="{{url('/transactions')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="mdi:currency-usd" class="fs-6"></iconify-icon>
-
-
-              </span>
-              <span class="hide-menu ps-1">Transactions</span>
-            </a>
-          </li>
-          @endif
-           @if((auth()->user()->role == "Admin"))
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'Dealers')active @endif" href="{{url('/dealers')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="mdi:store" class="fs-6"></iconify-icon>
-
-
-              </span>
-              <span class="hide-menu ps-1">Dealers</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'Customers')active @endif" href="{{url('/customers')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="mdi:account" class="fs-6"></iconify-icon>
-
-
-
-              </span>
-              <span class="hide-menu ps-1">Customers</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'Users')active @endif" href="{{url('/users')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="mdi:cog" class="fs-6"></iconify-icon>
-
-
-
-              </span>
-              <span class="hide-menu ps-1">Users</span>
-            </a>
-          </li>
-          @endif
-          {{-- <li class="nav-small-cap">
-            <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
-            <span class="hide-menu">Dealer</span>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'dashboard-dealer')active @endif" href="{{url('/dashboard-dealer')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="solar:screencast-2-line-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu ps-1">Dashboard</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'dealer=transactions')active @endif" href="{{url('/dealer=transactions')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="mdi:currency-usd" class="fs-6"></iconify-icon>
-
-
-              </span>
-              <span class="hide-menu ps-1">Transactions</span>
-            </a>
-          </li>
-          <li class="nav-small-cap">
-            <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
-            <span class="hide-menu">Customer</span>
-          </li>
-          <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link primary-hover-bg @if(Route::currentRouteName() == 'dashboard-customer')active @endif" href="{{url('/dashboard-customer')}}" aria-expanded="false">
-              <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                <iconify-icon icon="solar:screencast-2-line-duotone" class="fs-6"></iconify-icon>
-              </span>
-              <span class="hide-menu ps-1">Dashboard</span>
-            </a>
-          </li> --}}
-          <!-- ============================= -->
-          <!-- Apps -->
-          <!-- ============================= -->
-        
-        </ul>
-    
-      </nav>
-      <!-- End Sidebar navigation -->
-    </div>
-    
-    <div class=" fixed-profile mx-3 mt-3">
-      <div class="card bg-primary-subtle mb-0 shadow-none">
-        <div class="card-body p-4">
-          <div class="d-flex align-items-center justify-content-between gap-3">
-            <div class="d-flex align-items-center gap-3">
-              <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" width="45" height="45" class="img-fluid rounded-circle" alt="" />
-              <div>
-                <h5 class="mb-1">{{current(explode(' ',auth()->user()->name))}}</h5>
-              </div>
-            </div>
-            <a href="{{ route('logout') }}" onclick="logout(); show();" class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top"
-              data-bs-title="Logout">
-              <iconify-icon icon="solar:logout-line-duotone" class="fs-8"></iconify-icon>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-          </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- ---------------------------------- -->
-    <!-- Start Vertical Layout Sidebar -->
-    <!-- ---------------------------------- -->
-        </aside>
-        <!--  Sidebar End -->
-        <div class="page-wrapper">
-    
-          <aside class="left-sidebar with-horizontal">
-            <!-- Sidebar scroll-->
-   
-          </aside>
-    
-          <div class="body-wrapper">
-            <div class="container-fluid">
-              <!--  Header Start -->
-              <header class="topbar sticky-top">
-                <div class="with-vertical"><!-- ---------------------------------- -->
-    <!-- Start Vertical Layout Header -->
-    <!-- ---------------------------------- -->
-    <nav class="navbar navbar-expand-lg p-0">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-            <div class="nav-icon-hover-bg rounded-circle ">
-              <iconify-icon icon="solar:list-bold-duotone" class="fs-7 text-dark"></iconify-icon>
-            </div>
-          </a>
-        </li>
-      </ul>
-    
-     
-    
-      <div class="d-block d-lg-none">
-        {{-- <img src="{{asset('images/icon.png')}}" class="dark-logo" alt="Logo-Dark" />
-        <img src="{{asset('images/icon.png')}}" class="light-logo" alt="Logo-light" /> --}}
-      </div>
-    
-    
-      <a class="navbar-toggler nav-icon-hover p-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse"
-        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="p-2">
-          <i class="ti ti-dots fs-7"></i>
-        </span>
-      </a>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="d-flex align-items-center justify-content-between">
-          <a href="javascript:void(0)" class="nav-link d-flex d-lg-none align-items-center justify-content-center"
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-            aria-controls="offcanvasWithBothOptions">
-            <div class="nav-icon-hover-bg rounded-circle ">
-              <i class="ti ti-align-justified fs-7"></i>
-            </div>
-          </a>
-          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-            <li class="nav-item dropdown d-block d-lg-none">
-              <a class="nav-link position-relative" href="javascript:void(0)" id="drop3" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <iconify-icon icon="solar:magnifer-linear" class="fs-7 text-dark"></iconify-icon>
-              </a>
-              <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop3">
-                <!--  Search Bar -->
-            
-            <div class="modal-header border-bottom p-3">
-            <input type="search" class="form-control fs-3" placeholder="Try to searching ..." />
-            <span data-bs-dismiss="modal" class="lh-1 cursor-pointer">
-                <i class="ti ti-x fs-5 ms-3"></i>
-            </span>
-            </div>
-              </div>
-            </li>
-            <!-- ------------------------------- -->
-            <!-- start language Dropdown -->
-            <!-- ------------------------------- -->
-           
-            <!-- ------------------------------- -->
-            <!-- end language Dropdown -->
-            <!-- ------------------------------- -->
-    
-           
-    
-            <!-- ------------------------------- -->
-            <!-- start Messages cart Dropdown -->
-            <!-- ------------------------------- -->
-            
-            <!-- ------------------------------- -->
-            <!-- end Messages cart Dropdown -->
-            <!-- ------------------------------- -->
-    
-            <!-- ------------------------------- -->
-            <!-- start notification Dropdown -->
-            <!-- ------------------------------- -->
-           
-            <!-- ------------------------------- -->
-            <!-- end notification Dropdown -->
-            <!-- ------------------------------- -->
-    
-            <!-- ------------------------------- -->
-            <!-- start profile Dropdown -->
-            <!-- ------------------------------- -->
-            <li class="nav-item dropdown">
-              <a class="nav-link position-relative ms-6" href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <div class="d-flex align-items-center flex-shrink-0">
-                  <div class="user-profile me-sm-3 me-2">
-                    <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" width="45" height='100%' class="rounded-circle" alt="">
-                  </div>
-                  <span class="d-sm-none d-block"><iconify-icon
-                      icon="solar:alt-arrow-down-line-duotone"></iconify-icon></span>
-    
-                  <div class="d-none d-sm-block">
-                    <h6 class="fw-bold fs-4 mb-1 profile-name">
-                        {{current(explode(' ',auth()->user()->name))}}
-                    </h6>
-                    <p class="fs-3 lh-base mb-0 profile-subtext">
-                      
-                    </p>
-                  </div>
+
+        <div class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">HOME</div>
+                <div class="nav-item">
+                    <a href="{{url('/')}}" class="nav-link @if(Route::currentRouteName() == 'home')active @endif">
+                        <div class="nav-icon">
+                            <i class="bi bi-grid-1x2"></i>
+                        </div>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
                 </div>
-              </a>
-              <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
-                <div class="profile-dropdown position-relative" data-simplebar>
-      <div class="d-flex align-items-center justify-content-between pt-3 px-7">
-        <h3 class="mb-0 fs-5">User Profile</h3>
-        <button type="button" class="border-0 bg-transparent" aria-label="Close">
-          <iconify-icon icon="solar:close-circle-line-duotone" class="fs-7 text-muted"></iconify-icon>
-        </button>
-      </div>
-    
-      <div class="d-flex align-items-center mx-7 py-9 border-bottom">
-        <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="user" width="100" class="rounded-circle" />
-        <div class="ms-4">
-          <h4 class="mb-0 fs-5 fw-normal">{{auth()->user()->name}}</h4>
-          <span class="text-muted"></span>
-          <p class="text-muted mb-0 mt-1 d-flex align-items-center">
-            <iconify-icon icon="solar:mailbox-line-duotone" class="fs-4 me-1"></iconify-icon>
-            {{auth()->user()->email}}
-          </p>
-        </div>
-      </div>
-    
-      <div class="message-body">
-        @if(auth()->user()->role != "Admin")
-        <a href="{{url('user-profile')}}" class="dropdown-item px-7 d-flex align-items-center py-6">
-          <span class="btn px-3 py-2 bg-info-subtle rounded-1 text-info shadow-none">
-            <iconify-icon icon="solar:wallet-2-line-duotone" class="fs-7"></iconify-icon>
-          </span>
-          <div class="w-75 d-inline-block v-middle ps-3 ms-1">
-            <h5 class="mb-0 mt-1 fs-4 fw-normal">
-              My Profile
-            </h5>
-            <span class="fs-3 text-nowrap d-block fw-normal mt-1 text-muted">Account Settings</span>
-          </div>
-        </a>
-        @endif
-    
-      </div>
-    
-      <div class="py-6 px-7 mb-1">
-        <a href="" class="btn btn-primary w-100">Log Out</a>
-      </div>
-    </div>
-              </div>
-            </li>
-            <!-- ------------------------------- -->
-            <!-- end profile Dropdown -->
-            <!-- ------------------------------- -->
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- ---------------------------------- -->
-    <!-- End Vertical Layout Header -->
-    <!-- ---------------------------------- -->
-    
-    <!-- ------------------------------- -->
-    <!-- apps Dropdown in Small screen -->
-    <!-- ------------------------------- -->
-    <!--  Mobilenavbar -->
-    <div class="offcanvas offcanvas-start dropdown-menu-nav-offcanvas" data-bs-scroll="true" tabindex="-1" id="mobilenavbar"
-      aria-labelledby="offcanvasWithBothOptionsLabel">
-      <nav class="sidebar-nav scroll-sidebar">
-        <div class="offcanvas-header justify-content-between">
-          {{-- <img src="{{asset('images/icon.png')}}" alt="" class="img-fluid" /> --}}
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body h-n80" data-simplebar>
-        
-        </div>
-      </nav>
-    </div></div>
-                <div class="app-header with-horizontal">
-                  <nav class="navbar navbar-expand-xl container-fluid p-0">
-     
-      <a class="navbar-toggler nav-icon-hover p-0 border-0" href="javascript:void(0)" data-bs-toggle="collapse"
-        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="p-2">
-          <i class="ti ti-dots fs-7"></i>
-        </span>
-      </a>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="d-flex align-items-center justify-content-between">
-          <a href="javascript:void(0)" class="nav-link d-flex d-lg-none align-items-center justify-content-center"
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar"
-            aria-controls="offcanvasWithBothOptions">
-            <div class="nav-icon-hover-bg rounded-circle ">
-              <i class="ti ti-align-justified fs-7"></i>
-            </div>
-          </a>
-          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
-            <li class="nav-item dropdown d-block d-lg-none">
-              <a class="nav-link position-relative" href="javascript:void(0)" id="drop3" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <iconify-icon icon="solar:magnifer-linear" class="fs-7 text-dark"></iconify-icon>
-              </a>
-              <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop3">
-                <!--  Search Bar -->
-    
-    <div class="modal-header border-bottom p-3">
-      <input type="search" class="form-control fs-3" placeholder="Try to searching ..." />
-      <span data-bs-dismiss="modal" class="lh-1 cursor-pointer">
-        <i class="ti ti-x fs-5 ms-3"></i>
-      </span>
-    </div>
-   
-              </div>
-            </li>
-            <!-- ------------------------------- -->
-            <!-- start language Dropdown -->
-            <!-- ------------------------------- -->
-           
-            <!-- ------------------------------- -->
-            <!-- end notification Dropdown -->
-            <!-- ------------------------------- -->
-    
-            <!-- ------------------------------- -->
-            <!-- start profile Dropdown -->
-            <!-- ------------------------------- -->
-            
-            <!-- ------------------------------- -->
-            <!-- end profile Dropdown -->
-            <!-- ------------------------------- -->
-          </ul>
-        </div>
-      </div>
-    </nav>
+                
+                @if((auth()->user()->role == "Admin") || (auth()->user()->role == "Dealer"))
+                <div class="nav-item">
+                    <a href="{{url('/transactions')}}" class="nav-link @if(Route::currentRouteName() == 'transactions')active @endif">
+                        <div class="nav-icon">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                        <span class="nav-text">Transactions</span>
+                    </a>
                 </div>
-              </header>
-              @yield('content')
-              <!--  Header End -->
-            <footer class="footer">
+                @endif
+                
+                @if(auth()->user()->role == "Admin")
+                <div class="nav-item">
+                    <a href="{{url('/dealers')}}" class="nav-link @if(Route::currentRouteName() == 'dealers')active @endif">
+                        <div class="nav-icon">
+                            <i class="bi bi-shop"></i>
+                        </div>
+                        <span class="nav-text">Dealers</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{url('/customers')}}" class="nav-link @if(Route::currentRouteName() == 'customers')active @endif">
+                        <div class="nav-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <span class="nav-text">Customers</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{url('/users')}}" class="nav-link @if(Route::currentRouteName() == 'users')active @endif">
+                        <div class="nav-icon">
+                            <i class="bi bi-gear"></i>
+                        </div>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="User" class="user-avatar">
+                <div class="user-info">
+                    <p class="user-name">{{current(explode(' ',auth()->user()->name))}}</p>
+                    <p class="user-role">{{auth()->user()->role}}</p>
+                </div>
+                <button class="logout-btn" onclick="logout(); show();">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="bi bi-list" style="font-size: 20px;"></i>
+                </button>
+                <div class="welcome-message">
+                    <h6>Hello {{current(explode(' ',auth()->user()->name))}}!</h6>
+                    <small>Welcome back to dashboard</small>
+                </div>
+            </div>
+            @if((auth()->user()->role == "Admin"))
+            <div class="topbar-right">
+                <li class="nav-item d-none d-md-block me-2 mt-3 search-container">
+                    <form action="{{ url('/search') }}" method="GET" class="position-relative">
+                        <input 
+                        type="search" 
+                        name="q"
+                        id="searchInput"
+                        class="search-input" 
+                        style="width: 300px; height: 40px;" 
+                        placeholder="Search by name..." 
+                        value="{{ request('q') }}"
+                        autocomplete="off"
+                        />
+                        <iconify-icon icon="solar:magnifer-linear" 
+                                    class="search-icon position-absolute top-50 translate-middle-y ms-3 fs-6 text-muted"></iconify-icon>
+                        
+                        <div id="searchSuggestions" 
+                            class="position-absolute bg-white border rounded-3 shadow-lg" 
+                            style="display: none; z-index: 1000; max-height: 350px; overflow-y: auto; top: 100%; left: 0; right: 0; margin-top: 5px;">
+                        </div>
+                        
+                        <button type="submit" style="display: none;"></button>
+                    </form>
+                </li>
+                
+
+               <div class="dropdown me-2 notification-dropdown">
+                    @php
+                    $notificationData = app('App\Http\Controllers\NotificationController')->getNotificationData();
+                    extract($notificationData); // This gives you all the variables like $notifications, $totalUnreadCount, etc.
+                    @endphp
+                    
+                    <a class="" id="notificationDropdown" 
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="rounded-circle danger">
+                        <iconify-icon icon="solar:bell-linear" class="fs-7" style="color: #DFDFEC"></iconify-icon>
+                        @if($totalUnreadCount > 0)
+                        <span class="position-absolute bottom-45 start-100 translate-middle badge rounded-pill notif-badge" 
+                            id="notification-badge">
+                            {{$totalUnreadCount ?? ''}}
+                        </span>
+                        @endif
+                    </div>
+                    </a>
+                    
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up p-0" 
+                        aria-labelledby="notificationDropdown" style="width: 380px;">
+                        <div class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">
+                            Notifications 
+                        </h6>
+                        @if($totalUnreadCount > 0)
+                            <form action="{{ route('notifications.markAllAsRead') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-link p-0 text-primary">
+                                    Mark all as read
+                                </button>
+                            </form>
+                            @endif
+                        </div>
+                        
+                        <div style="max-height: 350px; overflow-y: auto;">
+                                @if($notifications->count() > 0)
+                                    <div class="px-3 py-2">
+                                        @foreach($notifications as $notification)
+                                        @if($notification['type'] === 'client')
+                                            @php 
+                                                $client = $notification['data'];
+                                                $isUnread = !in_array('client_' . $client->id, $readNotifications);
+                                                $isSaved = in_array('customer_' . $client->id, $savedNotifications);
+                                                $redirectUrl = url('/customers'); // Dynamic URL for clients
+                                            @endphp
+                                            <div class="notification-item border-bottom py-2">
+                                                <div class="d-flex align-items-center" 
+                                                    style="cursor: pointer;" 
+                                                    onclick="markAsReadAndRedirect('client_{{ $client->id }}', '{{ $redirectUrl }}')"
+                                                    onmouseover="this.style.backgroundColor='#f8f9fa'" 
+                                                    onmouseout="this.style.backgroundColor=''">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                                                            style="width: 35px; height: 35px;">
+                                                            <iconify-icon icon="solar:user-plus-broken" class="text-white fs-5"></iconify-icon>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <p class="mb-0 fs-3">
+                                                            <strong>{{ $client->name }}</strong> registered
+                                                            @if($isUnread)
+                                                                <span class="badge bg-primary ms-2" style="font-size: 0.6rem;">NEW</span>
+                                                            @endif
+                                                        </p>
+                                                        <small class="text-muted">{{ $client->created_at->diffForHumans() }}</small>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    @if(!$isSaved)
+                                                        <form action="{{ route('notification.save') }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="type" value="client">
+                                                            <input type="hidden" name="record_id" value="{{ $client->id }}">
+                                                            <button type="submit" class="btn btn-sm btn-success" style="font-size: 0.75rem;">
+                                                                View
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <a href="{{ $redirectUrl }}" class="btn btn-sm btn-success" style="font-size: 0.75rem;">
+                                                            View
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                                                    @elseif($notification['type'] === 'transaction')
+                                            @php 
+                                                $transaction = $notification['data'];
+                                                $isUnread = !in_array('transaction_' . $transaction->id, $readNotifications);
+                                                $isSaved = in_array('transaction_' . $transaction->id, $savedNotifications);
+                                                $redirectUrl = url('/transactions'); // Dynamic URL for transactions
+                                            @endphp
+                                            <div class="notification-item border-bottom py-2">
+                                                <div class="d-flex align-items-center" 
+                                                    style="cursor: pointer;" 
+                                                    onclick="markAsReadAndRedirect('transaction_{{ $transaction->id }}', '{{ $redirectUrl }}')"
+                                                    onmouseover="this.style.backgroundColor='#f8f9fa'" 
+                                                    onmouseout="this.style.backgroundColor=''">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="bg-success rounded-circle d-flex align-items-center justify-content-center" 
+                                                            style="width: 35px; height: 35px;">
+                                                            <iconify-icon icon="solar:dollar-minimalistic-broken" class="text-white fs-5"></iconify-icon>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <p class="mb-0 fs-3">
+                                                            @if($transaction->customer)
+                                                                <strong>{{ $transaction->customer->name }}</strong> 
+                                                            @else
+                                                                Customer
+                                                            @endif
+                                                            made transaction
+                                                            @if($isUnread)
+                                                                <span class="badge bg-primary ms-2" style="font-size: 0.6rem;">NEW</span>
+                                                            @endif
+                                                            @if($transaction->product)
+                                                                <br><small class="text-muted">{{ $transaction->product->name }} - ₱{{ number_format($transaction->price, 2) }}</small>
+                                                            @endif
+                                                        </p>
+                                                        <small class="text-muted">{{ $transaction->created_at->diffForHumans() }}</small>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    @if(!$isSaved)
+                                                        <form action="{{ route('notification.save') }}" method="POST" style="display: inline;">
+                                                            @csrf
+                                                            <input type="hidden" name="type" value="transaction">
+                                                            <input type="hidden" name="record_id" value="{{ $transaction->id }}">
+                                                            <button type="submit" class="btn btn-sm btn-success" style="font-size: 0.75rem;">
+                                                                View
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <a href="{{ $redirectUrl }}" class="btn btn-sm btn-success" style="font-size: 0.75rem;">
+                                                            View
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                @else
+                                <div class="px-3 py-4 text-center">
+                                    <iconify-icon icon="solar:bell-off-broken" class="fs-1 text-muted"></iconify-icon>
+                                    <p class="text-muted mb-0">No recent notifications</p>
+                                </div>
+                            @endif
+
+                        </div>
+                        
+                        <div class="px-3 py-2 border-top text-center">
+                        <a href="{{ url('/transactions') }}" class="btn btn-sm btn-outline-primary">View All Transactions</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <div class="dropdown">
+                    <button class="profile-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="Profile" class="profile-img">
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="profile-info">
+                            <div class="d-flex align-items-center">
+                                <img src="{{auth()->user()->avatar}}" onerror="this.src='{{url('design/assets/images/profile/user-1.png')}}';" alt="user" width="40" class="rounded-circle me-3" />
+                                <div>
+                                    <h6 class="mb-0">{{auth()->user()->name}}</h6>
+                                    <small class="text-muted">{{auth()->user()->email}}</small>
+                                </div>
+                            </div>
+                        </li>
+                        @if(auth()->user()->role != "Admin")
+                        <li><a class="dropdown-item" href="{{url('user-profile')}}">
+                            <i class="bi bi-person"></i>
+                            <span>My Profile</span>
+                        </a></li>
+                        @endif
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="logout(); show();">
+                            <i class="bi bi-box-arrow-right text-danger"></i>
+                            <span>Log Out</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+             @yield('content')
+
+             <footer class="footer">
               <div class="container-fluid">
                 <div class="footer-content">
                   
@@ -776,175 +1358,19 @@
                 
               </div>
             </footer>
-
-            </div>
-          </div>
-          <script>
-      function handleColorTheme(e) {
-        $("html").attr("data-color-theme", e);
-        $(e).prop("checked", !0);
-      }
-    </script>
-    {{-- <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn"
-      type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-      <i class="icon ti ti-settings fs-7"></i>
-    </button> --}}
-    
-    <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample"
-      aria-labelledby="offcanvasExampleLabel">
-      <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
-        <h4 class="offcanvas-title fw-semibold" id="offcanvasExampleLabel">
-          Settings
-        </h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body h-n80" data-simplebar>
-        <h6 class="fw-semibold fs-4 mb-2">Theme</h6>
-    
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <input type="radio" class="btn-check light-layout" name="theme-layout" id="light-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="light-layout"><i
-              class="icon ti ti-brightness-up fs-7 me-2"></i>Light</label>
-    
-          <input type="radio" class="btn-check dark-layout" name="theme-layout" id="dark-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="dark-layout"><i class="icon ti ti-moon fs-7 me-2"></i>Dark</label>
         </div>
-    
-        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Direction</h6>
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <input type="radio" class="btn-check" name="direction-l" id="ltr-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="ltr-layout"><i
-              class="icon ti ti-text-direction-ltr fs-7 me-2"></i>LTR</label>
-    
-          <input type="radio" class="btn-check" name="direction-l" id="rtl-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="rtl-layout"><i
-              class="icon ti ti-text-direction-rtl fs-7 me-2"></i>RTL</label>
-        </div>
-    
-        <h6 class="mt-5 fw-semibold fs-4 mb-2">Theme Colors</h6>
-    
-        <div class="d-flex flex-row flex-wrap gap-3 customizer-box color-pallete" role="group">
-          <input type="radio" class="btn-check" name="color-theme-layout" id="Blue_Theme"
-            autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Blue_Theme')"
-            for="Blue_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-1">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i>
-            </div>
-          </label>
-    
-          <input type="radio" class="btn-check" name="color-theme-layout"  id="Aqua_Theme"
-            autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Aqua_Theme')"
-            for="Aqua_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-2">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i>
-            </div>
-          </label>
-    
-          <input type="radio" class="btn-check" name="color-theme-layout" id="Purple_Theme" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Purple_Theme')"
-            for="Purple_Theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-3">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i> 
-            </div>
-          </label>
-    
-          <input type="radio" class="btn-check" name="color-theme-layout" id="green-theme-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Green_Theme')"
-            for="green-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-4">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i>
-            </div>
-          </label>
-    
-          <input type="radio" class="btn-check" name="color-theme-layout" id="cyan-theme-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Cyan_Theme')"
-            for="cyan-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-5">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i>
-            </div>
-          </label>
-    
-          <input type="radio" class="btn-check" name="color-theme-layout" id="orange-theme-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary d-flex align-items-center justify-content-center" onclick="handleColorTheme('Orange_Theme')"
-            for="orange-theme-layout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">
-            <div class="color-box rounded-circle d-flex align-items-center justify-content-center skin-6">
-              <i class="ti ti-check text-white d-flex icon fs-5"></i>
-            </div>
-          </label>
-        </div>
-    
-        <h6 class="mt-5 fw-semibold fs-4 mb-2">Layout Type</h6>
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <div>
-            <input type="radio" class="btn-check" name="page-layout" id="vertical-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="vertical-layout"><i
-                class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Vertical</label>
-          </div>
-          <div>
-            <input type="radio" class="btn-check" name="page-layout" id="horizontal-layout" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="horizontal-layout"><i
-                class="icon ti ti-layout-navbar fs-7 me-2"></i>Horizontal</label>
-          </div>
-        </div>
-    
-        <h6 class="mt-5 fw-semibold fs-4 mb-2">Container Option</h6>
-    
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <input type="radio" class="btn-check" name="layout" id="boxed-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="boxed-layout"><i
-              class="icon ti ti-layout-distribute-vertical fs-7 me-2"></i>Boxed</label>
-    
-          <input type="radio" class="btn-check" name="layout" id="full-layout" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="full-layout"><i
-              class="icon ti ti-layout-distribute-horizontal fs-7 me-2"></i>Full</label>
-        </div>
-    
-        <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <a href="javascript:void(0)" class="fullsidebar">
-            <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="full-sidebar"><i
-                class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full</label>
-          </a>
-          <div>
-            <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar" autocomplete="off" />
-            <label class="btn p-9 btn-outline-primary" for="mini-sidebar"><i
-                class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse</label>
-          </div>
-        </div>
-    
-        <h6 class="mt-5 fw-semibold fs-4 mb-2">Card With</h6>
-    
-        <div class="d-flex flex-row gap-3 customizer-box" role="group">
-          <input type="radio" class="btn-check" name="card-layout" id="card-with-border" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="card-with-border"><i
-              class="icon ti ti-border-outer fs-7 me-2"></i>Border</label>
-    
-          <input type="radio" class="btn-check" name="card-layout" id="card-without-border" autocomplete="off" />
-          <label class="btn p-9 btn-outline-primary" for="card-without-border"><i
-              class="icon ti ti-border-none fs-7 me-2"></i>Shadow</label>
-        </div>
-      </div>
     </div>
-        </div>
-        <div class="dark-transparent sidebartoggler"></div>
-      </div>
-      @include('sweetalert::alert')
-    {{-- <div id="app">
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div> --}}
-    <script>
-            function logout() {
-            event.preventDefault();
-            document.getElementById('logout-form').submit();
-        }
+
+    <!-- Hidden logout form -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
+
+    @include('sweetalert::alert')
+
+    <!-- Bootstrap JS -->
     
-    </script>
-  
+    <!-- Original scripts -->
     <script src="{{asset('design/assets/js/vendor.min.js')}}"></script>
     <script src="{{asset('design/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('design/assets/libs/simplebar/dist/simplebar.min.js')}}"></script>
@@ -953,141 +1379,257 @@
     <script src="{{asset('design/assets/js/theme/app.min.js')}}"></script>
     <script src="{{asset('design/assets/js/theme/sidebarmenu.js')}}"></script>
     <script src="{{asset('design/assets/js/theme/feather.min.js')}}"></script>
-    {{-- <script >
-        window.onload = function() {
-            var userImage = document.getElementById("light-layout");
-            userImage.click();
-        };
-    </script> --}}
+
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
-  @yield('javascript')
-  
-  <script>
-    // Replace the existing logo switching script with this improved version
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebarToggler = document.getElementById('headerCollapse');
-    const mainWrapper = document.getElementById('main-wrapper');
-    const sidebar = document.querySelector('.left-sidebar');
+    @yield('javascript')
+
+    <script>
+            function logout() {
+            event.preventDefault();
+            document.getElementById('logout-form').submit();
+        }
+    
+    </script>
+
+<script>
+$(document).ready(function() {
+    @if(auth()->user()->role === 'Dealer' || auth()->user()->role === 'Client')
+        $('.content-area').css('margin-top', '90px');
+    @endif
+});
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const suggestionsDiv = document.getElementById('searchSuggestions');
+      let debounceTimer;
+
+      if (searchInput) {
+          searchInput.addEventListener('input', function() {
+              const query = this.value.trim();
+              
+              clearTimeout(debounceTimer);
+              
+              if (query.length < 2) {
+                  suggestionsDiv.style.display = 'none';
+                  return;
+              }
+
+              debounceTimer = setTimeout(() => {
+                  fetch(`{{ url('/search/suggestions') }}?q=${encodeURIComponent(query)}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          suggestionsDiv.innerHTML = '';
+                          
+                          if (data.length > 0) {
+                              data.forEach(item => {
+                                  const div = document.createElement('div');
+                                  div.className = 'p-3 search-suggestion-item border-bottom';
+                                  div.style.cursor = 'pointer';
+                                  div.innerHTML = `
+                                      <div class="d-flex align-items-center">
+                                          <div class="me-3">
+                                              <div class="rounded-circle d-flex align-items-center justify-content-center" 
+                                                  style="width: 35px; height: 35px; background-color: ${item.type === 'client' ? '#e3f2fd' : '#f3e5f5'};">
+                                                  <iconify-icon icon="${item.type === 'client' ? 'solar:user-linear' : 'solar:shop-linear'}" 
+                                                              class="fs-5" style="color: ${item.type === 'client' ? '#1976d2' : '#7b1fa2'};"></iconify-icon>
+                                              </div>
+                                          </div>
+                                          <div class="flex-grow-1">
+                                              <div class="fw-semibold text-dark">${item.name}</div>
+                                              <small class="text-muted">${item.type === 'client' ? 'Customer' : 'Dealer'}</small>
+                                          </div>
+                                          <div>
+                                              <iconify-icon icon="solar:arrow-right-linear" class="text-muted"></iconify-icon>
+                                          </div>
+                                      </div>
+                                  `;
+                                  
+                                  div.addEventListener('click', function() {
+                                      searchInput.value = item.name;
+                                      suggestionsDiv.style.display = 'none';
+                                      window.location.href = `{{ url('/profile') }}/${item.id}/${item.type}`;
+                                  });
+
+                                  div.addEventListener('mouseenter', function() {
+                                      this.style.backgroundColor = '#f8f9fa';
+                                  });
+
+                                  div.addEventListener('mouseleave', function() {
+                                      this.style.backgroundColor = 'transparent';
+                                  });
+                                  
+                                  suggestionsDiv.appendChild(div);
+                              });
+                              
+                              if (data.length > 0) {
+                                  const viewAllDiv = document.createElement('div');
+                                  viewAllDiv.className = 'p-3 text-center border-top';
+                                  viewAllDiv.innerHTML = `
+                                      <small class="text-primary fw-semibold" style="cursor: pointer;">
+                                          Press Enter to search for "${query}"
+                                      </small>
+                                  `;
+                                  suggestionsDiv.appendChild(viewAllDiv);
+                              }
+                              
+                              suggestionsDiv.style.display = 'block';
+                          } else {
+                              suggestionsDiv.innerHTML = `
+                                  <div class="p-3 text-center text-muted">
+                                      <iconify-icon icon="solar:magnifer-linear" class="fs-3"></iconify-icon>
+                                      <div class="mt-2">No users found for "${query}"</div>
+                                      <small>Try a different search term</small>
+                                  </div>
+                              `;
+                              suggestionsDiv.style.display = 'block';
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Search error:', error);
+                          suggestionsDiv.style.display = 'none';
+                      });
+              }, 300);
+          });
+
+          document.addEventListener('click', function(event) {
+              if (!searchInput.closest('.position-relative').contains(event.target)) {
+                  suggestionsDiv.style.display = 'none';
+              }
+          });
+
+          searchInput.addEventListener('keydown', function(event) {
+              if (event.key === 'Escape') {
+                  suggestionsDiv.style.display = 'none';
+              }
+          });
+
+          searchInput.addEventListener('focus', function() {
+              if (this.value.length >= 2) {
+                  this.dispatchEvent(new Event('input'));
+              }
+          });
+      }
+  });
+  </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
     const logoFull = document.querySelector('.logo-full');
     const logoMini = document.querySelector('.logo-mini');
-    
-    console.log('Logo switching script loaded');
-    console.log('Elements found:', {
-        sidebarToggler: !!sidebarToggler,
-        mainWrapper: !!mainWrapper,
-        sidebar: !!sidebar,
-        logoFull: !!logoFull,
-        logoMini: !!logoMini
-    });
-    
-    // Function to switch logos based on sidebar width
-    function switchLogo() {
-        if (!sidebar || !logoFull || !logoMini) return;
-        
-        // Get the computed width of the sidebar
-        const sidebarWidth = sidebar.offsetWidth;
-        console.log('Sidebar width:', sidebarWidth);
-        
-        // Check various possible class names and width
-        const isCollapsed = sidebarWidth < 100 || 
-                           mainWrapper.classList.contains('mini-sidebar') ||
-                           mainWrapper.classList.contains('sidebar-mini') ||
-                           mainWrapper.classList.contains('collapsed') ||
-                           sidebar.classList.contains('mini-sidebar') ||
-                           sidebar.classList.contains('collapsed');
-        
-        console.log('Is collapsed:', isCollapsed);
+
+    // Logo switching function
+    function updateLogoVisibility() {
+        if (!logoFull || !logoMini || !sidebar) {
+            console.log('Missing logo elements');
+            return;
+        }
+
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        console.log('Logo update - Sidebar collapsed:', isCollapsed);
         
         if (isCollapsed) {
-            // Show mini logo, hide full logo
             logoFull.style.display = 'none';
-            logoMini.style.display = 'block';
-            console.log('Switched to mini logo');
+            logoMini.style.display = 'inline-block';
         } else {
-            // Show full logo, hide mini logo
-            logoFull.style.display = 'block';
+            logoFull.style.display = 'inline-block';
             logoMini.style.display = 'none';
-            console.log('Switched to full logo');
         }
     }
-    
-    // Listen for sidebar toggle clicks
-    if (sidebarToggler) {
-        sidebarToggler.addEventListener('click', function() {
-            console.log('Sidebar toggler clicked');
-            // Try multiple delays to catch the animation
-            setTimeout(switchLogo, 50);
-            setTimeout(switchLogo, 150);
-            setTimeout(switchLogo, 300);
-            setTimeout(switchLogo, 500);
-        });
-    }
-    
-    // Also listen for clicks on the sidebar itself (some themes have multiple togglers)
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.sidebartoggler') || e.target.closest('[data-toggle="sidebar"]')) {
-            console.log('Alternative sidebar toggle clicked');
-            setTimeout(switchLogo, 100);
-            setTimeout(switchLogo, 300);
-        }
-    });
-    
-    // Watch for class changes on main wrapper and sidebar
-    const observerConfig = {
-        attributes: true,
-        attributeFilter: ['class', 'style']
-    };
-    
-    if (mainWrapper) {
-        const mainObserver = new MutationObserver(function(mutations) {
-            console.log('Main wrapper class changed');
-            switchLogo();
-        });
-        mainObserver.observe(mainWrapper, observerConfig);
-    }
-    
-    if (sidebar) {
-        const sidebarObserver = new MutationObserver(function(mutations) {
-            console.log('Sidebar class/style changed');
-            switchLogo();
-        });
-        sidebarObserver.observe(sidebar, observerConfig);
-    }
-    
-    // Watch for window resize (in case it affects sidebar)
-    window.addEventListener('resize', function() {
-        setTimeout(switchLogo, 100);
-    });
-    
-    // Initial check
-    setTimeout(switchLogo, 500);
-    
-    // Fallback: Check periodically for the first few seconds
-    let checkCount = 0;
-    const intervalCheck = setInterval(function() {
-        switchLogo();
-        checkCount++;
-        if (checkCount > 10) {
-            clearInterval(intervalCheck);
-        }
-    }, 500);
-});
-  </script>
-  <script>
-      function show() {
-            document.getElementById("loader").style.display = "block";
-        }
-    function error(error)
-    {
-      Swal.fire({
-        type: "error",
-        title: "Error",
-        text: error,
-      });
-    }
-  </script>
 
+    function initializeSidebar() {
+        if (window.innerWidth > 768) {
+            const savedState = localStorage.getItem('sidebarCollapsed');
+            if (savedState === 'true') {
+                sidebar.classList.add('collapsed');
+            } else {
+                sidebar.classList.remove('collapsed');
+            }
+            sidebar.classList.remove('mobile-open');
+            sidebarOverlay.classList.remove('active');
+        } else {
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.remove('mobile-open');
+            sidebarOverlay.classList.remove('active');
+        }
+        updateLogoVisibility();
+    }
+
+    initializeSidebar();
+
+    function toggleSidebar() {
+        console.log('Toggle clicked, window width:', window.innerWidth);
+        
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle('mobile-open');
+            sidebarOverlay.classList.toggle('active');
+            console.log('Mobile toggle - sidebar mobile-open:', sidebar.classList.contains('mobile-open'));
+        } else {
+            sidebar.classList.toggle('collapsed');
+            console.log('Desktop toggle - sidebar collapsed:', sidebar.classList.contains('collapsed'));
+            
+            updateLogoVisibility();
+            
+            if (sidebar.classList.contains('collapsed')) {
+                localStorage.setItem('sidebarCollapsed', 'true');
+            } else {
+                localStorage.setItem('sidebarCollapsed', 'false');
+            }
+        }
+    }
+
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', toggleSidebar);
+    }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('mobile-open');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
+
+    window.addEventListener('resize', function() {
+        setTimeout(function() {
+            initializeSidebar();
+        }, 100);
+    });
+
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    }
+
+    if (sidebar) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    setTimeout(updateLogoVisibility, 10);
+                }
+            });
+        });
+
+        observer.observe(sidebar, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    console.log('Sidebar script initialized');
+});
+    </script>
+    
 </body>
 </html>
