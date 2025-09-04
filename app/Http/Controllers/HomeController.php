@@ -84,9 +84,10 @@ class HomeController extends Controller
 
         // If logged in as Client
         elseif (auth()->user()->role == "Client") {
-            $customer = Client::select('id', 'user_id', 'name')
-                ->where('user_id', auth()->user()->id)
-                ->first();
+           $customer = Client::with('serial')
+            ->where('user_id', auth()->id()) // shorthand for auth()->user()->id
+            ->select('id', 'user_id', 'name')
+            ->first();
 
             $transactions_details = TransactionDetail::where('client_id', $customer->id)
                 ->select('id', 'price', 'qty', 'date', 'dealer_id', 'points_client')
