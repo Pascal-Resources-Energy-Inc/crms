@@ -690,7 +690,7 @@
                         @endphp
                         <h5 class="fs-7 mb-0">
                           @if($trans)
-                            {{date('M d, Y',strtotime($trans->created_at))}}
+                            {{date('M d, Y',strtotime($trans->date))}}
                           @else
                           No Data
                           @endif
@@ -739,7 +739,7 @@
                         <tbody>
                            @foreach($transactions_details as $transaction)
                             <tr>
-                              <td>{{date('M d, Y',strtotime($transaction->created_at))}}</td>
+                              <td>{{date('M d, Y',strtotime($transaction->date))}}</td>
                               <td>{{number_format($transaction->qty,2)}}</td>
                               <td>{{number_format($transaction->qty*$transaction->price,2)}}</td>
                               <td>{{$transaction->dealer->name}}</td>
