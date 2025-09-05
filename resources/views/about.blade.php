@@ -2,6 +2,9 @@
 
 @section('css')
 <style>
+    .client-about-page {
+        margin-top: 90px !important;
+    }
     .about-container {
         display: flex;
         justify-content: center;
@@ -182,7 +185,7 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid @if(auth()->user()->role === 'Client') client-about-page @endif">
     <div class="about-container">
         <div class="image-wrapper" onclick="openZoom()">
             <img src="{{ asset('images/ABOUT.png') }}" 
