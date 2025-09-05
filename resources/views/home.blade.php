@@ -7,6 +7,9 @@
 
 @endsection
 <style>
+         .content-area:has(.welcome-dealer) {
+            margin-top: 90px !important;
+        }
         .stats-card {
             background: white;
             border: none;
@@ -341,9 +344,8 @@
                                   <!-- Customer Avatar -->
                                   <div class="flex-shrink-0 me-3">
                                     <div class="avatar-circle position-relative" style="width: 45px; height: 45px;">
-                                      <img src="{{ $transaction->customer->avatar ?? '' }}" 
-                                          onerror="this.src='{{ url('design/assets/images/profile/user-1.png') }}';" 
-                                          alt="{{ $transaction->customer->name ?? 'Customer' }}"
+                                      <img src="{{ optional($transaction->customer)->avatar ? asset($transaction->customer->avatar) : asset('design/assets/images/profile/user-1.png') }}" 
+                                          alt="{{ optional($transaction->customer)->name ?? 'Customer' }}"
                                           class="rounded-circle w-100 h-100 object-fit-cover"
                                           style="border: 2px solid #e2e8f0;">
                                     </div>
@@ -486,7 +488,7 @@
           @endif
           @if(auth()->user()->role == "Dealer")
 
-          <section class="welcome">
+          <section class="welcome @if(auth()->user()->role === 'Dealer') welcome-dealer @endif">
             <div class="row">
               <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
                 <div class="card w-100">
@@ -589,7 +591,7 @@
           @endif
           @if(auth()->user()->role == "Client")
 
-          <section class="welcome">
+          <section class="welcome" style="margin-top: 90px">
             <div class="row">
               <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
                 <div class="card w-100">

@@ -1,7 +1,9 @@
 @extends('layouts.header')
 @section('css')
 <style>
-    /* Custom styling */
+    .welcome-client {
+        margin-top: 90px !important;
+    }
     .transaction-table th {
         text-align: center;
     }
@@ -44,7 +46,7 @@
 @endsection
 
 @section('content')
-<section class="welcome">
+<div class="welcome @if(auth()->user()->role === 'Dealer' || auth()->user()->role === 'Client') welcome-client @endif">
      <!-- Customer Info Section -->
      <div class="row">
         <div class="col-md-4">

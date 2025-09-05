@@ -2,6 +2,9 @@
 
 @section('css')
 <style>
+        .client-store-page{
+            margin-top: 90px !important;
+        }
         .main-layout .store-locations-wrapper {
         max-width: 1400px;
         margin: 0 auto;
@@ -356,7 +359,7 @@
 @endsection
 
 @section('content')
-<div class="page-header">
+<div class="page-header @if(auth()->user()->role === 'Client') client-store-page @endif">
     <h1 class="page-title">Store Locations</h1>
     <div class="legend">
         <div class="legend-item" data-type="dealer" id="dealerLegend">

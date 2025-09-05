@@ -80,14 +80,50 @@ class CustomerController extends Controller
         return redirect('view-client/' . $customer->id);
 
     }
-    public function changeAvatar(Request $request,$id)
+    public function changeAvatar(Request $request, $id)
     {
-
         $customer = Client::findOrfail($id);
-        $customer->avatar = $request->image_data;
-        $customer->save();
-
-        Alert::success('Successfully Uploaded')->persistent('Dismiss');
+        
+        $imageData = $request->image_data;
+        
+        if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $matches)) {
+            $imageType = $matches[1];
+            $imageData = substr($imageData, strpos($imageData, ',') + 1);
+        } else {
+            Alert::error('Invalid image format')->persistent('Dismiss');
+            return back();
+        }
+        
+        $imageData = base64_decode($imageData);
+        
+        if ($imageData === false) {
+            Alert::error('Failed to decode image')->persistent('Dismiss');
+            return back();
+        }
+        
+        $directory = public_path('avatar-client');
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+        
+        $fileName = 'avatar_' . $customer->id . '_' . time() . '.png';
+        $filePath = $directory . '/' . $fileName;
+        
+        if (file_put_contents($filePath, $imageData)) {
+            if ($customer->avatar && 
+                $customer->avatar !== url('design/assets/images/profile/user-1.png') && 
+                file_exists(public_path(str_replace(url('/'), '', $customer->avatar)))) {
+                unlink(public_path(str_replace(url('/'), '', $customer->avatar)));
+            }
+            
+            $customer->avatar = 'avatar-client/' . $fileName;
+            $customer->save();
+            
+            Alert::success('Successfully Uploaded')->persistent('Dismiss');
+        } else {
+            Alert::error('Failed to save image')->persistent('Dismiss');
+        }
+        
         return back();
     }
     public function uploadValidId(Request $request,$id)

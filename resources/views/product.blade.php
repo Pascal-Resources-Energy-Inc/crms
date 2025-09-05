@@ -2,6 +2,9 @@
 
 @section('css')
 <style>
+    .dealer-product-page{
+        margin-top: 90px;
+    }
     .pricing-container {
         padding: 40px 20px;
         background-color: #ffffffff;
@@ -545,7 +548,7 @@
 @endsection
 
 @section('content')
-<div class="pricing-container">
+<div class="pricing-container @if(auth()->user()->role === 'Client') dealer-product-page @endif">
     <div class="page-header">
         <h1 class="page-title">Price List</h1>
         @if(Auth::user()->role === 'Admin' && Auth::user()->can_add === 'on')

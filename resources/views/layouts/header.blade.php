@@ -461,6 +461,7 @@
             font-size: 14px;
             margin: 0;
         }
+        
 
         .user-role {
             color: var(--text-muted);
@@ -471,6 +472,7 @@
         .user-profile {
         position: relative;
         }
+        
         .user-profile::after {
         position: absolute;
         left: 35px !important;
@@ -487,6 +489,18 @@
             opacity: 0;
             width: 0;
             overflow: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            padding: 16px 8px;
+        }
+
+        .sidebar.collapsed .user-profile {
+            flex-direction: column;
+            gap: 8px;
+            padding: 12px 8px;
+            align-items: center;
+            justify-content: center;
         }
 
         .logout-btn {
@@ -1072,9 +1086,9 @@
                     <p class="user-name">{{current(explode(' ',auth()->user()->name))}}</p>
                     <p class="user-role">{{auth()->user()->role}}</p>
                 </div>
-                <button class="logout-btn" onclick="logout(); show();">
+                <!-- <button class="logout-btn" onclick="logout(); show();">
                     <i class="bi bi-box-arrow-right"></i>
-                </button>
+                </button> -->
             </div>
         </div>
     </nav>
@@ -1392,14 +1406,6 @@
         }
     
     </script>
-
-<script>
-$(document).ready(function() {
-    @if(auth()->user()->role === 'Dealer' || auth()->user()->role === 'Client')
-        $('.content-area').css('margin-top', '90px');
-    @endif
-});
-</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
