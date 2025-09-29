@@ -57,6 +57,7 @@ class HomeController extends Controller
         // Only fetch IDs & names for dropdowns
         $customers = Client::select('id', 'name')
             ->whereHas('transactions')
+            ->where('status','Active')
             ->get();
 
         // If logged in as Dealer
