@@ -189,11 +189,6 @@ return [
     */
 
     'aliases' => [
-<<<<<<< HEAD
-
-=======
-'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,

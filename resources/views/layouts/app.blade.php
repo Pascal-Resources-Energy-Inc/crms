@@ -1,23 +1,15 @@
-<<<<<<< HEAD
 {{-- app blade --}}
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 <!DOCTYPE html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
     
-=======
-    {{-- @laravelPWA --}}
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-<<<<<<< HEAD
     
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{url('images/aaa.png')}}">
@@ -37,12 +29,6 @@
     <link rel="apple-touch-icon" sizes="152x152" href="{{url('images/icons/icon-152x152.png')}}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{url('images/icons/icon-192x192.png')}}">
     <link rel="apple-touch-icon" sizes="167x167" href="{{url('images/icons/icon-192x192.png')}}">
-=======
-    <link rel="shortcut icon"  href="{{url('images/aaa.png')}}">
-    <link rel="icon"  href="{{url('images/aaa.png')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 
     <!-- Layout config Js -->
     <script src="{{asset('inside_css/assets/js/layout.js')}}"></script>
@@ -53,18 +39,12 @@
     <!-- App Css-->
     <link href="{{asset('inside_css/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
-<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <link href="{{asset('inside_css/assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
  
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     
-=======
-    <link href="{{asset('inside_css/assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
- 
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     <style>
         .loader {
             position: fixed;
@@ -73,7 +53,6 @@
             width: 100%;
             height: 100%;
             z-index: 9999;
-<<<<<<< HEAD
             background: url("{{ asset('login_css/images/loader.gif')}}") 50% 50% no-repeat white;
             opacity: .8;
             background-size:120px 120px;
@@ -441,12 +420,8 @@
     const hasCompletedFirstLoad = localStorage.getItem('pwa-first-load-complete');
     const overlay = document.getElementById('pwaLoadingOverlay');
     
-    // CRITICAL: Check if Service Worker is already active
     const isServiceWorkerActive = navigator.serviceWorker && navigator.serviceWorker.controller;
     
-    // Skip loading if:
-    // 1. First load already completed, OR
-    // 2. Service Worker is already controlling the page (subsequent visits)
     if (hasCompletedFirstLoad === 'true' || isServiceWorkerActive) {
         if (overlay) {
             overlay.classList.add('hidden');
@@ -455,7 +430,6 @@
         document.body.style.overflow = 'auto';
         console.log('⚡ Skip loading - PWA already initialized');
     } else {
-        // First time visit - show loading
         if (overlay) {
             overlay.classList.remove('hidden');
             overlay.style.display = 'flex';
@@ -468,7 +442,6 @@
 
     <div id="loader" style="display:none;" class="loader"></div>
     
-    <!-- PWA Install Prompt -->
     <div class="pwa-install-container" id="pwaInstallPrompt">
         <div class="pwa-install-prompt">
             <div class="pwa-install-icon">
@@ -489,7 +462,6 @@
         </div>
     </div>
     
-    <!-- Installed Badge -->
     <div class="pwa-installed-badge" id="pwaInstalledBadge">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="20 6 9 17 4 12"/>
@@ -499,43 +471,12 @@
   
     @yield('content')
 
-    <!-- Scripts -->
-=======
-            background: url("{{ asset('login_css/images/loader.gif')}}") 50% 50% no-repeat white ;
-            opacity: .8;
-            background-size:120px 120px;
-        }
-      .bg-overlay {
-		    background: linear-gradient(to right, #c3c3c3, #c3c3c3) !important;
-    		/* opacity: .9; */
-   			/* Change 5px to your desired thickness */
-		}
-    </style>
-    <!-- LogIN CSS -->
-  
-
-    <!-- Styles -->
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-</head>
-<body>
-    <div id = "loader" style="display:none;" class="loader">
-    </div>
-  
-                @yield('content')
-    </div>
-
-    {{-- <script src="{{asset('login_css/js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{asset('login_css/js/popper.min.jss')}}"></script>
-    <script src="{{asset('login_css/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('login_css/js/main.js')}}"></script> --}}
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     <script src="{{asset('inside_css/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('inside_css/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{asset('inside_css/assets/libs/node-waves/waves.min.js')}}"></script>
     <script src="{{asset('inside_css/assets/libs/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('inside_css/assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script src="{{asset('inside_css/assets/js/plugins.js')}}"></script>
-<<<<<<< HEAD
     <script src="{{asset('inside_css/assets/libs/particles.js/particles.js')}}"></script>
     <script src="{{asset('inside_css/assets/js/pages/particles.app.js')}}"></script>
     <script src="{{asset('inside_css/assets/js/pages/password-addon.init.js')}}"></script>
@@ -1695,15 +1636,3 @@ document.head.appendChild(offlineStyles);
 </script>
 </body>
 </html>
-=======
-
-    <!-- particles js -->
-    <script src="{{asset('inside_css/assets/libs/particles.js/particles.js')}}"></script>
-    <!-- particles app js -->
-    <script src="{{asset('inside_css/assets/js/pages/particles.app.js')}}"></script>
-    <!-- password-addon init -->
-    <script src="{{asset('inside_css/assets/js/pages/password-addon.init.js')}}"></script>
-  
-</body>
-</html>
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e

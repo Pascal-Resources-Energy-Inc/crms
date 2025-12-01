@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-<<<<<<< HEAD
 
 use App\Dealer;
 use App\Client;
@@ -18,23 +17,6 @@ class UserController extends Controller
         {
             $profile = Dealer::where('user_id',auth()->user()->id)->first();
             $transactions = TransactionDetail::where('dealer_id',$profile->user_id)->get();
-=======
-use App\Dealer;
-use App\Client;
-use App\TransactionDetail;
-use Illuminate\Http\Request;
-
-class UserController extends Controller
-{
-    //
-
-    public function view(){
-
-        if(auth()->user()->role == "Dealer")
-        {
-            $profile = Dealer::where('user_id',auth()->user()->id)->first();
-             $transactions = TransactionDetail::where('dealer_id',$profile->user_id)->get();
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
         }
         else
         {
@@ -49,7 +31,6 @@ class UserController extends Controller
             )
         );
     }
-<<<<<<< HEAD
     public function testPasswordExists()
 {
     $user = DB::selectOne('SELECT id, name, email, password FROM users WHERE id = 1');
@@ -65,14 +46,11 @@ class UserController extends Controller
     public function getUsers()
     {
         try {
-            // Use raw SQL query to get EVERYTHING
             $users = DB::select('SELECT * FROM users');
             
-            // Convert to array and handle nulls
             $usersArray = array_map(function($user) {
                 $userData = (array) $user;
                 
-                // Replace null values with empty strings
                 foreach ($userData as $key => $value) {
                     if (is_null($value)) {
                         $userData[$key] = '';
@@ -82,7 +60,6 @@ class UserController extends Controller
                 return $userData;
             }, $users);
             
-            // Debug logging
             \Log::info('=== USER SYNC DEBUG ===');
             \Log::info('Total users: ' . count($usersArray));
             
@@ -114,6 +91,3 @@ class UserController extends Controller
 
 
 
-=======
-}
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e

@@ -2,15 +2,12 @@
 
 namespace App\Providers;
 
-<<<<<<< HEAD
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Dealer;
 use App\Client;
 use App\Item;
 use App\RedeemedHistory;
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-<<<<<<< HEAD
         View::composer('*', function ($view) {
             $profile = null;
             $unreadNotifications = 0;
@@ -45,12 +41,10 @@ class AppServiceProvider extends ServiceProvider
                 if ($user->role == 'Dealer') {
                     $profile = Dealer::where('user_id', $user->id)->first();
                     
-                    // unread notifications ni dealer
                     $unreadNotifications = RedeemedHistory::where('user_id', $user->id)
                         ->where('viewed', 0)
                         ->count();
                         
-                    // Calculate points
                     if ($profile) {
                         $totalPoints = $profile->sales->sum('points_dealer');
                         $redeemedPoints = abs(RedeemedHistory::where('user_id', $user->id)->sum('points_amount'));
@@ -60,12 +54,10 @@ class AppServiceProvider extends ServiceProvider
                 } elseif ($user->role == 'Client') {
                     $profile = Client::where('user_id', $user->id)->first();
                     
-                    // unread notifications ni client
                     $unreadNotifications = RedeemedHistory::where('user_id', $user->id)
                         ->where('viewed', 0)
                         ->count();
                     
-                    // Calculate available points for client
                     if ($profile) {
                         $totalPoints = $profile->transactions->sum('points_client');
                         $redeemedPoints = abs(RedeemedHistory::where('user_id', $user->id)->sum('points_amount'));
@@ -86,8 +78,3 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 }
-=======
-        //
-    }
-}
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e

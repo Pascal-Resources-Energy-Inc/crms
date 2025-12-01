@@ -16,10 +16,7 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password', 'remember_token',
-<<<<<<< HEAD
         'remember_token',
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     ];
 
     protected $casts = [
@@ -36,14 +33,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class, 'user_id');
     }
-<<<<<<< HEAD
     
     public function redeemedHistory()
     {
         return $this->hasMany(RedeemedHistory::class);
     }
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 
     
 }

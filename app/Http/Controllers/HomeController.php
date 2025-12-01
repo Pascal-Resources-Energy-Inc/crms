@@ -10,10 +10,7 @@ use Illuminate\Support\Collection;
 use App\TransactionDetail;
 use Illuminate\Http\Request;
 use App\Product;
-<<<<<<< HEAD
 use App\RedeemedHistory;
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 
 class HomeController extends Controller
 {
@@ -32,7 +29,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-<<<<<<< HEAD
     public function index(Request $request)
     {
         $dealer = "";
@@ -176,151 +172,6 @@ class HomeController extends Controller
                 'customer_available_points' => $customerAvailablePoints ?? 0,
             )
         );
-=======
- 
-    public function index(Request $request)
-    {
-        $dealer = null;
-        $customer = null;
-        $threeDaysAgo = Carbon::now()->subDays(7)->toDateString();
-
-        // Get selected year and month
-        $selectedYear = $request->get('year', Carbon::now()->year);
-        $selectedMonth = $request->get('month', null);
-        $viewType = $selectedMonth ? 'monthly' : 'yearly';
-
-        // Customers with last transaction older than 7 days
-        $customers_less = Client::where('status', 'Active') // ✅ Filter only active clients
-    ->whereDoesntHave('latestTransaction', function ($q) use ($threeDaysAgo) {
-                $q->where('date', '>=', $threeDaysAgo);
-            })
-            ->whereHas('latestTransaction')
-            ->orderByDesc(
-                DB::raw('(SELECT date FROM transaction_details 
-                        WHERE transaction_details.client_id = clients.id 
-                        ORDER BY date DESC LIMIT 1)')
-            )
-            ->limit(50) // 🔹 LIMIT results to avoid huge memory usage
-            ->get();
-
-        // Only fetch IDs & names for dropdowns
-        $customers = Client::select('id', 'name')
-            ->whereHas('transactions')
-            ->where('status','Active')
-            ->get();
-
-        // If logged in as Dealer
-         $transactions_details = TransactionDetail::select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer', 'points_client','item')
-            ->orderByDesc('id')
-            ->limit(20)
-            ->get();
-            
-        $total_qty = TransactionDetail::sum('qty');
-        if (auth()->user()->role == "Dealer") {
-            $dealer = Dealer::select('id', 'user_id', 'name')
-                ->where('user_id', auth()->user()->id)
-                ->first();
-
-            $transactions_details = TransactionDetail::where('dealer_id', auth()->user()->id)
-                ->select('id', 'price', 'qty', 'date', 'client_id', 'points_dealer','item')
-                ->orderByDesc('id')
-                ->limit(500) // 🔹 Only load latest 500 for dashboard
-                ->get();
-
-            $total_sales = TransactionDetail::where('dealer_id', auth()->user()->id)
-                ->select(DB::raw('SUM(price * qty) as total'))
-                ->value('total');
-            $total_qty = TransactionDetail::where('dealer_id', auth()->user()->id)->sum('qty');
-        }
-
-        // If logged in as Client
-        elseif (auth()->user()->role == "Client") {
-           $customer = Client::with('serial')
-            ->where('user_id', auth()->id()) // shorthand for auth()->user()->id
-            ->select('id', 'user_id', 'name','created_at')
-            ->first();
-
-            $transactions_details = TransactionDetail::where('client_id', $customer->id)
-                ->select('id', 'price', 'qty', 'date', 'dealer_id', 'points_client','item')
-                ->orderByDesc('id')
-                ->limit(500)
-                ->get();
-
-            $total_sales = TransactionDetail::where('client_id', $customer->id)
-                ->select(DB::raw('SUM(price * qty) as total'))
-                ->value('total');
-
-                $total_qty = TransactionDetail::where('client_id', auth()->user()->id)->sum('qty');
-        }
-
-        // 🔹 Only calculate global total if dealer/client total isn't already set
-        if (!isset($total_sales)) {
-            $total_sales = TransactionDetail::select(DB::raw('SUM(price * qty) as total'))
-                ->value('total');
-        }
-
-        // Chart data
-        $chartData = $viewType === 'monthly'
-            ? $this->getDailyData($selectedYear, $selectedMonth)
-            : $this->getMonthlyData($selectedYear);
-
-        $categories = $chartData['categories'];
-        $qty = $chartData['qty'];
-
-        // Dropdown options
-        $availableYears = $this->getAvailableYears();
-        $availableMonths = $this->getAvailableMonths($selectedYear);
-
-        // Dealers leaderboard
-        $dealers = TransactionDetail::select(
-                'dealer_id',
-                DB::raw('SUM(points_dealer) as total_points'),
-                DB::raw('MAX(date) as latest_transaction')
-            )
-            ->with(['dealer:id,name']) // 🔹 Only load dealer id & name
-            ->groupBy('dealer_id')
-            ->orderByDesc('total_points')
-            ->limit(20) // 🔹 Prevent large dataset
-            ->get();
-
-        // Top customers
-        $top_customers = TransactionDetail::select(
-                'client_id',
-                DB::raw('SUM(points_client) as total_points'),
-                DB::raw('MAX(created_at) as latest_transaction')
-            )
-            ->with(['customer:id,name']) // 🔹 Only load customer id & name
-            ->whereNotNull('client_id')
-            ->groupBy('client_id')
-            ->orderByDesc('total_points')
-            ->limit(10)
-            ->get();
-
-        // Trends
-        $salesTrend = $this->calculateSalesTrend();
-        $qtyTrend = $this->calculateQtyTrend();
-
-        return view('home', [
-            'transactions_details' => $transactions_details ?? collect(),
-            'dealers' => $dealers,
-            'categories' => $categories,
-            'qty' => $qty,
-            'customers' => $customers,
-            'dealer' => $dealer,
-            'customer' => $customer,
-            'customers_less' => $customers_less,
-            'total_sales' => $total_sales,
-            'top_customers' => $top_customers,
-            'sales_trend' => $salesTrend,
-            'qty_trend' => $qtyTrend,
-            'available_years' => $availableYears,
-            'available_months' => $availableMonths,
-            'selected_year' => $selectedYear,
-            'selected_month' => $selectedMonth,
-            'view_type' => $viewType,
-            'total_qty' => $total_qty,
-        ]);
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     }
 
     public function getChartDataAjax(Request $request)

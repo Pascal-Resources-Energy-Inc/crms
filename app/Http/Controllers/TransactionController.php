@@ -6,25 +6,16 @@ use App\Item;
 use App\Client;
 use App\Dealer;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 
 use RealRashid\SweetAlert\Facades\Alert;
 class TransactionController extends Controller
 {
-<<<<<<< HEAD
-=======
-    //
-
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     public function index(Request $request)
     {
         $customers = Client::whereHas('serial')->get();
         $items = Item::get();
         $dealers = Dealer::get();
-<<<<<<< HEAD
          $place_order = [];
         //  dd(auth()->user());
         if(auth()->user()->role == "Admin")
@@ -38,21 +29,6 @@ class TransactionController extends Controller
         return view('place_order',
             array(
                 'place_order' => $place_order,
-=======
-         $transactions = [];
-        //  dd(auth()->user());
-        if(auth()->user()->role == "Admin")
-        {
-            $transactions = TransactionDetail::get();
-        }
-        elseif(auth()->user()->role == "Dealer")
-        {
-            $transactions = TransactionDetail::where('dealer_id',auth()->user()->id)->get();
-        }
-        return view('transactions',
-            array(
-                'transactions' => $transactions,
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
                 'items' => $items,
                 'customers' => $customers,
                 'dealers' => $dealers,
@@ -60,7 +36,6 @@ class TransactionController extends Controller
         );
     }
 
-<<<<<<< HEAD
     public function store(Request $request)
     {
         try {
@@ -205,13 +180,6 @@ class TransactionController extends Controller
         // dd($request->all());
         $item = Item::findOrfail($request->item_id);
         $client = Client::findOrFail($request->customer_id);
-=======
-
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        $item = Item::findOrfail($request->item_id);
-
 
         $transaction = new TransactionDetail;
         $transaction->item = $item->item;
@@ -221,57 +189,21 @@ class TransactionController extends Controller
         $transaction->qty = $request->qty;
         $transaction->price = $item->price;
         $transaction->client_id = $request->customer_id;
-        $transaction->date = date('Y-m-d');
-        $transaction->dealer_id = auth()->user()->id;
-        $transaction->created_by = auth()->user()->id;
-        $transaction->save();
-
-
-         Alert::success('Successfully Save')->persistent('Dismiss');
-        return back();
-    }
-    
-    public function storeAdmin(Request $request)
-    {
-        // dd($request->all());
-        $item = Item::findOrfail($request->item_id);
-
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
-
-        $transaction = new TransactionDetail;
-        $transaction->item = $item->item;
-        $transaction->points_dealer = $item->dealer_points * $request->qty;
-        $transaction->points_client = $item->customer_points * $request->qty;
-        $transaction->item_description = $item->item_description;
-        $transaction->qty = $request->qty;
-        $transaction->price = $item->price;
-        $transaction->client_id = $request->customer_id;
-<<<<<<< HEAD
         $transaction->client_address = $client->address ?? '';
-=======
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
         $transaction->dealer_id = $request->dealer;
         $transaction->date = $request->date;
         $transaction->created_by = auth()->user()->id;
         $transaction->save();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
          Alert::success('Successfully Save')->persistent('Dismiss');
         return back();
     }
 
-<<<<<<< HEAD
-    // ADD THIS NEW METHOD FOR PLACE ORDER
     public function placeOrder(Request $request)
     {
         try {
-            // Get order data from request
             $orderData = $request->all();
             
-            // Validate required fields
             if (empty($orderData['customer_id'])) {
                 Alert::error('Customer information is required')->persistent('Dismiss');
                 return redirect()->back();
@@ -286,24 +218,20 @@ class TransactionController extends Controller
             $items = $orderData['items'];
             $paymentMethod = $orderData['payment_method'] ?? 'cash';
             
-            // Validate customer exists
             $customer = Client::find($customerId);
             if (!$customer) {
                 Alert::error('Customer not found')->persistent('Dismiss');
                 return redirect('cart');
             }
             
-            // Create transactions for each item
             $successCount = 0;
             foreach ($items as $itemData) {
-                // Get item from database
                 $item = Item::find($itemData['item_id']);
                 
                 if (!$item) {
-                    continue; // Skip if item not found
+                    continue;
                 }
                 
-                // Create transaction
                 $transaction = new TransactionDetail();
                 $transaction->item = $item->item;
                 $transaction->points_dealer = $item->dealer_points * $itemData['quantity'];
@@ -338,9 +266,6 @@ class TransactionController extends Controller
     }
 
     public function destroy($id)
-=======
-  public function destroy($id)
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
     {
         try {
             if (!is_numeric($id) || $id <= 0) {
@@ -413,18 +338,14 @@ class TransactionController extends Controller
         }
     }
 
-<<<<<<< HEAD
     public function getTransactions()
     {
         try {
-            // Use raw SQL to get ALL fields
             $transactions = DB::select('SELECT * FROM transaction_details');
             
-            // Convert to array and handle nulls
             $transactionsArray = array_map(function($transaction) {
                 $transactionData = (array) $transaction;
                 
-                // Replace null values with empty strings
                 foreach ($transactionData as $key => $value) {
                     if (is_null($value)) {
                         $transactionData[$key] = '';
@@ -446,8 +367,4 @@ class TransactionController extends Controller
             ], 500);
         }
     }
-=======
-
-       
->>>>>>> cbcdc328ee536f65b48e8e78150a46183d1dd68e
 }
