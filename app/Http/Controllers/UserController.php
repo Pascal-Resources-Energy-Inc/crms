@@ -32,16 +32,16 @@ class UserController extends Controller
         );
     }
     public function testPasswordExists()
-{
-    $user = DB::selectOne('SELECT id, name, email, password FROM users WHERE id = 1');
-    
-    return response()->json([
-        'user' => $user,
-        'password_exists' => isset($user->password),
-        'password_length' => isset($user->password) ? strlen($user->password) : 0,
-        'password_preview' => isset($user->password) ? substr($user->password, 0, 20) . '...' : 'NULL'
-    ]);
-}
+    {
+        $user = DB::selectOne('SELECT id, name, email, password FROM users WHERE id = 1');
+        
+        return response()->json([
+            'user' => $user,
+            'password_exists' => isset($user->password),
+            'password_length' => isset($user->password) ? strlen($user->password) : 0,
+            'password_preview' => isset($user->password) ? substr($user->password, 0, 20) . '...' : 'NULL'
+        ]);
+    }
 
     public function getUsers()
     {
@@ -85,6 +85,11 @@ class UserController extends Controller
                 'error' => 'Failed to fetch users: ' . $e->getMessage()
             ], 500);
         }
+    }
+    
+    public function getUser(Request $request)
+    {
+        return $request->user();
     }
 }
 

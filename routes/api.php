@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get('/user', [UserController::class, 'getUser']);
+
+Route::middleware('auth:api')->get('/users', [UserController::class, 'getUsers']);
+Route::middleware('auth:api')->get('/test-password', [UserController::class, 'testPasswordExists']);
