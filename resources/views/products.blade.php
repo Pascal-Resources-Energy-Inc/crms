@@ -105,7 +105,7 @@
           <div class="product-card-container bg-white rounded-3 shadow-sm border" id="container-{{ $product->id }}">
             <div class="product-card p-3 text-center h-100">
               <div class="product-image-container d-flex justify-content-center align-items-center mb-3 rounded-2">
-                <img src="{{ $product->item_image }}" alt="{{ $product->item }}" id="productImage">
+                <img src="{{ asset($product->item_image) }}" alt="{{ $product->item }}" id="productImage">
               </div>
               
               <div class="product-info d-flex flex-column h-100">
@@ -139,7 +139,6 @@
           </div>
         </div>
       @empty
-      <!-- Bootstrap utilities for empty state -->
       <div class="col-12">
         <div class="text-center py-5 text-muted">
           <i class="bi bi-box display-1 mb-3 d-block text-light"></i>
@@ -155,7 +154,6 @@
 @section('css')
 
 <style>
-  /* Fixed top controls */
 .top-controls {
   background: #fff;
   margin-top: 0px !important;
@@ -169,14 +167,12 @@
   padding: 15px 20px;
 }
 
-/* Content area adjustments */
 .content-area {
   padding: 15px !important;
   text-align: left !important;
   padding-bottom: 120px !important;
 }
 
-/* Toast Notification */
 .toast {
   position: fixed;
   top: 80px;
@@ -206,7 +202,6 @@
   transform: translateX(0);
 }
 
-/* Customer Dropdown Button */
 .category-dropdown {
   background: #fff;
   border: 2px solid #e9ecef;
@@ -258,7 +253,6 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown Empty States */
 .dropdown-empty-state,
 .dropdown-no-results {
   padding: 2rem 1.5rem;
@@ -297,17 +291,14 @@
   font-weight: 500;
 }
 
-/* Hidden state */
 .hidden {
   display: none !important;
 }
 
-/* Dropdown Container */
 .dropdown {
   position: relative;
 }
 
-/* Dropdown Menu */
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 4px);
@@ -343,7 +334,6 @@
   }
 }
 
-/* Search Input in Dropdown */
 .dropdown-search-wrapper {
   padding: 8px 12px;
   background: #f8f9fa;
@@ -374,7 +364,6 @@
   color: #999;
 }
 
-/* Dropdown Items */
 .dropdown-item {
   display: block;
   width: 100%;
@@ -391,7 +380,6 @@
   background: #f8f9fa;
 }
 
-/* Default Select Customer Option */
 .dropdown-item[data-customer-id=""] {
   font-weight: 600;
   color: #666;
@@ -403,7 +391,6 @@
   background: #f0f0f0;
 }
 
-/* Customer Option Items */
 .customer-option {
   padding: 12px 16px !important;
   border-left: 3px solid transparent;
@@ -424,12 +411,10 @@
   font-weight: 700;
 }
 
-/* Hide filtered items */
 .dropdown-item.hidden {
   display: none !important;
 }
 
-/* Customer Info Layout */
 .customer-info {
   display: flex;
   flex-direction: column;
@@ -475,7 +460,6 @@
   color: #4A90E2;
 }
 
-/* Product grid and cards */
 .product-card-container {
   transition: all 0.3s ease;
 }
