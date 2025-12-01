@@ -532,9 +532,9 @@
 
 <body>
     <!-- Network Status Indicator -->
-    <div class="network-status" id="networkStatus" onclick="toggleNetworkMode()">
+    <div class="network-status offline" id="networkStatus" onclick="toggleNetworkMode()">
         <span class="network-status-dot"></span>
-        <span id="networkStatusText">Checking...</span>
+        <span id="networkStatusText">Offline Mode</span>
     </div>
 
     <div id="loader" style="display:none;" class="loader"></div>
@@ -1104,212 +1104,196 @@
     });
     </script>
 
-    <!-- Network Status Detection Script -->
     <script>
-    const networkStatus = document.getElementById('networkStatus');
-    const networkStatusText = document.getElementById('networkStatusText');
-    let isActuallyOnline = navigator.onLine;
-    let networkCheckInterval = null;
-    let hasShownPrompt = false;
+        const networkStatus = document.getElementById('networkStatus');
+        const networkStatusText = document.getElementById('networkStatusText');
+        let isActuallyOnline = navigator.onLine;
+        let networkCheckInterval = null;
+        let hasShownPrompt = false;
 
-    async function checkRealNetworkStatus() {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
-            
-            await fetch('https://www.google.com/favicon.ico', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store',
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async function updateNetworkStatusWithCheck() {
-        const actuallyOnline = await checkRealNetworkStatus();
-        
-        if (actuallyOnline !== isActuallyOnline) {
-            const previousStatus = isActuallyOnline;
-            isActuallyOnline = actuallyOnline;
-            
-            if (actuallyOnline) {
-                networkStatus.className = 'network-status online';
-                networkStatusText.textContent = 'Online';
+        async function checkRealNetworkStatus() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
                 
-                if (!previousStatus && !hasShownPrompt) {
+                await fetch('https://www.google.com/favicon.ico', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        async function updateNetworkStatusWithCheck() {
+            const actuallyOnline = await checkRealNetworkStatus();
+            
+            if (actuallyOnline !== isActuallyOnline) {
+                const previousStatus = isActuallyOnline;
+                isActuallyOnline = actuallyOnline;
+                
+                if (actuallyOnline && !previousStatus && !hasShownPrompt) {
                     hasShownPrompt = true;
                     showOnlinePrompt();
                     setTimeout(() => { hasShownPrompt = false; }, 2000);
-                }
-            } else {
-                networkStatus.className = 'network-status offline';
-                networkStatusText.textContent = 'Offline';
-                
-                if (previousStatus) {
+                } else if (!actuallyOnline && previousStatus) {
                     showOfflineNotification();
                 }
             }
-        } else {
-            if (actuallyOnline) {
-                networkStatus.className = 'network-status online';
-                networkStatusText.textContent = 'Online';
-            } else {
+           
                 networkStatus.className = 'network-status offline';
-                networkStatusText.textContent = 'Offline';
-            }
+                networkStatusText.textContent = 'Offline Mode';
         }
-    }
 
-    function showOnlinePrompt() {
-        Swal.fire({
-            icon: 'success',
-            title: 'Connection Restored',
-            html: `
-                <p style="font-size: 16px; margin-bottom: 20px;">
-                    Your internet connection has been restored.
-                </p>
-                <p style="font-size: 14px; color: #666;">
-                    Would you like to go online or continue in offline mode?
-                </p>
-            `,
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: '<i class="bi bi-wifi"></i> Go Online',
-            denyButtonText: '<i class="bi bi-wifi-off"></i> Stay Offline',
-            confirmButtonColor: '#2ecc71',
-            denyButtonColor: '#ff4757',
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                redirectToOnline();
-            } else if (result.isDenied) {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Staying Offline',
-                    text: 'You will continue using offline mode.',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-            }
-        });
-    }
-
-    function showOfflineNotification() {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Connection Lost',
-            html: `
-                <p style="font-size: 16px; margin-bottom: 15px;">
-                    Your internet connection has been lost.
-                </p>
-                <p style="font-size: 14px; color: #666;">
-                    You are now in offline mode. The app will notify you when your connection is restored.
-                </p>
-            `,
-            timer: 3000,
-            timerProgressBar: true,
-            confirmButtonColor: '#5BC2E7'
-        });
-    }
-
-    function redirectToOnline() {
-        Swal.fire({
-            icon: 'success',
-            title: 'Switching to Online Mode',
-            text: 'Redirecting to online version...',
-            timer: 1500,
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        }).then(() => {
-            const basePath = window.location.pathname.includes('/crms/public') ? '/crms/public' : '';
-            window.location.href = basePath + '/login';
-        });
-    }
-
-    async function toggleNetworkMode() {
-        const actuallyOnline = await checkRealNetworkStatus();
-        
-        if (actuallyOnline) {
-            networkStatus.className = 'network-status online';
-            networkStatusText.textContent = 'Online';
-            isActuallyOnline = true;
-        } else {
-            networkStatus.className = 'network-status offline';
-            networkStatusText.textContent = 'Offline';
-            isActuallyOnline = false;
-        }
-        
-        if (!actuallyOnline) {
+        function showOnlinePrompt() {
             Swal.fire({
-                icon: 'warning',
-                title: 'No Internet Connection',
+                icon: 'success',
+                title: 'Connection Restored',
                 html: `
                     <p style="font-size: 16px; margin-bottom: 20px;">
-                        You are currently offline. Please check your internet connection.
+                        Your internet connection has been restored.
                     </p>
                     <p style="font-size: 14px; color: #666;">
-                        The app will automatically detect when your connection is restored.
+                        Would you like to go online or continue in offline mode?
+                    </p>
+                `,
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: '<i class="bi bi-wifi"></i> Go Online',
+                denyButtonText: '<i class="bi bi-wifi-off"></i> Stay Offline',
+                confirmButtonColor: '#2ecc71',
+                denyButtonColor: '#ff4757',
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    redirectToOnline();
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Staying Offline',
+                        text: 'You will continue using offline mode.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function showOfflineNotification() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Connection Lost',
+                html: `
+                    <p style="font-size: 16px; margin-bottom: 15px;">
+                        Your internet connection has been lost.
+                    </p>
+                    <p style="font-size: 14px; color: #666;">
+                        You are now in offline mode. The app will notify you when your connection is restored.
                     </p>
                 `,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#5BC2E7'
             });
-            return;
         }
-        
-        Swal.fire({
-            title: 'Go Online?',
-            html: `
-                <div style="text-align: left; padding: 10px;">
-                    <p style="margin-bottom: 15px;">
-                        <strong>Connection Status:</strong> 🟢 Connected
-                    </p>
-                    <p style="font-size: 14px; color: #666;">
-                        You have an active internet connection. Would you like to switch to the online version?
-                    </p>
-                </div>
-            `,
-            icon: 'question',
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: '🌐 Go Online',
-            denyButtonText: '📵 Stay Offline',
-            confirmButtonColor: '#2ecc71',
-            denyButtonColor: '#ff4757'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                redirectToOnline();
-            } else if (result.isDenied) {
+
+        function redirectToOnline() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Switching to Online Mode',
+                text: 'Redirecting to online version...',
+                timer: 1500,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            }).then(() => {
+                const basePath = window.location.pathname.includes('/crms/public') ? '/crms/public' : '';
+                window.location.href = basePath + '/login';
+            });
+        }
+
+        async function toggleNetworkMode() {
+            const actuallyOnline = await checkRealNetworkStatus();
+            
+            if (!actuallyOnline) {
                 Swal.fire({
-                    icon: 'info',
-                    title: 'Staying Offline',
-                    text: 'You will continue using offline mode.',
-                    timer: 2000,
-                    showConfirmButton: false
+                    icon: 'warning',
+                    title: 'No Internet Connection',
+                    html: `
+                        <div style="text-align: center; padding: 15px;">
+                            <p style="font-size: 16px; margin-bottom: 20px;">
+                                📵 You are currently offline
+                            </p>
+                            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+                                To go online, please:
+                            </p>
+                            <ul style="text-align: left; font-size: 14px; color: #666; margin: 0 auto; max-width: 250px;">
+                                <li>Turn on WiFi, or</li>
+                                <li>Enable mobile data</li>
+                            </ul>
+                            <p style="font-size: 13px; color: #999; margin-top: 20px;">
+                                The app will automatically detect when your connection is restored.
+                            </p>
+                        </div>
+                    `,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#5BC2E7'
                 });
+                return;
+            }
+            
+            Swal.fire({
+                title: 'Switch to Online Mode?',
+                html: `
+                    <div style="text-align: center; padding: 15px;">
+                        <p style="font-size: 16px; margin-bottom: 15px;">
+                            🟢 <strong>Internet Connected</strong>
+                        </p>
+                        <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
+                            You have an active internet connection. Would you like to switch to the online version?
+                        </p>
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; font-size: 13px; color: #666;">
+                            <i class="bi bi-info-circle"></i> Online mode provides real-time sync and additional features
+                        </div>
+                    </div>
+                `,
+                icon: 'question',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: '<i class="bi bi-wifi"></i> Go Online',
+                denyButtonText: '<i class="bi bi-wifi-off"></i> Stay Offline',
+                confirmButtonColor: '#2ecc71',
+                denyButtonColor: '#6c757d'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    redirectToOnline();
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Staying Offline',
+                        text: 'You will continue using offline mode.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        networkCheckInterval = setInterval(updateNetworkStatusWithCheck, 3000);
+        updateNetworkStatusWithCheck();
+
+        window.addEventListener('beforeunload', () => {
+            if (networkCheckInterval) {
+                clearInterval(networkCheckInterval);
             }
         });
-    }
-
-    // Start network monitoring
-    networkCheckInterval = setInterval(updateNetworkStatusWithCheck, 3000);
-    updateNetworkStatusWithCheck();
-
-    window.addEventListener('beforeunload', () => {
-        if (networkCheckInterval) {
-            clearInterval(networkCheckInterval);
-        }
-    });
     </script>
 
     <script src="http://localhost/inside_css/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>

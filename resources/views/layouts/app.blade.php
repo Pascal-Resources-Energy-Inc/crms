@@ -416,30 +416,26 @@
     </div>
 
     <script>
-      (function() {
-    const hasCompletedFirstLoad = localStorage.getItem('pwa-first-load-complete');
-    const overlay = document.getElementById('pwaLoadingOverlay');
-    
-    const isServiceWorkerActive = navigator.serviceWorker && navigator.serviceWorker.controller;
-    
-    if (hasCompletedFirstLoad === 'true' || isServiceWorkerActive) {
-        if (overlay) {
-            overlay.classList.add('hidden');
-            overlay.style.display = 'none';
+    (function() {
+        const hasCompletedFirstLoad = localStorage.getItem('pwa-first-load-complete');
+        const overlay = document.getElementById('pwaLoadingOverlay');
+        
+        
+        if (hasCompletedFirstLoad === 'true') {
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+            }
+            document.body.style.overflow = 'auto';
+        } else {
+            if (overlay) {
+                overlay.classList.remove('hidden');
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
         }
-        document.body.style.overflow = 'auto';
-        console.log('⚡ Skip loading - PWA already initialized');
-    } else {
-        if (overlay) {
-            overlay.classList.remove('hidden');
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        console.log('📥 First visit - showing loading overlay');
-    }
-})();
+    })();
     </script>
-
     <div id="loader" style="display:none;" class="loader"></div>
     
     <div class="pwa-install-container" id="pwaInstallPrompt">
