@@ -702,12 +702,25 @@
         }
 
         const completeOrderBtn = document.getElementById('complete-order-btn');
+        let isProcessing = false;
+        let orderPlaced = false;
         
-        completeOrderBtn.addEventListener('click', async function() {
+        completeOrderBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            if (isProcessing || orderPlaced) {
+                console.log('Order already being processed or completed');
+                return;
+            }
+            
+            isProcessing = true;
+            
             const paymentMethod = orderData.payment_method || 'cash';
             
             const customerId = customerData?.id || localStorage.getItem('selectedCustomerId');
             if (!customerId) {
+                isProcessing = false;
                 Swal.fire({
                     title: 'Customer Not Selected',
                     text: 'Please go back and select a customer before placing the order.',
@@ -720,6 +733,7 @@
             }
 
             if (!dealerCartData || dealerCartData.length === 0) {
+                isProcessing = false;
                 Swal.fire({
                     title: 'Cart is Empty',
                     text: 'Please add items to your cart before placing the order.',
@@ -732,6 +746,7 @@
             }
             
             this.disabled = true;
+            this.style.pointerEvents = 'none';
             this.innerHTML = '<i class="bi bi-hourglass-split"></i> <span>Processing...</span>';
             
             setTimeout(async () => {
@@ -779,6 +794,8 @@
                     console.log('Order saved to IndexedDB with ID:', savedId);
                     console.log('Transaction data:', transaction);
                     
+                    orderPlaced = true;
+                    
                     localStorage.removeItem('dealerCartData');
                     localStorage.removeItem('dealerCartItems');
                     localStorage.removeItem('orderData');
@@ -790,42 +807,84 @@
                     
                     this.innerHTML = '<i class="bi bi-check-circle success-checkmark"></i> <span>Order Completed!</span>';
                     
-                    Swal.fire({
-                        title: 'Order Saved Offline!',
-                        html: `
-                            <p>Order has been saved for <strong>${customerData?.name || 'Customer'}</strong></p>
-                            <p class="text-muted mt-2" style="font-size: 0.9em;">
-                                This transaction will be synced to the server when you go online.
-                            </p>
-                        `,
-                        icon: 'success',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        allowOutsideClick: false
-                    }).then(() => {
+                    try {
+                        await Swal.fire({
+                            title: 'Order Saved Offline!',
+                            html: `
+                                <p>Order has been saved for <strong>${customerData?.name || 'Customer'}</strong></p>
+                                <p class="text-muted mt-2" style="font-size: 0.9em;">
+                                    This transaction will be synced to the server when you go online.
+                                </p>
+                            `,
+                            icon: 'success',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            allowOutsideClick: false
+                        });
+                    } catch (swalError) {
+                        console.warn('SweetAlert failed to display, but order was saved:', swalError);
+                    }
+                    
+                    setTimeout(() => {
                         window.location.href = 'home.html';
-                    });
+                    }, 100);
+                    
                 } catch (error) {
                     console.error('Error saving order:', error);
+                    
+                    isProcessing = false;
+                    orderPlaced = false;
+                    
                     this.disabled = false;
+                    this.style.pointerEvents = 'auto';
                     this.innerHTML = '<i class="bi bi-check-circle"></i> <span>Place Order</span>';
                     
-                    Swal.fire({
-                        title: 'Error Saving Order',
-                        html: `
-                            <p>Failed to save order to database.</p>
-                            <p class="text-muted" style="font-size: 0.9em;">Error: ${error.message}</p>
-                        `,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                    try {
+                        await Swal.fire({
+                            title: 'Error Saving Order',
+                            html: `
+                                <p>Failed to save order to database.</p>
+                                <p class="text-muted" style="font-size: 0.9em;">Error: ${error.message}</p>
+                            `,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    } catch (swalError) {
+                        console.error('SweetAlert failed to display error:', swalError);
+                        alert('Error saving order: ' + error.message);
+                    }
                 }
             }, 1500);
         });
 
         initializeOrderPage();
         completeOrderBtn.disabled = false;
+        
+        window.addEventListener('beforeunload', function(e) {
+            if (isProcessing && !orderPlaced) {
+                e.preventDefault();
+                e.returnValue = 'Order is being processed. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
+        
+        const orderAlreadyPlaced = sessionStorage.getItem('orderPlaced');
+        if (orderAlreadyPlaced) {
+            completeOrderBtn.disabled = true;
+            completeOrderBtn.style.pointerEvents = 'none';
+            completeOrderBtn.innerHTML = '<i class="bi bi-check-circle"></i> <span>Order Already Placed</span>';
+            
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 1000);
+        }
+        
+        window.addEventListener('beforeunload', function() {
+            if (orderPlaced) {
+                sessionStorage.setItem('orderPlaced', 'true');
+            }
+        });
     });
 </script>
 </body>
