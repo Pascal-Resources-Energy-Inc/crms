@@ -1316,12 +1316,17 @@
                     : `<i class="bi bi-plus"></i>`;
                 const hasQuantityClass = existing ? 'has-quantity' : '';
                 
+                let imagePath = product.item_image || 'placeholder.png';
+                if (!imagePath.startsWith('/') && !imagePath.startsWith('http')) {
+                    imagePath = '/' + imagePath;
+                }
+                
                 return `
                     <div class="col-6">
                         <div class="product-card-container">
                             <div class="product-card">
                                 <div class="product-image-container">
-                                    <img src="${product.item_image || 'placeholder.png'}" alt="${product.item}">
+                                    <img src="${imagePath}" alt="${product.item}">
                                 </div>
                                 <div class="product-info">
                                     <div class="product-name">${product.item}</div>
@@ -1331,7 +1336,7 @@
                                                 data-id="${product.id}" 
                                                 data-name="${product.item}" 
                                                 data-price="${product.price}" 
-                                                data-image="${product.item_image}">
+                                                data-image="${imagePath}">
                                             ${buttonContent}
                                         </button>
                                     </div>
