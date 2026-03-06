@@ -1338,14 +1338,14 @@ if (!navigator.onLine) {
                 @endif
             </button>
 
-            <div class="dropdown points-dropdown">
+            {{-- <div class="dropdown points-dropdown">
                 <button class="points-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="window.location.href='{{url('rewards')}}'">
                     <div class="points-icon-wrapper">
                         <img src="{{url('images/icon.png')}}" alt="Profile" class="profile-img">
                     </div>
                     <span class="points-text">{{ $availablePoints ?? 0 }} points</span>
                 </button>
-            </div>
+            </div> --}}
         </div>
     </header>
     @endif
@@ -1440,12 +1440,12 @@ if (!navigator.onLine) {
                             <div class="col-12">
                                 <div class="loyalty-info-field">
                                     <span class="loyalty-info-label">Customer Name</span>
-                                    <span class="loyalty-info-value">BONGALOS, FARAHMI</span>
+                                    <span class="loyalty-info-value">{{ auth()->user()->name }}</span>
                                 </div>
                                 
                                 <div class="loyalty-info-field">
                                     <span class="loyalty-info-label">Address</span>
-                                    <span class="loyalty-info-value">NAGAS TIWI ALBAY</span>
+                                    <span class="loyalty-info-value">ALBAY</span>
                                 </div>
                             </div>
                         </div>

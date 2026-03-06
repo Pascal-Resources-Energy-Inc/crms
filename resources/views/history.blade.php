@@ -965,17 +965,17 @@
             </div>
         </div>
 
-        <div class="detail-section">
-            <div class="detail-section__title">Points Earned</div>
-            <div class="detail-row">
-            <span class="detail-label">Dealer Points</span>
-            <span class="detail-value">${transaction.points_dealer} pts</span>
-            </div>
-            <div class="detail-row">
-            <span class="detail-label">Client Points</span>
-            <span class="detail-value">${transaction.points_client} pts</span>
-            </div>
-        </div>
+        <!-- <div class="detail-section">
+          <div class="detail-section__title">Points Earned</div>
+          <div class="detail-row">
+          <span class="detail-label">Dealer Points</span>
+          <span class="detail-value">${transaction.points_dealer} pts</span>
+          </div>
+          <div class="detail-row">
+          <span class="detail-label">Client Points</span>
+          <span class="detail-value">${transaction.points_client} pts</span>
+          </div>
+        </div> -->
         `;
     }
 

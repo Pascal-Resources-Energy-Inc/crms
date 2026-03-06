@@ -19,13 +19,13 @@
         <div class="main-content">
             <div class="stats-section mb-2">
                 <div class="row g-3">
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <div class="stat-card">
                             <h3 class="stat-value">{{ $availablePoints ?? 0 }}</h3>
                             <p class="stat-label">Total Points</p>
                         </div>
-                    </div>
-                    <div class="col-6">
+                    </div> --}}
+                    <div class="col-12">
                         <div class="stat-card">
                             <h3 class="stat-value">{{ $total_transactions ?? 0}}</h3>
                             <p class="stat-label">Transactions</p>

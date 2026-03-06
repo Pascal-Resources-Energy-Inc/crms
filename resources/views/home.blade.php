@@ -344,7 +344,7 @@
                 </div>
             </div>
             
-            <h5 class="mb-2 fw-bold" style="color: #5BC2E7;">Lastest Transaction</h5>
+            <h5 class="mb-2 fw-bold" style="color: #5BC2E7;">Latest Transaction</h5>
             
             <div class="row mt-3">
                 <div class="col-lg-12">
